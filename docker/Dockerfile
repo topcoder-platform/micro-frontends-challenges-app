@@ -1,6 +1,12 @@
 # Use the base image with Node.js
 FROM node:10.22.1
 
+ARG APPMODE
+ARG APPENV
+
+ENV APPMODE=$APPMODE
+ENV APPENV=$APPENV
+
 # Copy the current directory into the Docker image
 COPY . /micro-frontends-challenges-app
 

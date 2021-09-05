@@ -3,6 +3,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import singleSpaReact from "single-spa-react";
 import Root from "./root.component";
+import appInit from "./utils/lifeCycle";
+
+const appLifecycles = appInit();
 
 const lifecycles = singleSpaReact({
   React,
@@ -14,4 +17,8 @@ const lifecycles = singleSpaReact({
   },
 });
 
-export const { bootstrap, mount, unmount } = lifecycles;
+const bootstrap = [appLifecycles.bootstrap, lifecycles.bootstrap];
+const mount = [appLifecycles.mount, lifecycles.mount];
+const unmount = [lifecycles.unmount];
+
+export { bootstrap, mount, unmount };
