@@ -1,10 +1,10 @@
 /* global process */
-
 const express = require("express");
 
 const app = express();
 
-app.use('/challenges-app',
+app.use(
+  "/challenges-app",
   express.static("./dist", {
     setHeaders: function setHeaders(res) {
       res.header("Access-Control-Allow-Origin", "*");
@@ -16,11 +16,10 @@ app.use('/challenges-app',
     },
   })
 );
+app.get("/", function (req, res) {
+  res.send("alive");
+});
 
-app.get('/', function (req, res) {
-  res.send('alive')
-})
-
-const PORT = process.env.PORT || 8511;
-app.listen(PORT, '0.0.0.0');
+const PORT = process.env.PORT || 8009;
+app.listen(PORT);
 console.log(`App is hosted on port ${PORT}.`); // eslint-disable-line no-console

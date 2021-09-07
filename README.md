@@ -1,4 +1,6 @@
-# Topcoder React Microapp Example
+# micro-frontends-challenges-app
+
+# Topcoder Challenges App
 
 This is a [single-spa](https://single-spa.js.org/) example React microapp.
 
@@ -14,9 +16,11 @@ This is a [single-spa](https://single-spa.js.org/) example React microapp.
 | Command               | Description                                                       |
 | --------------------- | ----------------------------------------------------------------- |
 | `npm start`           | Run server which serves production ready build from `dist` folder |
-| `npm run dev`         | Run app in the development mode                                   |
-| `npm run dev-https`   | Run app in the development mode using HTTPS protocol              |
-| `npm run build`       | Build app for production and puts files to the `dist` folder      |
+| `npm run dev`         | Run app in the `development` mode and `dev` config  |
+| `npm run dev-https`   | Run app in the `development` mode and `dev` config using HTTPS protocol |
+| `npm run local`       | Run app in the `development` mode and `dev` config   |
+| `npm run prod`        | Run app in the `development` mode and `prod` config  |
+| `npm run build`       | Build app for production and puts files to the `dist` folder, default to `development` mode and `dev` config |
 | `npm run analyze`     | Analyze dependencies sizes and opens report in the browser        |
 | `npm run lint`        | Check code for lint errors                                        |
 | `npm run format`      | Format code using prettier                                        |
@@ -28,14 +32,15 @@ This is a [single-spa](https://single-spa.js.org/) example React microapp.
 
 Inside the project folder run:
 
+- `nvm use 10.22.1;` - to use npm version: 10.22.1
 - `npm i` - install dependencies
-- `npm run dev` - run app in development mode
-- As this app can be loaded only inside a frame single-spa, you have to run a `micro-frontends-frame` frame app and configure it to use the URL `http://localhost:8500/topcoder-micro-frontends-challenges-app.js`.
+- `npm run local` - run app in `development` mode and `dev` config
+- This app will be loaded as a normal MFE app, its url is `http://localhost:8009/challenges-app/topcoder-micro-frontends-challenges-app.js` and is configurated in the config file of Earn App
 
 ## Deployment to Production
 
 - `npm i` - install dependencies
-- `npm build` - build code to `dist/` folder
+- `APPMODE=production APPENV=prod npm run build` - build code to `dist/` folder
 - Now you can host `dist/` folder using any static server. For example, you may run a simple `Express` server by running `npm start`.
 
 ### Deploying to Heroku
@@ -43,9 +48,13 @@ Inside the project folder run:
 Make sure you have [Heroky CLI](https://devcenter.heroku.com/articles/heroku-cli) installed and you have a Heroku account. And then inside the project folder run the next commands:
 
 - If there is not Git repository inited yet, create a repo and commit all the files:
+
   - `git init`
   - `git add .`
   - `git commit -m'inital commit'`
+
 - `heroku apps:create` - create Heroku app
+
 - `git push heroku master` - push changes to Heroku and trigger deploying
-- Now you have to configure frame app to use the URL provided by Heroku like `https://<APP-NAME>.herokuapp.com/topcoder-micro-frontends-challenges-app.js` to load this microapp.
+
+- Now you have to configure frame app to use the URL provided by Heroku like `https://<APP-NAME>.herokuapp.com/challenges-app/topcoder-micro-frontends-challenges-app.js` to load this microapp.
