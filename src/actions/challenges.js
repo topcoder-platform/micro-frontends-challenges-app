@@ -1,4 +1,5 @@
 import { createActions } from "redux-actions";
+import _ from "lodash";
 import service from "../services/challenges";
 import * as util from "../utils/challenge";
 import * as constants from "../constants";
@@ -85,5 +86,7 @@ async function getChallenges(filter, signal) {
 }
 
 export default createActions({
-  GET_CHALLENGES: getChallenges,
+  GET_CHALLENGES_INIT: _.noop(),
+  GET_CHALLENGES_DONE: getChallenges,
+  GET_CHALLENGES_FAILURE: _.noop,
 });

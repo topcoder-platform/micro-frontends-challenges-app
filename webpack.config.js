@@ -21,6 +21,8 @@ module.exports = (webpackConfigEnv) => {
   );
   unusedFilesWebpackPlugin.globOptions.ignore.push(
     "assets/icons/*.svg",
+    "assets/icons/*.png",
+    "assets/images/**/*.svg",
     "__mocks__/**"
   );
 
@@ -121,6 +123,12 @@ module.exports = (webpackConfigEnv) => {
       alias: {
         styles: path.resolve(__dirname, "src/styles"),
         assets: path.resolve(__dirname, "src/assets"),
+        actions: path.resolve(__dirname, "src/actions"),
+        components: path.resolve(__dirname, "src/components"),
+        containers: path.resolve(__dirname, "src/containers"),
+        utils: path.resolve(__dirname, "src/utils"),
+        constants: path.resolve(__dirname, "src/constants"),
+        services: path.resolve(__dirname, "src/services"),
       },
     },
     devServer: {

@@ -4,10 +4,12 @@
  */
 import { createStore, compose, applyMiddleware } from "redux";
 import { createPromise } from "redux-promise-middleware";
+import promiseMiddleware from "redux-promise";
 import root from "./reducers";
 
 const middlewares = [
-  createPromise({ promiseTypeSuffixes: ["INIT", "DONE", "FAILURE"] }),
+  promiseMiddleware,
+  // createPromise({ promiseTypeSuffixes: ["INIT", "DONE", "FAILURE"] }),
 ];
 
 if (process.env.APPMODE === "development") {

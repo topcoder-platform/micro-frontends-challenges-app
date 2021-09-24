@@ -19,9 +19,9 @@ const config = {
     }],
     [
       'inline-react-svg',
-      {
-        ignorePattern: '[/\/]assets[/\/]images'
-      }
+      // {
+      //   ignorePattern: '[/\/]assets[/\/]images'
+      // }
     ],
     [
       "@babel/plugin-transform-runtime",

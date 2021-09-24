@@ -5,4 +5,5 @@ import { setPublicPath } from "systemjs-webpack-interop";
  * https://single-spa.js.org/docs/faq/#code-splits
  */
 
+window.TRU_FRONT_END = true;
 setPublicPath("@topcoder/micro-frontends-challenges-app");

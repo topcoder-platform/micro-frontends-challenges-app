@@ -1,3 +1,3 @@
-const config = require("config");
+// const config = require("config");
 
-global.process.env = {...global.process.env, ...config};
+// global.process.env = {...global.process.env, ...config};
