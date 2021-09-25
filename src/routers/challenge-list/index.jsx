@@ -16,8 +16,6 @@ import "react-date-range/dist/theme/default.css";
 import "react-date-range/dist/styles.css";
 import "rc-tooltip/assets/bootstrap.css";
 
-import "../../styles/main.scss";
-
 const App = () => {
   const location = useLocation();
   const previousControllerRef = useRef();

@@ -3,7 +3,6 @@
  */
 import React from "react";
 import { BrowserRouter, Route, Router } from "react-router-dom";
-import "../../styles/main.scss";
 import AuthComponent from "containers/auth-component";
 import ErrorMessage from "containers/ErrorMessage";
 
