@@ -110,9 +110,9 @@ export default function ChallengeTags(props) {
             <Tag
               key={tag}
               onClick={() =>
-                setImmediate(() => setChallengeListingFilter({ search: tag }))
+                setImmediate(() => setChallengeListingFilter({ tags: [tag] }))
               }
-              to={`${challengesUrl}?search=${encodeURIComponent(tag)}`}
+              to={`${challengesUrl}?tags[]=${encodeURIComponent(tag)}`}
             >
               {tag}
             </Tag>

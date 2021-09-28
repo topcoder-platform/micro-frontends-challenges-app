@@ -921,7 +921,7 @@ const mapDispatchToProps = (dispatch) => {
       change.page = 1;
       change.tracks = constants.FILTER_CHALLENGE_TRACKS;
       change.backet = constants.FILTER_BUCKETS[1];
-      if (change.search) {
+      if (change.tags) {
         change.types = constants.FILTER_CHALLENGE_TYPES;
       }
       dispatch(updateFilter(change));
