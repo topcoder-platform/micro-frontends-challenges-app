@@ -81,7 +81,7 @@ export default function ChallengeTags(props) {
         <TrackTag
           onClick={() =>
             setImmediate(() =>
-              setChallengeListingFilter({ types: [challengeType.abbreviation] })
+              setChallengeListingFilter({ types: [challengeType.name] })
             )
           }
           to={`${challengesUrl}?types[]=${encodeURIComponent(

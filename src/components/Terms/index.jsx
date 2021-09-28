@@ -13,7 +13,7 @@ import LoadingIndicator from "components/LoadingIndicator";
 import FocusTrap from "focus-trap-react";
 import TermDetails from "./TermDetails";
 
-import style from "./styles.scss";
+import style from "./styles.module.scss";
 
 function handleScroll(scrollElement, masks, orientation) {
   let length;

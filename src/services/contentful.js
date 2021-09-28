@@ -34,7 +34,7 @@ const EDU_ARTICLE_TYPES = ["Article", "Video", "Forum post"];
 
 /* Holds the base URL of Community App endpoints that proxy HTTP request to
  * Contentful APIs. */
-const PROXY_ENDPOINT = "/api/cdn/public/contentful";
+const PROXY_ENDPOINT = `${config.URL.BASE}/api/cdn/public/contentful`;
 /* At the client-side only, it holds the cached index of published Contentful
  * assets and content. Do not use it directly, use getIndex() function below
  * instead (it takes care about updating this when necessary). */

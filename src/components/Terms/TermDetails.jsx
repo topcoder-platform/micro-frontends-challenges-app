@@ -6,7 +6,7 @@ import React from "react";
 import PT from "prop-types";
 import LoadingIndicator from "components/LoadingIndicator";
 
-import "./TermDetails.scss";
+import "./TermDetails.module.scss";
 
 export default class TermDetails extends React.Component {
   constructor(props) {

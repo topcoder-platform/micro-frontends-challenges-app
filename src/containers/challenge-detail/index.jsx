@@ -42,6 +42,7 @@ import {
   SUBTRACKS,
   CHALLENGE_STATUS,
 } from "utils/tc";
+import * as constants from "../../constants";
 import config from "../../../config";
 import MetaTags from "components/MetaTags";
 import actions from "actions";
@@ -800,6 +801,7 @@ function mapStateToProps(state, props) {
     );
   }
   return {
+    filter: state.filter,
     auth: state.auth,
     challenge,
     challengeTypes: cl.challengeTypes,
@@ -913,22 +915,20 @@ const mapDispatchToProps = (dispatch) => {
         return challengeDetails;
       });
     },
-    setChallengeListingFilter: (filter, stateProps) => {
-      const cl = challengeListingActions.challengeListing;
-      const cls = challengeListingSidebarActions.challengeListing.sidebar;
-      const fp =
-        challengeListingFilterPanelActions.challengeListing.filterPanel;
-      const newFilter = _.assign(
-        {},
-        {
-          types: stateProps.challengeTypes.map((type) => type.abbreviation),
-          search: "",
-        },
-        filter
+    setChallengeListingFilter: (change, stateProps) => {
+      const updateFilter = actions.filter.updateFilter;
+      const updateQuery = actions.filter.updateChallengeQuery;
+      change.page = 1;
+      change.tracks = constants.FILTER_CHALLENGE_TRACKS;
+      change.backet = constants.FILTER_BUCKETS[1];
+      if (change.search) {
+        change.types = constants.FILTER_CHALLENGE_TYPES;
+      }
+      dispatch(updateFilter(change));
+      dispatch(
+        updateQuery({ ...stateProps.filter.challenge, ...change }),
+        change
       );
-      dispatch(cls.selectBucket(BUCKETS.OPEN_FOR_REGISTRATION));
-      dispatch(cl.setFilter(newFilter));
-      dispatch(fp.setSearchText(newFilter.search));
     },
     setSpecsTabState: (state) =>
       dispatch(pageActions.page.challengeDetails.setSpecsTabState(state)),
