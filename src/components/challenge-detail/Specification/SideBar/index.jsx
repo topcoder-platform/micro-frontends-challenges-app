@@ -5,7 +5,6 @@ import PT from "prop-types";
 import _ from "lodash";
 
 import Tooltip from "components/Tooltip-challenge-detail";
-import { Link } from "react-router-dom";
 import config from "../../../../../config";
 
 import EligibleEvents from "./EligibleEvents";
@@ -117,7 +116,9 @@ export default function SideBar({
         <div>
           <h2>LEARN:</h2>
           <p styleName="link-like-paragraph">
-            <a href="/thrive/articles/all-about-topcoder-challenges-tasks-and-gig-work-opportunities">
+            <a
+              href={`${config.URL.BASE}/thrive/articles/all-about-topcoder-challenges-tasks-and-gig-work-opportunities`}
+            >
               Topcoder Challenges Explained
             </a>
           </p>
@@ -350,9 +351,11 @@ export default function SideBar({
             <div styleName="link-like-paragraph">
               {terms.map((t) => (
                 <div styleName="term" key={t.id}>
-                  <Link to={`${challengesUrl}/terms/detail/${t.id}`}>
+                  <a
+                    href={`${config.URL.BASE}/challenges/terms/detail/${t.id}`}
+                  >
                     {t.title}
-                  </Link>
+                  </a>
                 </div>
               ))}
             </div>

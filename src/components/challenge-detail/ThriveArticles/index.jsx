@@ -21,9 +21,9 @@ export default function ThriveArticles({ articles }) {
   const getPageUrl = (article) =>
     article.externalArticle && article.contentUrl
       ? article.contentUrl
-      : `${config.TC_EDU_BASE_PATH}${config.TC_EDU_ARTICLES_PATH}/${
-          article.slug || article.title
-        }`;
+      : `${config.URL.BASE}${config.TC_EDU_BASE_PATH}${
+          config.TC_EDU_ARTICLES_PATH
+        }/${article.slug || article.title}`;
 
   const items = map(articles, (a, idx) => (
     <div styleName="article" key={idx}>

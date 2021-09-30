@@ -500,8 +500,10 @@ class ChallengesService {
       : "";
     const params = {
       challengeId,
-      roleId,
     };
+    if (roleId) {
+      params.roleId = roleId;
+    }
 
     let registrants = await this.private.apiV5
       .get(`/resources?${qs.stringify(params)}`)

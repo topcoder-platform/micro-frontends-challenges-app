@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import _ from "lodash";
 import Terms from "components/Terms";
 import termsActions from "actions/terms";
+import config from "../../../config";
 
 let isAnyTermModalOpen = false;
 
@@ -88,9 +89,7 @@ class TermsPageContainer extends React.Component {
             details={termDetails}
             docuSignUrl={docuSignUrl}
             getDocuSignUrl={(templateId) => {
-              const base = window
-                ? window.location.href.match(".*://[^/]*")[0]
-                : "";
+              const base = config.URL.BASE;
               return getDocuSignUrl(
                 authTokens,
                 templateId,

@@ -22,7 +22,7 @@ export default function Winner({
 }) {
   const [windowOrigin, setWindowOrigin] = useState();
   useEffect(() => {
-    setWindowOrigin(window.origin);
+    setWindowOrigin(config.URL.BASE);
   }, []);
 
   const submissionId = viewable && getId(submissions, winner.placement);
@@ -66,7 +66,7 @@ export default function Winner({
           <Avatar theme={{ avatar: style.avatar }} url={avatarUrl} />
           <div>
             <a
-              href={`${windowOrigin}/members/${winner.handle}`}
+              href={`${config.URL.BASE}/members/${winner.handle}`}
               styleName="handle"
               target={`${_.includes(windowOrigin, "www") ? "_self" : "_blank"}`}
             >

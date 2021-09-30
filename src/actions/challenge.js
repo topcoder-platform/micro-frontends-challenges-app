@@ -415,7 +415,7 @@ function getSubmissionInformationDone(challengeId, submissionId, tokenV3) {
     const submission = _.find(submissions, { id: submissionId });
     _.remove(
       submission.review,
-      (review) => review.typeId === CONFIG.AV_SCAN_SCORER_REVIEW_TYPE_ID
+      (review) => review.typeId === config.AV_SCAN_SCORER_REVIEW_TYPE_ID
     );
     return { submissionId, submission };
   });

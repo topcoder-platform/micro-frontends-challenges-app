@@ -8,6 +8,7 @@ import PT from "prop-types";
 import moment from "moment";
 import _ from "lodash";
 import cn from "classnames";
+import config from "../../../../config";
 import { getRatingLevel } from "utils/tc";
 
 import sortList from "utils/challenge-detail/sort";
@@ -418,7 +419,7 @@ export default class Registrants extends React.Component {
                 <div styleName="col-3">
                   <span role="cell">
                     <a
-                      href={`${window.origin}/members/${r.memberHandle}`}
+                      href={`${config.URL.BASE}/members/${r.memberHandle}`}
                       styleName={
                         isDesign
                           ? ""

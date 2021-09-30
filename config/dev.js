@@ -14,6 +14,8 @@ module.exports = {
    */
   CONNECT_WEBSITE_URL: "https://connect.topcoder-dev.com",
 
+  AV_SCAN_SCORER_REVIEW_TYPE_ID: "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+
   SERVER_API_KEY: "79b2d5eb-c1fd-42c4-9391-6b2c9780d591",
   URL: {
     /* Connector URL of the TC accounts App. */

@@ -8,6 +8,7 @@ import PT from "prop-types";
 import _ from "lodash";
 import { getRatingLevel } from "utils/tc";
 import moment from "moment";
+import config from "../../../../../config";
 
 import ArrowNext from "../../../../assets/images/arrow-next.svg";
 import Failed from "../../icons/failed.svg";
@@ -86,7 +87,7 @@ export default function SubmissionRow({
             {rating || "-"}
           </span>
           <a
-            href={`${window.origin}/members/${member}`}
+            href={`${config.URL.BASE}/members/${member}`}
             target={`${_.includes(window.origin, "www") ? "_self" : "_blank"}`}
             rel="noopener noreferrer"
             styleName={`col level-${getRatingLevel(rating)}`}

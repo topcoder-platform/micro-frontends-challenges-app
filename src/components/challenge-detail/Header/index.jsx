@@ -406,7 +406,7 @@ export default function ChallengeHeader(props) {
                   isLegacyMM
                 }
                 theme={{ button: style.challengeAction }}
-                to={`${challengesUrl}/${challengeId}/submit`}
+                to={`${config.URL.BASE}/challenges/${challengeId}/submit`}
               >
                 Submit
               </PrimaryButton>
