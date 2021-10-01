@@ -21,12 +21,12 @@ import mySubmissionsManagement from "./my-submissions-management";
 import { COMPETITION_TRACKS } from "../utils/tc";
 
 /**
- * Handles CHALLENGE/GET_DETAILS_INIT action.
+ * Handles CHALLENGE/GET_BASIC_DETAILS_INIT action.
  * @param {Object} state
  * @param {Object} action
  * @return {Object} New state
  */
-function onGetDetailsInit(state, action) {
+function onGetBasicDetailsInit(state, action) {
   const challengeId = action.payload;
   return state.details && _.toString(state.details.id) !== challengeId
     ? {
@@ -43,7 +43,7 @@ function onGetDetailsInit(state, action) {
 }
 
 /**
- * Handles CHALLENGE/GET_DETAILS_DONE action.
+ * Handles CHALLENGE/GET_BASIC_DETAILS_DONE action.
  * Note, that it silently discards received details if the ID of received
  * challenge mismatches the one stored in loadingDetailsForChallengeId field
  * of the state.
@@ -51,7 +51,7 @@ function onGetDetailsInit(state, action) {
  * @param {Object} action
  * @return {Object} New state.
  */
-function onGetDetailsDone(state, action) {
+function onGetBasicDetailsDone(state, action) {
   if (action.error) {
     logger.error("Failed to get challenge details!", action.payload);
     fireErrorMessage(
@@ -83,6 +83,65 @@ function onGetDetailsDone(state, action) {
     details,
     fetchChallengeFailure: false,
     loadingDetailsForChallengeId: "",
+  };
+}
+
+/**
+ * Handles CHALLENGE/GET_FULL_DETAILS_INIT action.
+ * @param {Object} state
+ * @param {Object} action
+ * @return {Object} New state
+ */
+function onGetFullDetailsInit(state, action) {
+  const challengeId = action.payload;
+  return {
+    ...state,
+    fetchChallengeFailure: false,
+    loadingFullDetailsForChallengeId: challengeId,
+  };
+}
+
+/**
+ * Handles CHALLENGE/GET_FULL_DETAILS_DONE action.
+ * Note, that it silently discards received details if the ID of received
+ * challenge mismatches the one stored in loadingFullDetailsForChallengeId field
+ * of the state.
+ * @param {Object} state
+ * @param {Object} action
+ * @return {Object} New state.
+ */
+function onGetFullDetailsDone(state, action) {
+  if (action.error) {
+    logger.error("Failed to get full challenge details!", action.payload);
+    fireErrorMessage(
+      "ERROR: Failed to load the challenge",
+      "Please, try again a bit later"
+    );
+    return {
+      ...state,
+      fetchChallengeFailure: action.error,
+      loadingFullDetailsForChallengeId: "",
+    };
+  }
+
+  const details = action.payload;
+
+  // condition based on ROUTE used for Review Opportunities, change if needed
+  const challengeId = state.loadingFullDetailsForChallengeId;
+  let compareChallenge = details.id;
+  if (challengeId.length >= 5 && challengeId.length <= 8) {
+    compareChallenge = details.legacyId;
+  }
+
+  if (_.toString(compareChallenge) !== challengeId) {
+    return state;
+  }
+
+  return {
+    ...state,
+    details,
+    fetchChallengeFailure: false,
+    loadingFullDetailsForChallengeId: "",
   };
 }
 
@@ -398,8 +457,10 @@ function create(initialState) {
     {
       [a.dropCheckpoints]: (state) => ({ ...state, checkpoints: null }),
       [a.dropResults]: (state) => ({ ...state, results: null }),
-      [a.getDetailsInit]: onGetDetailsInit,
-      [a.getDetailsDone]: onGetDetailsDone,
+      [a.getBasicDetailsInit]: onGetBasicDetailsInit,
+      [a.getBasicDetailsDone]: onGetBasicDetailsDone,
+      [a.getFullDetailsInit]: onGetFullDetailsInit,
+      [a.getFullDetailsDone]: onGetFullDetailsDone,
       [a.getSubmissionsInit]: onGetSubmissionsInit,
       [a.getSubmissionsDone]: onGetSubmissionsDone,
       [a.getMmSubmissionsInit]: onGetMMSubmissionsInit,
@@ -436,6 +497,7 @@ function create(initialState) {
       details: null,
       loadingCheckpoints: false,
       loadingDetailsForChallengeId: "",
+      loadingFullDetailsForChallengeId: "",
       loadingResultsForChallengeId: "",
       loadingMMSubmissionsForChallengeId: "",
       loadingSubmissionInformationForSubmissionId: "",

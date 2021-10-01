@@ -64,27 +64,51 @@ function dropResults() {}
 
 /**
  * @static
- * @desc Creates an action that signals beginning of challenge details loading.
+ * @desc Creates an action that signals beginning of basic challenge details loading.
  * @param {Number|String} challengeId Challenge ID
  * @return {Action}
  */
-function getDetailsInit(challengeId) {
+function getBasicDetailsInit(challengeId) {
   return _.toString(challengeId);
 }
 
 /**
  * @static
- * @desc Creates an action that loads challenge details.
+ * @desc Creates an action that loads basic challenge details.
  * @param {Number|String} challengeId Challenge ID.
  * @param {String} tokenV3 Topcoder v3 auth token.
  * @param {String} tokenV2 Topcoder v2 auth token.
  * @return {Action}
  */
-function getDetailsDone(challengeId, tokenV3, tokenV2) {
+function getBasicDetailsDone(challengeId, tokenV3, tokenV2) {
   const service = getChallengesService(tokenV3, tokenV2);
-  const v3Promise = service.getChallengeDetails(challengeId);
+  const v3Promise = service.getBasicChallengeDetails(challengeId);
   return v3Promise;
 }
+
+/**
+ * @static
+ * @desc Creates an action that signals beginning of full challenge details loading.
+ * @param {Number|String} challengeId Challenge ID
+ * @return {Action}
+ */
+ function getFullDetailsInit(challengeId) {
+    return _.toString(challengeId);
+  }
+
+  /**
+   * @static
+   * @desc Creates an action that loads full challenge details.
+   * @param {Number|String} challengeId Challenge ID.
+   * @param {String} tokenV3 Topcoder v3 auth token.
+   * @param {String} tokenV2 Topcoder v2 auth token.
+   * @return {Action}
+   */
+  function getFullDetailsDone(challengeId, tokenV3, tokenV2) {
+    const service = getChallengesService(tokenV3, tokenV2);
+    const v3Promise = service.getFullChallengeDetails(challengeId);
+    return v3Promise;
+  }
 
 /**
  * @static
@@ -196,7 +220,7 @@ function registerDone(auth, challengeId) {
             setTimeout(
               () =>
                 resolve(
-                  getDetailsDone(challengeId, auth.tokenV3, auth.tokenV2)
+                  getFullDetailsDone(challengeId, auth.tokenV3, auth.tokenV2)
                 ),
               config.CHALLENGE_DETAILS_REFRESH_DELAY
             )
@@ -235,7 +259,7 @@ function unregisterDone(auth, challengeId) {
             setTimeout(
               () =>
                 resolve(
-                  getDetailsDone(challengeId, auth.tokenV3, auth.tokenV2)
+                  getFullDetailsDone(challengeId, auth.tokenV3, auth.tokenV2)
                 ),
               config.CHALLENGE_DETAILS_REFRESH_DELAY
             )
@@ -335,8 +359,10 @@ function toggleCheckpointFeedback(id, open) {
  * @static
  * @desc Creates an action that signals beginning of challenge details update.
  * @todo No idea, why we have this action. This functionality should be covered
- *  by {@link module:actions.challenge.getDetailsInit} and
- *  {@link module:actions.challenge.getDetailsDone}. We need to refactor this.
+ *  by {@link module:actions.challenge.getBasicDetailsInit},
+ *  {@link module:actions.challenge.getBasicDetailsDone},
+ * {@link module:actions.challenge.getFullDetailsInit} and
+ * {@link module:actions.challenge.getFullDetailsDone}. We need to refactor this.
  * @param {String} uuid UUID of the operation (the same should be passed into
  *  the corresponding {@link module:actions.challenge.updateChallengeDone}).
  * @return {Action}
@@ -349,8 +375,10 @@ function updateChallengeInit(uuid) {
  * @static
  * @desc Creates an action that updates challenge details.
  * @todo No idea, why we have this action. This functionality should be covered
- *  by {@link module:actions.challenge.getDetailsInit} and
- *  {@link module:actions.challenge.getDetailsDone}. We need to refactor this.
+ *  by {@link module:actions.challenge.getBasicDetailsInit},
+ *  {@link module:actions.challenge.getBasicDetailsDone},
+ * {@link module:actions.challenge.getFullDetailsInit} and
+ * {@link module:actions.challenge.getFullDetailsDone}. We need to refactor this.
  * @param {String} uuid Operation UUID. Should match the one passed into the
  *  previous {@link module:actions.challenge.updateChallengeInit} call.
  * @param {Object} challenge Challenge data.
@@ -427,8 +455,10 @@ export default createActions({
     DROP_RESULTS: dropResults,
     FETCH_CHECKPOINTS_INIT: fetchCheckpointsInit,
     FETCH_CHECKPOINTS_DONE: fetchCheckpointsDone,
-    GET_DETAILS_INIT: getDetailsInit,
-    GET_DETAILS_DONE: getDetailsDone,
+    GET_BASIC_DETAILS_INIT: getBasicDetailsInit,
+    GET_BASIC_DETAILS_DONE: getBasicDetailsDone,
+    GET_FULL_DETAILS_INIT: getFullDetailsInit,
+    GET_FULL_DETAILS_DONE: getFullDetailsDone,
     GET_SUBMISSIONS_INIT: getSubmissionsInit,
     GET_SUBMISSIONS_DONE: getSubmissionsDone,
     LOAD_RESULTS_INIT: loadResultsInit,

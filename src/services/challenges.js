@@ -391,6 +391,50 @@ class ChallengesService {
   }
 
   /**
+   * Gets basic challenge details from Topcoder API.
+   * NOTE: This function also uses API v2 and other endpoints for now, due
+   * to some information is missing or
+   * incorrect in the main endpoint. This may change in the future.
+   * @param {Number|String} challengeId
+   * @returns {Promise} Resolves to the basic challenge object.
+   */
+  async getBasicChallengeDetails(challengeId){
+    let challenge = {};
+    let isLegacyChallenge = false;
+
+    // condition based on ROUTE used for Review Opportunities, change if needed
+    if (/^[\d]{5,8}$/.test(challengeId)) {
+      isLegacyChallenge = true;
+      challenge = await this.private
+        .getChallengeDetails("/challenges/", { legacyId: challengeId })
+        .then((res) => res.challenges[0] || {});
+    } else {
+      challenge = await this.private
+        .getChallengeDetails(`/challenges/${challengeId}`)
+        .then((res) => res.challenges);
+    }
+
+    if (challenge) {
+      challenge = {
+        ...challenge,
+        isLegacyChallenge,
+        isRegistered: false,
+        registrants: [],
+        submissions: [],
+        userDetails: { roles: [] },
+        events: _.map(challenge.events, (e) => ({
+          eventName: e.key,
+          eventId: e.id,
+          description: e.name,
+        })),
+        fetchedWithAuth: Boolean(this.private.apiV5.private.token)
+      };
+    }
+
+    return challenge;
+  }
+
+  /**
    * Gets challenge details from Topcoder API.
    * NOTE: This function also uses API v2 and other endpoints for now, due
    * to some information is missing or
@@ -398,7 +442,8 @@ class ChallengesService {
    * @param {Number|String} challengeId
    * @return {Promise} Resolves to the challenge object.
    */
-  async getChallengeDetails(challengeId) {
+  async getFullChallengeDetails(challengeId) {
+    var start = new Date().valueOf();
     const memberId = this.private.tokenV3
       ? decodeToken(this.private.tokenV3).userId
       : null;

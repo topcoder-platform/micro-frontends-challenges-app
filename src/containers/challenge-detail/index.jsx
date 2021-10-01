@@ -10,6 +10,7 @@ import _ from "lodash";
 import qs from "qs";
 import communityActions from "actions/tc-communities";
 import { isMM as checkIsMM } from "utils/challenge";
+import LoadingIndicator from "components/LoadingIndicator";
 import LoadingPagePlaceholder from "components/LoadingPagePlaceholder";
 import pageActions from "actions/page";
 import ChallengeHeader from "components/challenge-detail/Header";
@@ -155,6 +156,7 @@ class ChallengeDetailPageContainer extends React.Component {
       challenge,
       getCommunitiesList,
       loadChallengeDetails,
+      loadFullChallengeDetails,
       challengeId,
       challengeTypesMap,
       getTypes,
@@ -191,7 +193,7 @@ class ChallengeDetailPageContainer extends React.Component {
        * authentication. */
       (auth.tokenV2 && auth.tokenV3 && !challenge.fetchedWithAuth)
     ) {
-      loadChallengeDetails(auth, challengeId);
+      loadChallengeDetails(auth, challengeId, loadFullChallengeDetails);
     }
 
     if (!allCountries.length) {
@@ -332,6 +334,7 @@ class ChallengeDetailPageContainer extends React.Component {
       checkpoints,
       communitiesList,
       isLoadingChallenge,
+      isLoadingFullChallenge,
       isLoadingTerms,
       onSelectorClicked,
       registerForChallenge,
@@ -498,7 +501,10 @@ class ChallengeDetailPageContainer extends React.Component {
               updateChallenge={(x) => updateChallenge(x, auth.tokenV3)}
             />
           )}
-          {!isEmpty && selectedTab === DETAIL_TABS.REGISTRANTS && (
+          {!isEmpty && selectedTab === DETAIL_TABS.REGISTRANTS && isLoadingFullChallenge && (
+            <LoadingIndicator/>
+          )}
+          {!isEmpty && selectedTab === DETAIL_TABS.REGISTRANTS && !isLoadingFullChallenge && (
             <Registrants
               challenge={challenge}
               registrants={challenge.registrants}
@@ -522,7 +528,10 @@ class ChallengeDetailPageContainer extends React.Component {
               toggleCheckpointFeedback={toggleCheckpointFeedback}
             />
           )}
-          {!isEmpty && isLoggedIn && selectedTab === DETAIL_TABS.SUBMISSIONS && (
+          {!isEmpty && isLoggedIn && selectedTab === DETAIL_TABS.SUBMISSIONS && isLoadingFullChallenge && (
+            <LoadingIndicator/>
+          )}
+          {!isEmpty && isLoggedIn && selectedTab === DETAIL_TABS.SUBMISSIONS && !isLoadingFullChallenge && (
             <Submissions
               challenge={challenge}
               submissions={challenge.submissions}
@@ -818,6 +827,7 @@ function mapStateToProps(state, props) {
     communitiesList: state.tcCommunities.list,
     domain: state.domain,
     isLoadingChallenge: Boolean(state.challenge.loadingDetailsForChallengeId),
+    isLoadingFullChallenge: Boolean(state.challenge.loadingFullDetailsForChallengeId),
     isLoadingTerms: _.isEqual(state.terms.loadingTermsForEntity, {
       type: "challenge",
       id: props.match.params.challengeId,
@@ -868,11 +878,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(lookupActions.getReviewTypesInit());
       dispatch(lookupActions.getReviewTypesDone(tokenV3));
     },
-    loadChallengeDetails: (tokens, challengeId) => {
+    loadChallengeDetails: (tokens, challengeId, loadFullChallengeDetails) => {
       const a = actions.challenge;
-      dispatch(a.getDetailsInit(challengeId));
+      dispatch(a.getBasicDetailsInit(challengeId));
       dispatch(
-        a.getDetailsDone(challengeId, tokens.tokenV3, tokens.tokenV2)
+        a.getBasicDetailsDone(challengeId, tokens.tokenV3, tokens.tokenV2)
       ).then((res) => {
         const ch = res.payload;
         if (ch.track === COMPETITION_TRACKS.DES) {
@@ -889,9 +899,21 @@ const mapDispatchToProps = (dispatch) => {
             a.loadResultsDone(tokens, ch.legacyId, ch.track.toLowerCase())
           );
         } else dispatch(a.dropResults());
+
+        loadFullChallengeDetails(tokens, challengeId);
         return res;
       });
     },
+    loadFullChallengeDetails: (tokens, challengeId) => {
+        const a = actions.challenge;
+
+        dispatch(a.getFullDetailsInit(challengeId));
+        dispatch(
+          a.getFullDetailsDone(challengeId, tokens.tokenV3, tokens.tokenV2)
+        ).then((res) => {
+          return res;
+        });
+      },
     registerForChallenge: (auth, challengeId) => {
       const a = actions.challenge;
       dispatch(a.registerInit());
@@ -900,7 +922,7 @@ const mapDispatchToProps = (dispatch) => {
     reloadChallengeDetails: (tokens, challengeId) => {
       const a = actions.challenge;
       dispatch(
-        a.getDetailsDone(challengeId, tokens.tokenV3, tokens.tokenV2)
+        a.getFullDetailsDone(challengeId, tokens.tokenV3, tokens.tokenV2)
       ).then((challengeDetails) => {
         if (challengeDetails.track === COMPETITION_TRACKS.DES) {
           const p =
