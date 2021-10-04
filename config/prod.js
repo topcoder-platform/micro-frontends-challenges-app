@@ -15,7 +15,6 @@ module.exports = {
   SERVER_API_KEY: "aa9ccf36-3936-450c-9983-097ddba51bef",
   CONNECT_WEBSITE_URL: "https://connect.topcoder.com",
 
-  AV_SCAN_SCORER_REVIEW_TYPE_ID: "55bbb17d-aac2-45a6-89c3-a8d102863d05",
   URL: {
     ARENA: "https://arena.topcoder.com",
     APP: "https://community-app.topcoder.com",
@@ -75,8 +74,7 @@ module.exports = {
 
   MOCK_TERMS_SERVICE: false,
   AV_SCAN_SCORER_REVIEW_TYPE_ID: "55bbb17d-aac2-45a6-89c3-a8d102863d05",
-  PROVISIONAL_SCORING_COMPLETED_REVIEW_TYPE_ID:
-    "df51ca7d-fb0a-4147-9569-992fcf5aae48",
+  PROVISIONAL_SCORING_COMPLETED_REVIEW_TYPE_ID: "df51ca7d-fb0a-4147-9569-992fcf5aae48",
 
   PAGE_SIZE: 50,
   REVIEW_OPPORTUNITY_PAGE_SIZE: 1000,

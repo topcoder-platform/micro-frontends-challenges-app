@@ -306,7 +306,7 @@ function onRegisterDone(state, action) {
   /* As a part of registration flow we silently update challenge details,
    * reusing for this purpose the corresponding action handler. Thus, we
    * should also reuse corresponding reducer to generate proper state. */
-  return onGetDetailsDone(
+  return onGetBasicDetailsDone(
     {
       ...state,
       registering: false,
@@ -331,7 +331,7 @@ function onUnregisterDone(state, action) {
   /* As a part of unregistration flow we silently update challenge details,
    * reusing for this purpose the corresponding action handler. Thus, we
    * should also reuse corresponding reducer to generate proper state. */
-  return onGetDetailsDone(
+  return onGetBasicDetailsDone(
     {
       ...state,
       unregistering: false,
