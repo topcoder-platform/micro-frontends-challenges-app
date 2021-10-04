@@ -416,7 +416,7 @@ export default function ChallengeHeader(props) {
                 hasSubmissions && (
                   <PrimaryButton
                     theme={{ button: style.challengeAction }}
-                    to={`${challengesUrl}/${challengeId}/my-submissions`}
+                    to={`${config.URL.BASE}/challenges/${challengeId}/my-submissions`}
                   >
                     View Submissions
                   </PrimaryButton>

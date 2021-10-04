@@ -14,8 +14,6 @@ module.exports = {
    */
   CONNECT_WEBSITE_URL: "https://connect.topcoder-dev.com",
 
-  AV_SCAN_SCORER_REVIEW_TYPE_ID: "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
-
   SERVER_API_KEY: "79b2d5eb-c1fd-42c4-9391-6b2c9780d591",
   URL: {
     /* Connector URL of the TC accounts App. */
@@ -122,9 +120,9 @@ module.exports = {
     V2: "https://api.topcoder-dev.com/v2",
   },
   MOCK_TERMS_SERVICE: false,
-  AV_SCAN_SCORER_REVIEW_TYPE_ID: "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
-  PROVISIONAL_SCORING_COMPLETED_REVIEW_TYPE_ID:
-    "52c91e85-745f-4e62-b592-9879a2dfe9fd",
+
+  AV_SCAN_SCORER_REVIEW_TYPE_ID: "55bbb17d-aac2-45a6-89c3-a8d102863d05",
+  PROVISIONAL_SCORING_COMPLETED_REVIEW_TYPE_ID: "df51ca7d-fb0a-4147-9569-992fcf5aae48",
   PAGE_SIZE: 50,
   REVIEW_OPPORTUNITY_PAGE_SIZE: 1000,
   CONTENTFUL: {
