@@ -76,10 +76,19 @@ function setTcTokenV3(tokenV3) {
   return tokenV3;
 }
 
+/**
+ * @static
+ * @desc Creates an action that set authenticating done,
+ * Redux store.
+ * @return {Action}
+ */
+function setAuthenticatingDone() {}
+
 export default createActions({
   AUTH: {
     LOAD_PROFILE: loadProfileDone,
     SET_TC_TOKEN_V2: setTcTokenV2,
     SET_TC_TOKEN_V3: setTcTokenV3,
+    SET_AUTHENTICATING_DONE: setAuthenticatingDone,
   },
 });

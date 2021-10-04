@@ -92,23 +92,23 @@ function getBasicDetailsDone(challengeId, tokenV3, tokenV2) {
  * @param {Number|String} challengeId Challenge ID
  * @return {Action}
  */
- function getFullDetailsInit(challengeId) {
-    return _.toString(challengeId);
-  }
+function getFullDetailsInit(challengeId) {
+  return _.toString(challengeId);
+}
 
-  /**
-   * @static
-   * @desc Creates an action that loads full challenge details.
-   * @param {Number|String} challengeId Challenge ID.
-   * @param {String} tokenV3 Topcoder v3 auth token.
-   * @param {String} tokenV2 Topcoder v2 auth token.
-   * @return {Action}
-   */
-  function getFullDetailsDone(challengeId, tokenV3, tokenV2) {
-    const service = getChallengesService(tokenV3, tokenV2);
-    const v3Promise = service.getFullChallengeDetails(challengeId);
-    return v3Promise;
-  }
+/**
+ * @static
+ * @desc Creates an action that loads full challenge details.
+ * @param {Number|String} challengeId Challenge ID.
+ * @param {String} tokenV3 Topcoder v3 auth token.
+ * @param {String} tokenV2 Topcoder v2 auth token.
+ * @return {Action}
+ */
+function getFullDetailsDone(challengeId, tokenV3, tokenV2) {
+  const service = getChallengesService(tokenV3, tokenV2);
+  const v3Promise = service.getFullChallengeDetails(challengeId);
+  return v3Promise;
+}
 
 /**
  * @static

@@ -6,31 +6,16 @@ import {
 } from "@topcoder/micro-frontends-navbar-app";
 import { connect } from "react-redux";
 import ChallengeDetail from "../challenge-detail";
-import LoadingPagePlaceholder from "components/LoadingPagePlaceholder";
 import actions from "../../actions";
 
 class AuthComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoaded: false,
-    };
-  }
-
   componentDidMount() {
     const { getAuthToken } = this.props;
     disableSidebarForRoute("/challenges/*");
-    getAuthToken().then(() => {
-      this.setState({
-        isLoaded: true,
-      });
-    });
+    getAuthToken();
   }
 
   render() {
-    if (!this.state.isLoaded) {
-      return <LoadingPagePlaceholder />;
-    }
     return <ChallengeDetail {...this.props} />;
   }
 }
@@ -56,6 +41,8 @@ const mapDispatchToProps = (dispatch) => {
         if (tokens.tokenV3) {
           dispatch(actions.auth.setTcTokenV3(tokens.tokenV3));
           return dispatch(actions.auth.loadProfile(tokens.tokenV3));
+        } else {
+          dispatch(actions.auth.setAuthenticatingDone());
         }
       });
     },

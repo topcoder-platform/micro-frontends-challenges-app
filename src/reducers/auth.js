@@ -25,7 +25,6 @@ import actions from "../actions/auth";
 function onProfileLoaded(state, action) {
   return {
     ...state,
-    authenticating: false,
     profile: action.payload,
   };
 }
@@ -40,6 +39,10 @@ function create(initialState) {
   return handleActions(
     {
       [actions.auth.loadProfile]: onProfileLoaded,
+      [actions.auth.setAuthenticatingDone]: (state) => ({
+        ...state,
+        authenticating: false,
+      }),
       [actions.auth.setTcTokenV2]: (state, action) => ({
         ...state,
         tokenV2: action.payload,
