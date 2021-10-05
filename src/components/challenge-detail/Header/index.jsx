@@ -42,6 +42,7 @@ export default function ChallengeHeader(props) {
     checkpoints,
     hasRegistered,
     numWinners,
+    isLoadingChallenge,
     onSelectorClicked,
     onToggleDeadlines,
     registering,
@@ -390,7 +391,7 @@ export default function ChallengeHeader(props) {
                 </DangerButton>
               ) : (
                 <PrimaryButton
-                  disabled={registering || registrationEnded || isLegacyMM}
+                  disabled={isLoadingChallenge || registering || registrationEnded || isLegacyMM}
                   forceA
                   onClick={registerForChallenge}
                   theme={{ button: style.challengeAction }}
@@ -531,6 +532,7 @@ ChallengeHeader.propTypes = {
   unregistering: PT.bool.isRequired,
   challengeTypesMap: PT.shape().isRequired,
   hasFirstPlacement: PT.bool.isRequired,
+  isLoadingChallenge: PT.bool.isRequired,
   isMenuOpened: PT.bool,
   mySubmissions: PT.arrayOf(PT.shape()).isRequired,
   openForRegistrationChallenges: PT.shape().isRequired,
