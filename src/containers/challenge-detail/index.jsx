@@ -476,6 +476,7 @@ class ChallengeDetailPageContainer extends React.Component {
                 unregisterFromChallenge(auth, challengeId)
               }
               unregistering={unregistering}
+              isLoadingChallenge={isLoadingFullChallenge}
               checkpoints={checkpoints}
               hasRegistered={challenge.isRegistered}
               hasFirstPlacement={hasFirstPlacement}
