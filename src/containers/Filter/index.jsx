@@ -111,8 +111,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   updateFilter: actions.filter.updateFilter,
-  getTags: actions.lookup.getTags,
-  getSubCommunities: actions.lookup.getCommunityList,
+  getTags: actions.lookup.getTagsDone,
+  getSubCommunities: actions.lookup.getCommunityListDone,
   clearFilter: actions.filter.clearChallengeFilter,
   updateQuery: actions.filter.updateChallengeQuery,
 };

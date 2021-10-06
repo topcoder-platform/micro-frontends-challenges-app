@@ -39,3 +39,34 @@ export function updateQuery(params) {
     window.history.pushState(window.history.state, "", query);
   }
 }
+
+/**
+ * Get current URL
+ */
+export function getCurrentUrl() {
+  return window.location.href;
+}
+
+/**
+ * Get current URL hash parameters as object
+ */
+export function getHash() {
+  return qs.parse(window.location.hash.slice(1));
+}
+
+/**
+ * Get current URL query parameters as object
+ */
+export function getQuery() {
+  return qs.parse(window.location.search.slice(1));
+}
+
+/**
+ * Cleans/removes trailing slash from url
+ *
+ * @param  {String} url The url to clean
+ * @return {String}
+ */
+export function removeTrailingSlash(url) {
+  return url.charAt(url.length - 1) === "/" ? url.slice(0, -1) : url;
+}

@@ -3,6 +3,7 @@
  */
 import React, { useRef, useState, useEffect } from "react";
 import PT from "prop-types";
+import config from "../../../config";
 import _ from "lodash";
 import "./style.scss";
 
@@ -10,7 +11,7 @@ function Toggles({ checked, onChange, size }) {
   const [internalChecked, setInternalChecked] = useState(checked);
   let sizeStyle = size === "lg" ? "lgSize" : null;
   const delayedOnChange = useRef(
-    _.debounce((q, cb) => cb(q), process.env.GUIKIT.DEBOUNCE_ON_CHANGE_TIME) // eslint-disable-line no-undef
+    _.debounce((q, cb) => cb(q), config.GUIKIT.DEBOUNCE_ON_CHANGE_TIME) // eslint-disable-line no-undef
   );
 
   if (!sizeStyle) {
