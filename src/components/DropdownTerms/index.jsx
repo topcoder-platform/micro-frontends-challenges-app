@@ -6,6 +6,7 @@ import PT from "prop-types";
 import _ from "lodash";
 import { Creatable } from "react-select";
 import iconDown from "assets/icons/dropdown-arrow.png";
+import config from "../../../config";
 import "./styles.scss";
 
 function DropdownTerms({
@@ -27,7 +28,7 @@ function DropdownTerms({
   );
   const [focused, setFocused] = useState(false);
   const delayedOnChange = useRef(
-    _.debounce((q, cb) => cb(q), process.env.GUIKIT.DEBOUNCE_ON_CHANGE_TIME) // eslint-disable-line no-undef
+    _.debounce((q, cb) => cb(q), config.GUIKIT.DEBOUNCE_ON_CHANGE_TIME) // eslint-disable-line no-undef
   ).current;
 
   const containerRef = useRef(null);

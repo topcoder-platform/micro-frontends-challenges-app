@@ -10,7 +10,7 @@ import Dropdown from "../../../components/Dropdown";
 import DateRangePicker from "../../../components/DateRangePicker";
 import * as utils from "../../../utils";
 import * as constants from "../../../constants";
-import IconSearch from "assets/icons/search.svg";
+import IconSearch from "../../../assets/icons/search.svg";
 
 import "./styles.scss";
 
