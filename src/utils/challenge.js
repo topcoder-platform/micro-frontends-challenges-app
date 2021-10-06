@@ -461,3 +461,41 @@ export function getActivePhaseTimeLeft(challenge) {
 
   return { late, time, text };
 }
+
+/**
+ * check if is marathon match challenge
+ * @param {Object} challenge challenge object
+ */
+export function isMM(challenge) {
+  const tags = _.get(challenge, "tags") || [];
+  return tags.includes("Marathon Match");
+}
+
+/**
+ * Set challenge type to challenge
+ * @param {Object} challenges challenge object
+ * @param {Object} challengeTypeMap all challenge type object
+ */
+export function updateChallengeType(challenges, challengeTypeMap) {
+  if (challengeTypeMap) {
+    _.each(challenges, (challenge) => {
+      // eslint-disable-next-line no-param-reassign
+      challenge.challengeType = challengeTypeMap[challenge.typeId] || {};
+    });
+  }
+}
+
+export const currentPhase = (phases) => {
+  return phases
+    .filter((p) => p.name !== "Registration" && p.isOpen)
+    .sort((a, b) => moment(a.scheduledEndDate).diff(b.scheduledEndDate))[0];
+};
+
+export const submissionPhase = (phases) => {
+  return phases.filter((p) => p.name === "Submission")[0];
+};
+
+export const isLegacyId = (id) => /^[\d]{5,8}$/.test(id);
+
+export const isUuid = (id) =>
+  /^[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}|\d{5,8}$/.test(id);

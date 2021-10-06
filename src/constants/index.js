@@ -40,6 +40,7 @@ export const CHALLENGE_SORT_BY_RECOMMENDED = "bestMatch";
 export const CHALLENGE_SORT_BY_RECOMMENDED_LABEL = "Best Match";
 export const CHALLENGE_SORT_BY_MOST_RECENT = "updated";
 export const CHALLENGE_SORT_ORDER_DEFAULT = "desc";
+export const CHALLENGES_URL = "/earn/find/challenges";
 
 export const SORT_ORDER = {
   DESC: "desc",
@@ -64,4 +65,24 @@ export const CURRENCY_SYMBOL = {
   EUR: "€",
   INR: "₹",
   USD: "$",
+};
+
+export const ACCESS_DENIED_REASON = {
+  NOT_AUTHENTICATED: "Not authenticated",
+  NOT_AUTHORIZED: "Not authorized",
+  HAVE_NOT_SUBMITTED_TO_THE_CHALLENGE:
+    "You have not submitted to this challenge",
+};
+
+/**
+ * Codes of the Topcoder communities.
+ */
+/* TODO: These are originally motivated by Topcoder API v2. Topcoder API v3
+ * uses upper-case literals to encode the tracks. At some point, we should
+ * update it in this code as well! */
+export const COMPETITION_TRACKS = {
+  DS: "Data Science",
+  DES: "Design",
+  DEV: "Development",
+  QA: "Quality Assurance",
 };

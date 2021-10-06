@@ -1,7 +1,8 @@
 /* global process */
-import React from "react";
+import React, { useEffect } from "react";
 import { createHistory, LocationProvider } from "@reach/router";
 import { Provider } from "react-redux";
+import { setErrorsStore } from "utils/errors";
 import store from "./store";
 import App from "./App";
 
@@ -9,6 +10,10 @@ import App from "./App";
 const history = createHistory(window);
 
 export default function Root() {
+  useEffect(() => {
+    setErrorsStore(store);
+  }, []);
+
   return (
     <LocationProvider history={history}>
       <Provider store={store}>

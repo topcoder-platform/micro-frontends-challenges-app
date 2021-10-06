@@ -1,6 +1,6 @@
 /* global process */
 import { getAuthUserTokens } from "@topcoder/micro-frontends-navbar-app";
-import { keys } from "lodash";
+import _, { keys } from "lodash";
 import * as utils from "../utils";
 
 async function doFetch(endpoint, options = {}, v3, baseUrl) {
@@ -69,10 +69,43 @@ async function patch(endpoint, body) {
   return response.json();
 }
 
+/**
+ * Upload with progress
+ * @param {String} endpoint
+ * @param {Object} body and headers
+ * @param {Function} onProgress handler for update progress only works for client side for now
+ * @return {Promise}
+ */
+async function upload(endpoint, options, onProgress) {
+  const base = process.env.API.V5;
+  const { tokenV3 } = await getAuthUserTokens();
+  const headers = options.headers ? _.clone(options.headers) : {};
+  if (tokenV3) headers.Authorization = `Bearer ${tokenV3}`;
+
+  return new Promise((res, rej) => {
+    const xhr = new XMLHttpRequest(); //eslint-disable-line
+    xhr.open(options.method, `${base}${endpoint}`);
+    Object.keys(headers).forEach((key) => {
+      if (headers[key] != null) {
+        xhr.setRequestHeader(key, headers[key]);
+      }
+    });
+    xhr.onload = (e) => res(e.target.responseText);
+    xhr.onerror = rej;
+    if (xhr.upload && onProgress) {
+      xhr.upload.onprogress = (evt) => {
+        if (evt.lengthComputable) onProgress(evt.loaded / evt.total);
+      };
+    }
+    xhr.send(options.body);
+  });
+}
+
 export default {
   doFetch,
   get,
   post,
   put,
   patch,
+  upload,
 };

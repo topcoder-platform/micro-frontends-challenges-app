@@ -4,6 +4,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import PT from "prop-types";
 import _ from "lodash";
+import config from "../../../config";
 import "./styles.scss";
 
 import iconCheckL from "assets/icons/checkmark-large.png";
@@ -19,7 +20,7 @@ function Checkbox({ checked, onChange, size, errorMsg }) {
     sizeStyle = size === "xs" ? "xsSize" : "smSize";
   }
   const delayedOnChange = useRef(
-    _.debounce((q, cb) => cb(q), process.env.GUIKIT.DEBOUNCE_ON_CHANGE_TIME) // eslint-disable-line no-undef
+    _.debounce((q, cb) => cb(q), config.GUIKIT.DEBOUNCE_ON_CHANGE_TIME) // eslint-disable-line no-undef
   ).current;
 
   useEffect(() => {
