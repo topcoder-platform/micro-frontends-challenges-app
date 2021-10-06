@@ -7,7 +7,7 @@ import AuthComponent from "containers/auth-component";
 import ErrorMessage from "containers/ErrorMessage";
 import "utils/loading-indicator-animation";
 
-if (process.env.APPENV === "production") {
+if (process.env.APPMODE === "production") {
   require("topcoder-react-ui-kit/dist/prod/style.css");
 } else {
   require("topcoder-react-ui-kit/dist/dev/style.css");
