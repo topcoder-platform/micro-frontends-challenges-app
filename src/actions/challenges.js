@@ -86,5 +86,7 @@ async function getChallenges(filter, signal) {
 }
 
 export default createActions({
+  GET_CHALLENGES_INIT: _.noop(),
+  GET_CHALLENGES_DONE: getChallenges,
   GET_CHALLENGES_FAILURE: _.noop,
 });
