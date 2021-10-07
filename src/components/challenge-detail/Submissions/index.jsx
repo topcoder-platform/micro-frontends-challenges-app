@@ -734,7 +734,7 @@ class SubmissionsComponent extends React.Component {
               !hasRegistered || unregistering || submissionEnded || isLegacyMM
             }
             theme={{ button: style.challengeAction }}
-            to={`${config.URL.BASE}/${challengeId}/submit`}
+            to={`${challengesUrl}/${challengeId}/submit`}
           >
             Add Submission
           </PrimaryButton>
