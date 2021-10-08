@@ -419,7 +419,7 @@ export default class Registrants extends React.Component {
                 <div styleName="col-3">
                   <span role="cell">
                     <a
-                      href={`${config.URL.BASE}/members/${r.memberHandle}`}
+                      href={`${config.URL.PLATFORM_WEBSITE}/profile/${r.memberHandle}`}
                       styleName={
                         isDesign
                           ? ""

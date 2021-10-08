@@ -23,6 +23,7 @@ module.exports = {
      * as a more verbose name for the param. */
     COMMUNITY_APP: "https://community-app.topcoder.com",
 
+    PLATFORM_WEBSITE: "https://platform.topcoder.com",
     AUTH: "https://accounts-auth0.topcoder.com",
     BASE: "https://www.topcoder.com",
     HOME: "/my-dashboard",
