@@ -328,7 +328,7 @@ class SubmissionsComponent extends React.Component {
               {`#${s.id}`}
             </a>
             <a
-              href={`${config.URL.BASE}/members/${_.get(
+              href={`${config.URL.PLATFORM_WEBSITE}/profile/${_.get(
                 s.registrant,
                 "memberHandle",
                 ""
@@ -696,7 +696,7 @@ class SubmissionsComponent extends React.Component {
               )}
               <div styleName="col-3">
                 <a
-                  href={`${config.URL.BASE}/members/${_.get(
+                  href={`${config.URL.PLATFORM_WEBSITE}/profile/${_.get(
                     s.registrant,
                     "memberHandle",
                     ""

@@ -26,6 +26,7 @@ module.exports = {
      * as a more verbose name for the param. */
     COMMUNITY_APP: "https://community-app.topcoder-dev.com",
 
+    PLATFORM_WEBSITE: "https://platform.topcoder-dev.com",
     ARENA: "https://arena.topcoder-dev.com",
     AUTH: "https://accounts-auth0.topcoder-dev.com",
     BASE: "https://www.topcoder-dev.com",
