@@ -1,14 +1,14 @@
 import React from "react";
 import PT from "prop-types";
 import { Link } from "@reach/router";
-import { COMMUNITY_CHALLENGES_URL } from "../../../../constants";
+import config from '../../../../../config'
 
 import "./styles.scss";
 
 const Header = ({ title, challengeId }) => {
   return (
     <div styleName="header">
-      <a href={`${COMMUNITY_CHALLENGES_URL}/${challengeId}`}>
+      <a href={`${config.URL.PLATFORM_WEBSITE}/earn/find/challenges/${challengeId}`}>
         <span>&#x2039;</span>
         <p>Back to challenge</p>
       </a>
