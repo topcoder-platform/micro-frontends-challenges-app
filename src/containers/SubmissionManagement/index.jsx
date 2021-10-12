@@ -197,7 +197,7 @@ SubmissionManagement.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const challenge = state.challenge.challenge;
+  const challenge = (state.challenge && state.challenge.challenge) || {};
   const allPhases = challenge.phases || [];
   const submissionPhase =
     allPhases.find(

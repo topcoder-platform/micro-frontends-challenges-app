@@ -1,6 +1,16 @@
 export const PAGINATION_PER_PAGES = [10, 20, 50];
 export const PAGINATION_MAX_PAGE_DISPLAY = 3;
 
+/*
+ * Challenge Status
+ */
+export const CHALLENGE_STATUS = {
+  ACTIVE: "Active",
+  CANCELLED: "Cancelled",
+  COMPLETED: "Completed",
+  DRAFT: "Draft",
+};
+
 export const FILTER_BUCKETS = [
   "All Active Challenges",
   "Open for Registration",

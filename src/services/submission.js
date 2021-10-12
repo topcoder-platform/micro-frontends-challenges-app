@@ -44,7 +44,7 @@ function getSubmissions(filter) {
   return api
     .get(`/submissions?${qs.stringify(filter, { encode: false })}`)
     .then(util.tryThrowError)
-    .then((res) => res.json());
+    .then((res) => res);
 }
 
 export default {
