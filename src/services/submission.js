@@ -35,9 +35,11 @@ function deleteSubmission(submissionId) {
 
 function downloadSubmission(track, submissionId) {
   return api
-    .get(`/submissions/${submissionId}/download`)
+    .download(`/submissions/${submissionId}/download`)
     .then(util.tryThrowError)
-    .then((res) => res.blob());
+    .then((res) => {
+      return res.blob();
+    });
 }
 
 function getSubmissions(filter) {

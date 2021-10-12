@@ -25,6 +25,16 @@ async function doFetch(endpoint, options = {}, v3, baseUrl) {
   });
 }
 
+async function download(endpoint, baseUrl, cancellationSignal) {
+  const options = {
+    headers: { ["Content-Type"]: "application/json" },
+    signal: cancellationSignal,
+  };
+  const response = await doFetch(endpoint, options, undefined, baseUrl);
+
+  return response;
+}
+
 async function get(endpoint, baseUrl, cancellationSignal) {
   const options = {
     headers: { ["Content-Type"]: "application/json" },
@@ -108,4 +118,5 @@ export default {
   put,
   patch,
   upload,
+  download,
 };
