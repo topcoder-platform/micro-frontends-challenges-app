@@ -227,7 +227,7 @@ class ChallengeDetailPageContainer extends React.Component {
       challenge.isLegacyChallenge &&
       !history.location.pathname.includes(challenge.id)
     ) {
-      history.location.pathname = `/challenges/${challenge.id}`; // eslint-disable-line no-param-reassign
+      history.location.pathname = `/earn/find/challenges/${challenge.id}`; // eslint-disable-line no-param-reassign
       history.push(history.location.pathname, history.state);
     }
 
