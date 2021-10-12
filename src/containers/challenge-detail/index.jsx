@@ -502,63 +502,73 @@ class ChallengeDetailPageContainer extends React.Component {
               updateChallenge={(x) => updateChallenge(x, auth.tokenV3)}
             />
           )}
-          {!isEmpty && selectedTab === DETAIL_TABS.REGISTRANTS && isLoadingFullChallenge && (
-            <LoadingIndicator/>
-          )}
-          {!isEmpty && selectedTab === DETAIL_TABS.REGISTRANTS && !isLoadingFullChallenge && (
-            <Registrants
-              challenge={challenge}
-              registrants={challenge.registrants}
-              checkpointResults={_.merge(
-                checkpointResults,
-                checkpointResultsUi
-              )}
-              results={results2}
-              registrantsSort={registrantsSort}
-              notFoundCountryFlagUrl={notFoundCountryFlagUrl}
-              onGetFlagImageFail={(countryInfo) => {
-                notFoundCountryFlagUrl[countryInfo.countryCode] = true;
-                this.setState({ notFoundCountryFlagUrl });
-              }}
-              onSortChange={(sort) => this.setState({ registrantsSort: sort })}
-            />
-          )}
+          {!isEmpty &&
+            selectedTab === DETAIL_TABS.REGISTRANTS &&
+            isLoadingFullChallenge && <LoadingIndicator />}
+          {!isEmpty &&
+            selectedTab === DETAIL_TABS.REGISTRANTS &&
+            !isLoadingFullChallenge && (
+              <Registrants
+                challenge={challenge}
+                registrants={challenge.registrants}
+                checkpointResults={_.merge(
+                  checkpointResults,
+                  checkpointResultsUi
+                )}
+                results={results2}
+                registrantsSort={registrantsSort}
+                notFoundCountryFlagUrl={notFoundCountryFlagUrl}
+                onGetFlagImageFail={(countryInfo) => {
+                  notFoundCountryFlagUrl[countryInfo.countryCode] = true;
+                  this.setState({ notFoundCountryFlagUrl });
+                }}
+                onSortChange={(sort) =>
+                  this.setState({ registrantsSort: sort })
+                }
+              />
+            )}
           {!isEmpty && selectedTab === DETAIL_TABS.CHECKPOINTS && (
             <ChallengeCheckpoints
               checkpoints={checkpoints}
               toggleCheckpointFeedback={toggleCheckpointFeedback}
             />
           )}
-          {!isEmpty && isLoggedIn && selectedTab === DETAIL_TABS.SUBMISSIONS && isLoadingFullChallenge && (
-            <LoadingIndicator/>
-          )}
-          {!isEmpty && isLoggedIn && selectedTab === DETAIL_TABS.SUBMISSIONS && !isLoadingFullChallenge && (
-            <Submissions
-              challenge={challenge}
-              submissions={challenge.submissions}
-              loadingMMSubmissionsForChallengeId={
-                loadingMMSubmissionsForChallengeId
-              }
-              mmSubmissions={mmSubmissions}
-              loadMMSubmissions={loadMMSubmissions}
-              auth={auth}
-              isLoadingSubmissionInformation={isLoadingSubmissionInformation}
-              submssionInformation={submissionInformation}
-              loadSubmissionInformation={loadSubmissionInformation}
-              submissionsSort={submissionsSort}
-              notFoundCountryFlagUrl={notFoundCountryFlagUrl}
-              onGetFlagImageFail={(countryInfo) => {
-                notFoundCountryFlagUrl[countryInfo.countryCode] = true;
-                this.setState({ notFoundCountryFlagUrl });
-              }}
-              onSortChange={(sort) => this.setState({ submissionsSort: sort })}
-              hasRegistered={challenge.isRegistered}
-              unregistering={unregistering}
-              isLegacyMM={isLegacyMM}
-              submissionEnded={submissionEnded}
-              challengesUrl={challengesUrl}
-            />
-          )}
+          {!isEmpty &&
+            isLoggedIn &&
+            selectedTab === DETAIL_TABS.SUBMISSIONS &&
+            isLoadingFullChallenge && <LoadingIndicator />}
+          {!isEmpty &&
+            isLoggedIn &&
+            selectedTab === DETAIL_TABS.SUBMISSIONS &&
+            !isLoadingFullChallenge && (
+              <Submissions
+                challenge={challenge}
+                submissions={challenge.submissions}
+                loadingMMSubmissionsForChallengeId={
+                  loadingMMSubmissionsForChallengeId
+                }
+                mmSubmissions={mmSubmissions}
+                loadMMSubmissions={loadMMSubmissions}
+                auth={auth}
+                isLoadingSubmissionInformation={isLoadingSubmissionInformation}
+                submssionInformation={submissionInformation}
+                loadSubmissionInformation={loadSubmissionInformation}
+                submissionsSort={submissionsSort}
+                notFoundCountryFlagUrl={notFoundCountryFlagUrl}
+                onGetFlagImageFail={(countryInfo) => {
+                  notFoundCountryFlagUrl[countryInfo.countryCode] = true;
+                  this.setState({ notFoundCountryFlagUrl });
+                }}
+                onSortChange={(sort) =>
+                  this.setState({ submissionsSort: sort })
+                }
+                hasRegistered={challenge.isRegistered}
+                unregistering={unregistering}
+                isLegacyMM={isLegacyMM}
+                submissionEnded={submissionEnded}
+                challengesUrl={challengesUrl}
+              />
+            )}
           {isMM && !isEmpty && selectedTab === DETAIL_TABS.MY_SUBMISSIONS && (
             <MySubmissions
               challengesUrl={challengesUrl}
@@ -828,7 +838,9 @@ function mapStateToProps(state, props) {
     communitiesList: state.tcCommunities.list,
     domain: state.domain,
     isLoadingChallenge: Boolean(state.challenge.loadingDetailsForChallengeId),
-    isLoadingFullChallenge: Boolean(state.challenge.loadingFullDetailsForChallengeId),
+    isLoadingFullChallenge: Boolean(
+      state.challenge.loadingFullDetailsForChallengeId
+    ),
     isLoadingTerms: _.isEqual(state.terms.loadingTermsForEntity, {
       type: "challenge",
       id: props.match.params.challengeId,
@@ -906,15 +918,15 @@ const mapDispatchToProps = (dispatch) => {
       });
     },
     loadFullChallengeDetails: (tokens, challengeId) => {
-        const a = actions.challenge;
+      const a = actions.challenge;
 
-        dispatch(a.getFullDetailsInit(challengeId));
-        dispatch(
-          a.getFullDetailsDone(challengeId, tokens.tokenV3, tokens.tokenV2)
-        ).then((res) => {
-          return res;
-        });
-      },
+      dispatch(a.getFullDetailsInit(challengeId));
+      dispatch(
+        a.getFullDetailsDone(challengeId, tokens.tokenV3, tokens.tokenV2)
+      ).then((res) => {
+        return res;
+      });
+    },
     registerForChallenge: (auth, challengeId) => {
       const a = actions.challenge;
       dispatch(a.registerInit());
