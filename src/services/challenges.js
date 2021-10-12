@@ -398,7 +398,7 @@ class ChallengesService {
    * @param {Number|String} challengeId
    * @returns {Promise} Resolves to the basic challenge object.
    */
-  async getBasicChallengeDetails(challengeId){
+  async getBasicChallengeDetails(challengeId) {
     let challenge = {};
     let isLegacyChallenge = false;
 
@@ -427,7 +427,7 @@ class ChallengesService {
           eventId: e.id,
           description: e.name,
         })),
-        fetchedWithAuth: Boolean(this.private.apiV5.private.token)
+        fetchedWithAuth: Boolean(this.private.apiV5.private.token),
       };
     }
 

@@ -6,13 +6,16 @@ import { setErrorsStore } from "utils/errors";
 import store from "./store";
 import App from "./App";
 
+// History for location provider
+const history = createHistory(window);
+
 export default function Root() {
   useEffect(() => {
     setErrorsStore(store);
   }, []);
 
   return (
-    <LocationProvider history={createHistory(window)}>
+    <LocationProvider history={history}>
       <Provider store={store}>
         <>
           <App />

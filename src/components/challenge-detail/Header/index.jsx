@@ -391,7 +391,12 @@ export default function ChallengeHeader(props) {
                 </DangerButton>
               ) : (
                 <PrimaryButton
-                  disabled={isLoadingChallenge || registering || registrationEnded || isLegacyMM}
+                  disabled={
+                    isLoadingChallenge ||
+                    registering ||
+                    registrationEnded ||
+                    isLegacyMM
+                  }
                   forceA
                   onClick={registerForChallenge}
                   theme={{ button: style.challengeAction }}
