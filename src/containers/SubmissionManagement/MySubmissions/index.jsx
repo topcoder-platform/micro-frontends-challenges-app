@@ -5,7 +5,7 @@ import { PrimaryButton } from "components/Buttons";
 import SubmissionTable from "./SubmissionTable";
 import LoadingIndicator from "components/LoadingIndicator";
 import * as util from "../../../utils/challenge";
-import { CHALLENGES_URL, COMMUNITY_CHALLENGES_URL } from "../../../constants";
+import config from "../../../../config";
 
 import styles from "./styles.scss";
 
@@ -53,7 +53,7 @@ const MySubmissions = ({
         <div styleName="left-col">
           <h4 styleName="name">{challengeName}</h4>
           <a
-            href={`${COMMUNITY_CHALLENGES_URL}/${challengeId}`}
+            href={`${config.URL.PLATFORM_WEBSITE}/earn/find/challenges/${challengeId}`}
             styleName="back-btn"
           >
             &lt; Back
@@ -125,7 +125,7 @@ const MySubmissions = ({
             theme={{
               button: styles["add-sub-btn"],
             }}
-            to={`${CHALLENGES_URL}/${challengeId}/submit`}
+            to={`${config.URL.PLATFORM_WEBSITE}/earn/find/challenges/${challengeId}/submit`}
           >
             {!isDevelop || !submissions || submissions.length === 0
               ? "Add Submission"

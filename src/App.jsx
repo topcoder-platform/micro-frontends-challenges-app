@@ -13,7 +13,7 @@ const App = () => {
     <Router>
       <ChallengeList path="/earn/find/challenges" />
       <ChallengeDetail path={`/earn/find/challenges/:challengeId`} />
-      <Submission path={`/earn/find/challenges/:challengeId/submit`} />
+      <Submission path={`/earn/find/challenges/:challengeId/:page`} />
     </Router>
   );
 };
