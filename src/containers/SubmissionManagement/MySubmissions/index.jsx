@@ -1,6 +1,7 @@
 import React from "react";
 import PT from "prop-types";
 import moment from "moment";
+import { navigate } from "@reach/router";
 import { PrimaryButton } from "components/Buttons";
 import SubmissionTable from "./SubmissionTable";
 import LoadingIndicator from "components/LoadingIndicator";
@@ -46,6 +47,10 @@ const MySubmissions = ({
 
   const isLoadingOrDeleting = loadingSubmissions || isDeletingSubmission;
 
+  const goToChallengeDetail = () => {
+    navigate(`/earn/find/challenges/${challengeId}`)
+  }
+
   return (
     <div styleName="submission-management">
       {/* Header */}
@@ -53,7 +58,7 @@ const MySubmissions = ({
         <div styleName="left-col">
           <h4 styleName="name">{challengeName}</h4>
           <a
-            href={`${config.URL.PLATFORM_WEBSITE}/earn/find/challenges/${challengeId}`}
+            onClick={goToChallengeDetail}
             styleName="back-btn"
           >
             &lt; Back
