@@ -21,6 +21,8 @@
 
 import _ from "lodash";
 import config from "../../config";
+import store from "../store";
+import { createAction } from "redux-actions";
 
 const isDev = process.env.APPMODE === "development";
 const logger = {};
@@ -76,5 +78,26 @@ if (leLogger) {
   extend("log", "log");
   extend("warn", "warning");
 }
+
+/**
+ * The function behaves similarly to javascript alert()
+ * it will show a modal error diaglog with styling until the user clicks OK.
+ */
+export const fireErrorMessage = (title, details) => {
+  setImmediate(() => {
+    const newError = createAction("NEW_ERROR", (paramTitle, paramDetails) => ({
+      title: paramTitle,
+      details: paramDetails,
+    }));
+    store.dispatch(newError(title, details));
+  });
+};
+
+export const clearErrorMesssage = () => {
+  setImmediate(() => {
+    const clearError = createAction("CLEAR_ERROR");
+    store.dispatch(clearError());
+  });
+};
 
 export default logger;

@@ -30,6 +30,10 @@ function onProfileLoaded(state, action) {
   };
 }
 
+function onSetAuthDone(state, { payload }) {
+  return { ...state, user: payload, isAuthInitialized: true };
+}
+
 /**
  * Creates a new Auth reducer with the specified initial state.
  * @param {Object} initialState Optional. Initial state.
@@ -58,6 +62,7 @@ function create(initialState) {
           }),
         },
       }),
+      [actions.auth.setAuthDone]: onSetAuthDone,
     },
     _.defaults(initialState, {
       authenticating: true,
@@ -65,6 +70,7 @@ function create(initialState) {
       tokenV2: "",
       tokenV3: "",
       user: null,
+      isAuthInitialized: false,
     })
   );
 }

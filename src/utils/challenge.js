@@ -484,3 +484,18 @@ export function updateChallengeType(challenges, challengeTypeMap) {
     });
   }
 }
+
+export const currentPhase = (phases) => {
+  return phases
+    .filter((p) => p.name !== "Registration" && p.isOpen)
+    .sort((a, b) => moment(a.scheduledEndDate).diff(b.scheduledEndDate))[0];
+};
+
+export const submissionPhase = (phases) => {
+  return phases.filter((p) => p.name === "Submission")[0];
+};
+
+export const isLegacyId = (id) => /^[\d]{5,8}$/.test(id);
+
+export const isUuid = (id) =>
+  /^[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}|\d{5,8}$/.test(id);

@@ -7,6 +7,7 @@ import { createActions } from "redux-actions";
 import { decodeToken } from "../utils/token";
 import { getApiV3, getApiV5 } from "../services/challenge-api";
 import { setErrorIcon, ERROR_ICON_TYPES } from "../utils/errors";
+import { getAuthUserTokens } from "@topcoder/micro-frontends-navbar-app";
 
 /**
  * Helper method that checks for HTTP error response v5 and throws Error in this case.
@@ -76,10 +77,17 @@ function setTcTokenV3(tokenV3) {
   return tokenV3;
 }
 
+async function setAuthDone() {
+  const { tokenV3 } = await getAuthUserTokens();
+  const user = tokenV3 ? decodeToken(tokenV3) : null;
+  return user;
+}
+
 export default createActions({
   AUTH: {
     LOAD_PROFILE: loadProfileDone,
     SET_TC_TOKEN_V2: setTcTokenV2,
     SET_TC_TOKEN_V3: setTcTokenV3,
+    SET_AUTH_DONE: setAuthDone,
   },
 });

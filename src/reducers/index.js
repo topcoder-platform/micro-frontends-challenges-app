@@ -9,6 +9,8 @@ import page from "./page";
 import terms from "./terms";
 import auth from "./auth";
 import errors from "./errors";
+import submission from "./submission";
+import submissionManagement from "./submissionManagement";
 
 export default combineReducers({
   challenges,
@@ -20,5 +22,7 @@ export default combineReducers({
   page,
   terms,
   auth,
+  submission,
+  submissionManagement,
   errors,
 });

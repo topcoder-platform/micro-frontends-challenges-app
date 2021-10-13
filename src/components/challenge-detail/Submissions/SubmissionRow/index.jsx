@@ -87,7 +87,7 @@ export default function SubmissionRow({
             {rating || "-"}
           </span>
           <a
-            href={`${config.URL.BASE}/members/${member}`}
+            href={`${config.URL.PLATFORM_WEBSITE}/profile/${member}`}
             target={`${_.includes(window.origin, "www") ? "_self" : "_blank"}`}
             rel="noopener noreferrer"
             styleName={`col level-${getRatingLevel(rating)}`}

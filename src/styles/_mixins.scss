@@ -10,6 +10,13 @@ $member-blue: #4c50d9;
 $member-yellow: #f2c900;
 $member-red: #ea1900;
 
+// Replace the bourbon background with simple linear gradient - we only use this for the buttons;
+@mixin background-gradient($start, $stop) {
+  background: $start;
+  background: linear-gradient(to top, $start 0%, $stop 100%);
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='$start', endColorstr='$stop', GradientType=0); /* IE6-9 */
+}
+
 // Placeholder
 @mixin placeholder {
   &::-webkit-input-placeholder {
@@ -27,4 +34,8 @@ $member-red: #ea1900;
   &:-ms-input-placeholder {
     @content;
   }
+}
+
+@mixin button-transition {
+  transition: background 0.5s;
 }

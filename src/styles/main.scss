@@ -4,6 +4,10 @@
 @import "utils";
 
 :global {
+  :not(.challenge-listing-container) {
+    @import "legacy-buttons";
+  }
+
   html,
   body {
     text-rendering: geometricPrecision;
@@ -23,4 +27,13 @@
   body {
     flex: 1;
   }
+}
+
+#tooltips-container-id {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 1001;
 } // end :global

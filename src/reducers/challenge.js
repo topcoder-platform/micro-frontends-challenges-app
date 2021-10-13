@@ -446,6 +446,32 @@ function onGetSubmissionInformationDone(state, action) {
   };
 }
 
+function onGetChallengeInit(state) {
+  return {
+    ...state,
+    isLoadingChallenge: true,
+    isChallengeLoaded: false,
+  };
+}
+
+function onGetChallengeDone(state, { error, payload }) {
+  if (error) {
+    logger.error("Failed to get challenge details!", payload);
+    fireErrorMessage(
+      "ERROR: Failed to load the challenge",
+      "Please, try again a bit later"
+    );
+    return { ...state, isLoadingChallenge: false, isChallengeLoaded: false };
+  }
+
+  return {
+    ...state,
+    challenge: { ...payload },
+    isLoadingChallenge: false,
+    isChallengeLoaded: true,
+  };
+}
+
 /**
  * Creates a new Challenge reducer with the specified initial state.
  * @param {Object} initialState Optional. Initial state.
@@ -492,6 +518,8 @@ function create(initialState) {
       [a.getActiveChallengesCountDone]: onGetActiveChallengesCountDone,
       [a.getSubmissionInformationInit]: onGetSubmissionInformationInit,
       [a.getSubmissionInformationDone]: onGetSubmissionInformationDone,
+      [a.getChallengeInit]: onGetChallengeInit,
+      [a.getChallengeDone]: onGetChallengeDone,
     },
     _.defaults(initialState, {
       details: null,
@@ -510,6 +538,7 @@ function create(initialState) {
       updatingChallengeUuid: "",
       mmSubmissions: [],
       submissionInformation: null,
+      isLoadingChallenge: false,
     })
   );
 }

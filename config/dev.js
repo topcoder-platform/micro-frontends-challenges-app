@@ -12,51 +12,36 @@ module.exports = {
   /**
    * URL of Topcoder Connect Website
    */
-  SERVER_API_KEY: "79b2d5eb-c1fd-42c4-9391-6b2c9780d591",
   CONNECT_WEBSITE_URL: "https://connect.topcoder-dev.com",
 
+  SERVER_API_KEY: "79b2d5eb-c1fd-42c4-9391-6b2c9780d591",
   URL: {
-    ARENA: "https://arena.topcoder-dev.com",
+    /* Connector URL of the TC accounts App. */
+    ACCOUNTS_APP_CONNECTOR: "https://accounts-auth0.topcoder-dev.com",
+
+    /* The remote address where the app is deployed. */
     APP: "https://community-app.topcoder-dev.com",
 
     /* This is the same value as above, but it is used by topcoder-react-lib,
      * as a more verbose name for the param. */
     COMMUNITY_APP: "https://community-app.topcoder-dev.com",
 
+    PLATFORM_WEBSITE: "https://platform.topcoder-dev.com",
+    ARENA: "https://arena.topcoder-dev.com",
     AUTH: "https://accounts-auth0.topcoder-dev.com",
     BASE: "https://www.topcoder-dev.com",
     HOME: "/my-dashboard",
     BLOG: "https://www.topcoder-dev.com/blog",
     BLOG_FEED: "https://www.topcoder.com/blog/feed/",
-
     COMMUNITY: "https://community.topcoder-dev.com",
     FORUMS: "https://apps.topcoder-dev.com/forums",
     FORUMS_VANILLA: "https://vanilla.topcoder-dev.com",
     HELP:
-     "https://www.topcoder.com/thrive/tracks?track=Topcoder&tax=Help%20Articles",
+      "https://www.topcoder.com/thrive/tracks?track=Topcoder&tax=Help%20Articles",
     SUBMISSION_REVIEW: "https://submission-review.topcoder-dev.com",
 
     THRIVE: "https://www.topcoder.com/thrive",
 
-    MEMBER: "https://members.topcoder-dev.com",
-    ONLINE_REVIEW: "https://software.topcoder-dev.com",
-    PAYMENT_TOOL: "https://payment.topcoder-dev.com",
-    STUDIO: "https://studio.topcoder-dev.com",
-    IOS: "https://ios.topcoder-dev.com",
-
-    /* Connector URL of the TC accounts App. */
-    ACCOUNTS_APP_CONNECTOR: "https://accounts-auth0.topcoder-dev.com",
-
-    TCO: "https://www.topcoder.com/tco",
-    TCO17: "https://tco17.topcoder.com/",
-    TCO19: "https://community-app.topcoder-dev.com/__community__/tco19",
-    WIPRO: "https://wipro.topcoder.com",
-
-    TOPGEAR: "https://dev-topgear.wipro.com",
-
-    COMMUNITY_API: "http://localhost:8000",
-    COMMUNITY_APP_GITHUB_ISSUES:
-      "https://github.com/topcoder-platform/community-app/issues",
     COMMUNITIES: {
       BLOCKCHAIN: "https://blockchain.topcoder-dev.com",
       COGNITIVE: "https://cognitive.topcoder-dev.com",
@@ -65,6 +50,8 @@ module.exports = {
       CS: "https://community-app.topcoder-dev.com/__community__/cs",
     },
 
+    /* Dedicated section to group together links to various articles in
+     * Topcoder help center. */
     INFO: {
       DESIGN_CHALLENGES:
         "http://help.topcoder.com/hc/en-us/categories/202610437-DESIGN",
@@ -90,10 +77,28 @@ module.exports = {
       TEMPLATES_REPO: "https://github.com/topcoder-platform-templates",
     },
 
+    IOS: "https://ios.topcoder-dev.com",
+    MEMBER: "https://members.topcoder-dev.com",
+    ONLINE_REVIEW: "https://software.topcoder-dev.com",
+    PAYMENT_TOOL: "https://payment.topcoder-dev.com",
+    STUDIO: "https://studio.topcoder-dev.com",
+    TCO: "https://www.topcoder.com/tco",
+    TCO17: "https://tco17.topcoder.com/",
+    TCO19: "https://community-app.topcoder-dev.com/__community__/tco19",
+
+    TOPGEAR: "https://dev-topgear.wipro.com",
+
     USER_SETTINGS: "https://lc1-user-settings-service.herokuapp.com",
-    EMAIL_VERIFY_URL: "http://www.topcoder-dev.com/settings/account/changeEmail",
+    WIPRO: "https://wipro.topcoder.com",
+    COMMUNITY_API: "http://localhost:8000",
+    COMMUNITY_APP_GITHUB_ISSUES:
+      "https://github.com/topcoder-platform/community-app/issues",
+    EMAIL_VERIFY_URL:
+      "http://www.topcoder-dev.com/settings/account/changeEmail",
     ABANDONMENT_EMBED:
       "https://43d132d5dbff47c59d9d53ad448f93c2.js.ubembed.com",
+    // If a logged in user is a member of any of these groups, when they land on
+    // their profile page (members/:handle), they'll be redirected to the "userProfile" url
     SUBDOMAIN_PROFILE_CONFIG: [
       {
         groupId: "20000000",
@@ -115,7 +120,6 @@ module.exports = {
     V3: "https://api.topcoder-dev.com/v3",
     V2: "https://api.topcoder-dev.com/v2",
   },
-
   MOCK_TERMS_SERVICE: false,
   AV_SCAN_SCORER_REVIEW_TYPE_ID: "55bbb17d-aac2-45a6-89c3-a8d102863d05",
   PROVISIONAL_SCORING_COMPLETED_REVIEW_TYPE_ID: "df51ca7d-fb0a-4147-9569-992fcf5aae48",
@@ -125,5 +129,14 @@ module.exports = {
     LOCAL_MODE: false,
     DEFAULT_SPACE_NAME: "default",
     DEFAULT_ENVIRONMENT: "master",
+  },
+  /* Filestack configuration for uploading Submissions
+   * These are for the development back end */
+  FILESTACK: {
+    API_KEY: process.env.FILESTACK_API_KEY || "AzFINuQoqTmqw0QEoaw9az",
+    REGION: "us-east-1",
+    SUBMISSION_CONTAINER:
+      process.env.FILESTACK_SUBMISSION_CONTAINER ||
+      "topcoder-dev-submissions-dmz",
   },
 };

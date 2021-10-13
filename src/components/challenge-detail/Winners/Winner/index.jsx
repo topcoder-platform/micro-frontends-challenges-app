@@ -66,7 +66,7 @@ export default function Winner({
           <Avatar theme={{ avatar: style.avatar }} url={avatarUrl} />
           <div>
             <a
-              href={`${config.URL.BASE}/members/${winner.handle}`}
+              href={`${config.URL.PLATFORM_WEBSITE}/profile/${winner.handle}`}
               styleName="handle"
               target={`${_.includes(windowOrigin, "www") ? "_self" : "_blank"}`}
             >
