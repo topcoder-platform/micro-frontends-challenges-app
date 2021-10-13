@@ -1,6 +1,7 @@
 /* global process */
 import React from "react";
 import PT from "prop-types";
+import { navigate } from "@reach/router";
 import _ from "lodash";
 import TrackIcon from "./TrackIcon";
 import NumRegistrants from "./NumRegistrants";
@@ -30,6 +31,10 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
     submissionLink += "?tab=submissions";
   }
 
+  const goToChallengeDetail = () => {
+    navigate(`/earn/find/challenges/${challenge.id}`)
+  }
+
   return (
     <div styleName="challenge-item">
       <div styleName="track">
@@ -44,7 +49,7 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
         <div styleName="name-container">
           <h6 styleName="name">
             <a
-              href={`/earn/find/challenges/${challenge.id}`} // eslint-disable-line no-undef
+              onClick={goToChallengeDetail}
             >
               {challenge.name}
             </a>
