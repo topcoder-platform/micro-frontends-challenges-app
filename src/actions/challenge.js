@@ -10,6 +10,7 @@ import { createActions } from "redux-actions";
 import { decodeToken } from "../utils/token";
 import { getService as getChallengesService } from "../services/challenges";
 import { getService as getSubmissionService } from "../services/submissions";
+import challengeService from "../services/challenge";
 import { getApi } from "../services/challenge-api";
 import * as submissionUtil from "../utils/submission";
 
@@ -449,6 +450,10 @@ function getSubmissionInformationDone(challengeId, submissionId, tokenV3) {
   });
 }
 
+function getChallengeDone(challengeId) {
+  return challengeService.getChallenge(challengeId);
+}
+
 export default createActions({
   CHALLENGE: {
     DROP_CHECKPOINTS: dropCheckpoints,
@@ -476,5 +481,7 @@ export default createActions({
     GET_MM_SUBMISSIONS_DONE: getMMSubmissionsDone,
     GET_SUBMISSION_INFORMATION_INIT: getSubmissionInformationInit,
     GET_SUBMISSION_INFORMATION_DONE: getSubmissionInformationDone,
+    GET_CHALLENGE_INIT: _.noop,
+    GET_CHALLENGE_DONE: getChallengeDone,
   },
 });

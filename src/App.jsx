@@ -6,6 +6,7 @@ import { useLocation, Router, Redirect } from "@reach/router";
 import { usePreviousLocation } from "./utils/hooks";
 import ChallengeList from "./routers/challenge-list";
 import ChallengeDetail from "./routers/challenge-detail";
+import Submission from "./routers/submissions";
 import "./styles/main.scss";
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
     <Router>
       <ChallengeList path="/earn/find/challenges/" />
       <ChallengeDetail path={`/earn/find/challenges/:challengeId`} />
+      <Submission path={`/earn/find/challenges/:challengeId/:page`} />
       <Redirect from="/earn/*" to="/earn/find/challenges/" noThrow />
     </Router>
   );

@@ -23,6 +23,7 @@ module.exports = {
      * as a more verbose name for the param. */
     COMMUNITY_APP: "https://community-app.topcoder.com",
 
+    PLATFORM_WEBSITE: "https://platform.topcoder.com",
     AUTH: "https://accounts-auth0.topcoder.com",
     BASE: "https://www.topcoder.com",
     HOME: "/my-dashboard",
@@ -125,5 +126,12 @@ module.exports = {
     LOCAL_MODE: false,
     DEFAULT_SPACE_NAME: "default",
     DEFAULT_ENVIRONMENT: "master",
+  },
+  FILESTACK: {
+    API_KEY: process.env.FILESTACK_API_KEY || "AzFINuQoqTmqw0QEoaw9az",
+    REGION: "us-east-1",
+    SUBMISSION_CONTAINER:
+      process.env.FILESTACK_SUBMISSION_CONTAINER ||
+      "topcoder-dev-submissions-dmz",
   },
 };

@@ -180,4 +180,83 @@ export function processMMSubmissions(submissions) {
   return finalSubmissions;
 }
 
+export const isSubmissionEnded = (challenge) => {
+  const { status, phases } = challenge;
+
+  return (
+    status === "COMPLETED" ||
+    (!_.some(phases, { name: "Submission", isOpen: true }) &&
+      !_.some(phases, { name: "Checkpoint Submission", isOpen: true }))
+  );
+};
+
+export const canSubmitFinalFixes = (challenge, handle) => {
+  const { winners, phases } = challenge;
+  const hasFirstPlacement =
+    !_.isEmpty(winners) && _.some(winners, { placement: 1, handle });
+
+  let canSubmit = false;
+  if (hasFirstPlacement && !_.isEmpty(phases)) {
+    canSubmit = _.some(phases, { phaseType: "Final Fix", isOpen: true });
+  }
+
+  return canSubmit;
+};
+
+export const isChallengeBelongToTopgearGroup = (challenge, communityList) => {
+  const { groups } = challenge;
+
+  // check if challenge belong to any group
+  if (!_.isEmpty(groups)) {
+    return false;
+  }
+
+  const topGearCommunity = _.find(communityList, { mainSubdomain: "topgear" });
+  if (!topGearCommunity) {
+    return false;
+  }
+
+  // check the group info match with group list
+  for (let i = 0; i < groups.length; i += 1) {
+    if (groups[i] && _.includes(topGearCommunity.groupIds, groups[i])) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+export const getSubmissionDetail = (challenge) => {
+  const { phases } = challenge;
+
+  const checkpoint = _.find(phases, {
+    name: "Checkpoint Submission",
+  });
+  const submission = _.find(phases, {
+    name: "Submission",
+  });
+  const finalFix = _.find(phases, {
+    name: "Final Fix",
+  });
+  let subType;
+
+  // Submission type logic
+  if (checkpoint && checkpoint.isOpen) {
+    subType = "Checkpoint Submission";
+  } else if (
+    checkpoint &&
+    !checkpoint.isOpen &&
+    submission &&
+    submission.isOpen
+  ) {
+    subType = "Contest Submission";
+  } else if (finalFix && finalFix.isOpen) {
+    subType = "Studio Final Fix Submission";
+  } else {
+    subType = "Contest Submission";
+  }
+
+  return subType;
+};
+
 export default undefined;

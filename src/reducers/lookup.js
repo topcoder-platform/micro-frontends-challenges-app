@@ -15,8 +15,18 @@ function onGetTagsDone(state, { payload }) {
   return { ...state, tags: payload };
 }
 
-function onGetCommunityListDone(state, { payload }) {
-  return { ...state, subCommunities: payload };
+function onGetCommunityListInit(state) {
+  return {
+    ...state,
+    isSubCommunitiesLoaded: false,
+  };
+}
+
+function onGetCommunityListDone(state, { error, payload }) {
+  if (error) {
+    return { ...state, subCommunities: [] };
+  }
+  return { ...state, subCommunities: payload, isSubCommunitiesLoaded: true };
 }
 
 /**
@@ -259,6 +269,7 @@ function create(initialState = {}) {
   return handleActions(
     {
       [a.getTagsDone]: onGetTagsDone,
+      [a.getCommunityListInit]: onGetCommunityListInit,
       [a.getCommunityListDone]: onGetCommunityListDone,
       [a.getTypesInit]: (state) => state,
       [a.getTypesDone]: onGetTypesDone,
@@ -295,6 +306,7 @@ function create(initialState = {}) {
       tags: [],
       subCommunities: [],
       isLoggedIn: null,
+      isSubCommunitiesLoaded: false,
     })
   );
 }

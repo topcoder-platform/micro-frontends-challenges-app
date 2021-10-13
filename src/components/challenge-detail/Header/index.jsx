@@ -412,7 +412,7 @@ export default function ChallengeHeader(props) {
                   isLegacyMM
                 }
                 theme={{ button: style.challengeAction }}
-                to={`${config.URL.BASE}/challenges/${challengeId}/submit`}
+                to={`${challengesUrl}/${challengeId}/submit`}
               >
                 Submit
               </PrimaryButton>
@@ -422,7 +422,7 @@ export default function ChallengeHeader(props) {
                 hasSubmissions && (
                   <PrimaryButton
                     theme={{ button: style.challengeAction }}
-                    to={`${config.URL.BASE}/challenges/${challengeId}/my-submissions`}
+                    to={`${challengesUrl}/${challengeId}/my-submissions`}
                   >
                     View Submissions
                   </PrimaryButton>
