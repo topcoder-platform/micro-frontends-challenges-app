@@ -51,7 +51,10 @@ const Listing = ({
               size="xs"
               onChange={(value) => {
                 onSearch.current(() => {
-                  const filterChange = { search: value };
+                  const filterChange = {
+                    search: value,
+                    page: 1
+                  };
                   updateFilter(filterChange);
                 });
               }}
@@ -73,6 +76,7 @@ const Listing = ({
                 );
                 const filterChange = {
                   sortBy: constants.CHALLENGE_SORT_BY[selectedOption.label],
+                  page: 1
                 };
                 updateFilter(filterChange);
               }}
@@ -91,7 +95,11 @@ const Listing = ({
                 const s = range.startDate
                   ? moment(range.startDate).toISOString()
                   : null;
-                const filterChange = { endDateStart: s, startDateEnd: d };
+                const filterChange = {
+                  endDateStart: s,
+                  startDateEnd: d,
+                  page: 1
+                };
                 updateFilter(filterChange);
               }}
               range={{
@@ -102,18 +110,24 @@ const Listing = ({
           </div>
         </div>
       </Panel.Header>
-      {challenges.length ? 
+      {challenges.length ?
         <Panel.Body>
           {challenges.map((challenge, index) => (
             <div key={challenge.id} styleName={index % 2 === 0 ? "even" : "odd"}>
               <ChallengeItem
                 challenge={challenge}
                 onClickTag={(tag) => {
-                  const filterChange = { tags: [tag] };
+                  const filterChange = {
+                    tags: [tag],
+                    page: 1
+                  };
                   updateFilter(filterChange);
                 }}
                 onClickTrack={(track) => {
-                  const filterChange = { tracks: [track] };
+                  const filterChange = {
+                    tracks: [track],
+                    page: 1
+                  };
                   updateFilter(filterChange);
                 }}
                 isLoggedIn={isLoggedIn}
