@@ -52,7 +52,7 @@ function DropdownTerms({
   }, [focused, selectedOption]);
   useEffect(() => {
     setInternalTerms(terms);
-  }, [terms]);
+  }, [terms && terms.length]);
 
   const CustomReactSelectRow = React.forwardRef(
     ({ className, option, children, onSelect }, ref) =>
