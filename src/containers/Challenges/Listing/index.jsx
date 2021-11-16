@@ -50,7 +50,7 @@ const Listing = ({
               size="xs"
               onChange={(value) => {
                 onSearch.current(() => {
-                  const filterChange = { search: value };
+                  const filterChange = { search: value, page: 1 };
                   updateFilter(filterChange);
                 });
               }}
