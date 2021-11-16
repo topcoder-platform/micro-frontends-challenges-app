@@ -83,6 +83,7 @@ const Listing = ({
             }`}
           >
             <DateRangePicker
+              enterToSubmit
               onChange={(range) => {
                 const d = range.endDate
                   ? moment(range.endDate).toISOString()
