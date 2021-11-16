@@ -344,8 +344,17 @@ function DateRangePicker(props) {
   const onPreviewChange = (date) => {
     if (!(date instanceof Date)) {
       setPreview(null);
-      setActiveDate(null);
-      setFocusedRange([0, focusedRange[1]]);
+
+      // ---
+      // workaround for fixing issue 132:
+      // - set the active range's background to transparent color
+      // to prevent the calendar auto focusing on the day of today by default when no
+      // start date nor end date are set.
+      // - does not set the end date of the selection range as default when mouse is out.
+      // ---
+
+      // setActiveDate(null);
+      // setFocusedRange([0, focusedRange[1]]);
       return;
     }
 
@@ -485,7 +494,7 @@ function DateRangePicker(props) {
           startDate: activeDate,
           endDate: activeDate,
           key: "active",
-          color: "#D8FDD8",
+          color: preview ? "#D8FDD8" : "#D8FDD800",
         },
       ];
     }
