@@ -16,7 +16,7 @@ import {
 } from "./helpers";
 
 function DateRangePicker(props) {
-  const { id, range, onChange, placeholder } = props;
+  const { id, range, onChange, placeholder, enterToSubmit = false } = props;
 
   const [rangeString, setRangeString] = useState({
     startDateString: "",
@@ -538,6 +538,7 @@ function DateRangePicker(props) {
           }}
           onStartEndDateChange={onStartEndDateChange}
           placeholder={placeholder}
+          enterToSubmit={enterToSubmit}
         />
       </div>
       <div ref={calendarRef} styleName="calendar-container">
