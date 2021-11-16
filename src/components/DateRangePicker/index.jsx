@@ -562,18 +562,29 @@ function DateRangePicker(props) {
               preview={preview}
               onPreviewChange={onPreviewChange}
             />
-            <button
-              type="button"
-              styleName="reset-button"
-              onClick={() => {
-                onDateRangePickerChange({
-                  startDate: null,
-                  endDate: null,
-                });
-              }}
-            >
-              Reset
-            </button>
+            <div styleName="calendar-footer">
+              <button
+                type="button"
+                styleName="calendar-button"
+                onClick={() => {
+                  onDateRangePickerChange({
+                    startDate: null,
+                    endDate: null,
+                  });
+                }}
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                styleName="calendar-button"
+                onClick={() => {
+                  setIsComponentVisible(false);
+                }}
+              >
+                Close
+              </button>
+            </div>
           </div>
         )}
       </div>
