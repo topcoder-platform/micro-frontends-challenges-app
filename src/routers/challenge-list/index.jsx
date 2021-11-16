@@ -29,6 +29,8 @@ const App = () => {
 
   useEffect(() => {
     if (!location.search) {
+      const filterChange = utils.challenge.createEmptyChallengeFilter();
+      store.dispatch(actions.filter.clearChallengeFilter(filterChange));
       store.dispatch(actions.challenges.getChallengesInit());
       store.dispatch(
         actions.challenges.getChallengesDone(initialChallengeFilter)
