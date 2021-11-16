@@ -206,8 +206,8 @@ class SubmissionsComponent extends React.Component {
             valueA = getFinalScore(a);
             valueB = getFinalScore(b);
           } else {
-            valueA = !_.isEmpty(a.review) && a.review[0].score;
-            valueB = !_.isEmpty(b.review) && b.review[0].score;
+            valueA = !_.isEmpty(a.review) ? a.review[0].score : 0;
+            valueB = !_.isEmpty(b.review) ? b.review[0].score : 0;
           }
           break;
         }
