@@ -53,7 +53,7 @@ const Listing = ({
                 onSearch.current(() => {
                   const filterChange = {
                     search: value,
-                    page: 1
+                    page: 1,
                   };
                   updateFilter(filterChange);
                 });
@@ -76,7 +76,7 @@ const Listing = ({
                 );
                 const filterChange = {
                   sortBy: constants.CHALLENGE_SORT_BY[selectedOption.label],
-                  page: 1
+                  page: 1,
                 };
                 updateFilter(filterChange);
               }}
@@ -98,7 +98,7 @@ const Listing = ({
                 const filterChange = {
                   endDateStart: s,
                   startDateEnd: d,
-                  page: 1
+                  page: 1,
                 };
                 updateFilter(filterChange);
               }}
@@ -119,14 +119,14 @@ const Listing = ({
                 onClickTag={(tag) => {
                   const filterChange = {
                     tags: [tag],
-                    page: 1
+                    page: 1,
                   };
                   updateFilter(filterChange);
                 }}
                 onClickTrack={(track) => {
                   const filterChange = {
                     tracks: [track],
-                    page: 1
+                    page: 1,
                   };
                   updateFilter(filterChange);
                 }}
