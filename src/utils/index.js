@@ -164,10 +164,10 @@ export function parseTotalPrizes(s) {
   if (valid) {
     n = +val.replace(/,/g, "");
     if (/,/.test(val)) {
-      valid = valid && n.toLocaleString("en-US") === val;
+      n = n.toLocaleString("en-US");
     }
+    return n;
   }
-  if (valid) return n;
 }
 
 export function triggerDownload(fileName,blob) {
