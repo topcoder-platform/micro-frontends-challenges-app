@@ -3,6 +3,7 @@ import PT from "prop-types";
 import _ from "lodash";
 import moment from "moment";
 import Panel from "../../../components/Panel";
+import ChallengeError from "../Listing/errors/ChallengeError";
 import Pagination from "../../../components/Pagination";
 import ChallengeItem from "./ChallengeItem";
 import TextInput from "../../../components/TextInput";
@@ -101,38 +102,39 @@ const Listing = ({
           </div>
         </div>
       </Panel.Header>
-      <Panel.Body>
-        {challenges.map((challenge, index) => (
-          <div key={challenge.id} styleName={index % 2 === 0 ? "even" : "odd"}>
-            <ChallengeItem
-              challenge={challenge}
-              onClickTag={(tag) => {
-                const filterChange = { tags: [tag] };
+      {challenges.length ? 
+        <Panel.Body>
+          {challenges.map((challenge, index) => (
+            <div key={challenge.id} styleName={index % 2 === 0 ? "even" : "odd"}>
+              <ChallengeItem
+                challenge={challenge}
+                onClickTag={(tag) => {
+                  const filterChange = { tags: [tag] };
+                  updateFilter(filterChange);
+                }}
+                onClickTrack={(track) => {
+                  const filterChange = { tracks: [track] };
+                  updateFilter(filterChange);
+                }}
+                isLoggedIn={isLoggedIn}
+              />
+            </div>
+          ))}
+          <div styleName="pagination">
+            <Pagination
+              length={total}
+              pageSize={perPage}
+              pageIndex={utils.pagination.pageToPageIndex(page)}
+              onChange={(event) => {
+                const filterChange = {
+                  page: utils.pagination.pageIndexToPage(event.pageIndex),
+                  perPage: event.pageSize,
+                };
                 updateFilter(filterChange);
               }}
-              onClickTrack={(track) => {
-                const filterChange = { tracks: [track] };
-                updateFilter(filterChange);
-              }}
-              isLoggedIn={isLoggedIn}
             />
           </div>
-        ))}
-        <div styleName="pagination">
-          <Pagination
-            length={total}
-            pageSize={perPage}
-            pageIndex={utils.pagination.pageToPageIndex(page)}
-            onChange={(event) => {
-              const filterChange = {
-                page: utils.pagination.pageIndexToPage(event.pageIndex),
-                perPage: event.pageSize,
-              };
-              updateFilter(filterChange);
-            }}
-          />
-        </div>
-      </Panel.Body>
+        </Panel.Body> : <ChallengeError /> }
     </Panel>
   );
 };

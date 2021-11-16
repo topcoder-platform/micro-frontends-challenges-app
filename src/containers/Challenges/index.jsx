@@ -3,7 +3,6 @@ import PT from "prop-types";
 import { connect } from "react-redux";
 import Listing from "./Listing";
 import actions from "../../actions";
-import ChallengeError from "./Listing/errors/ChallengeError";
 // import ChallengeRecommendedError from "./Listing/errors/ChallengeRecommendedError";
 import * as constants from "../../constants";
 import IconListView from "../../assets/icons/list-view.svg";
@@ -70,8 +69,7 @@ const Challenges = ({
           </button>
         </span>
       </h1>
-      {challenges.length === 0 && initialized && <ChallengeError />}
-      {challenges.length > 0 && (
+      {initialized && (
         <>
           {/*noRecommendedChallenges && <ChallengeRecommendedError />*/}
           <Listing
