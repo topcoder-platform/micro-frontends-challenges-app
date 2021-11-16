@@ -9,7 +9,7 @@ import { FeedbackButton, showMenu } from "@topcoder/micro-frontends-earn-app";
 import actions from "../../actions";
 import * as utils from "../../utils";
 import store from "../../store";
-import { initialChallengeFilter } from "../..//reducers/filter";
+import { initialChallengeFilter } from "../../reducers/filter";
 import _ from "lodash";
 
 import "react-date-range/dist/theme/default.css";
@@ -29,10 +29,19 @@ const App = () => {
 
   useEffect(() => {
     if (!location.search) {
-      store.dispatch(actions.challenges.getChallengesInit());
-      store.dispatch(
-        actions.challenges.getChallengesDone(initialChallengeFilter)
-      );
+      const currentFilter = store.getState().filter.challenge;
+      const diff = !_.isEqual(initialChallengeFilter, currentFilter);
+
+      if (diff) {
+        const params = utils.challenge.createChallengeParams(currentFilter);
+        utils.url.updateQuery(params, true);
+      } else {
+        store.dispatch(actions.challenges.getChallengesInit());
+        store.dispatch(
+          actions.challenges.getChallengesDone(currentFilter)
+        );
+      }
+
       return;
     }
 

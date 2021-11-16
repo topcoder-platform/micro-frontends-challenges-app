@@ -31,12 +31,16 @@ export function parseUrlQuery(queryString) {
   return qs.parse(queryString, { ignoreQueryPrefix: true });
 }
 
-export function updateQuery(params) {
+export function updateQuery(params, replace = false) {
   const oldQuery = decodeURIComponent(window.location.search);
   let query = buildQueryString(params);
   query = `?${query.substring(1).split("&").sort().join("&")}`;
   if (query !== oldQuery) {
-    window.history.pushState(window.history.state, "", query);
+    if (replace) {
+      window.history.replaceState(window.history.state, "", query);
+    } else {
+      window.history.pushState(window.history.state, "", query);
+    }
   }
 }
 
