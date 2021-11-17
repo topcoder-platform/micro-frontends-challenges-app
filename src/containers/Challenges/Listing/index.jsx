@@ -36,6 +36,15 @@ const Listing = ({
   );
 
   const onSearch = useRef(_.debounce((f) => f(), 1000));
+  const onChangeSortBy = (newSortByOptions) => {
+    const selectedOption = utils.getSelectedDropdownOption(
+      newSortByOptions
+    );
+    const filterChange = {
+      sortBy: constants.CHALLENGE_SORT_BY[selectedOption.label],
+    };
+    updateFilter(filterChange);
+  }
 
   return (
     <Panel>
@@ -67,15 +76,7 @@ const Listing = ({
               label="Sort by"
               options={sortByOptions}
               size="xs"
-              onChange={(newSortByOptions) => {
-                const selectedOption = utils.getSelectedDropdownOption(
-                  newSortByOptions
-                );
-                const filterChange = {
-                  sortBy: constants.CHALLENGE_SORT_BY[selectedOption.label],
-                };
-                updateFilter(filterChange);
-              }}
+              onChange={_.debounce(onChangeSortBy, 1000)}
             />
           </div>
           <div
@@ -102,7 +103,7 @@ const Listing = ({
           </div>
         </div>
       </Panel.Header>
-      {challenges.length ? 
+      {challenges.length ?
         <Panel.Body>
           {challenges.map((challenge, index) => (
             <div key={challenge.id} styleName={index % 2 === 0 ? "even" : "odd"}>
