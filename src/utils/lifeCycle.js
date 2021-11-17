@@ -13,14 +13,18 @@ export default function appInit() {
     });
   }
 
-  function mount() {
-    if (initialQuery) {
-      const params = utils.url.parseUrlQuery(initialQuery);
-      const filter = utils.challenge.createChallengeFilter(params);
-      store.dispatch(action.initApp(filter));
+  async function mount() {
+    try {
+      if (initialQuery) {
+        const params = utils.url.parseUrlQuery(initialQuery);
+        const filter = utils.challenge.createChallengeFilter(params);
+        store.dispatch(action.initApp(filter));
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
+      return Promise.resolve();
     }
-
-    return Promise.resolve();
   }
 
   function unmount() {
