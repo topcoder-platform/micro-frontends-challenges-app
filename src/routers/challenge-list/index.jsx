@@ -36,7 +36,8 @@ const App = () => {
       return;
     }
 
-    const params = utils.url.parseUrlQuery(location.search);
+    let search = location.href.split('?').length ? '?' + location.href.split('?')[1]: ''
+    const params = utils.url.parseUrlQuery(search);
     const toUpdate = utils.challenge.createChallengeFilter(params);
 
     if (!toUpdate.types) toUpdate.types = [];
