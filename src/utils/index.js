@@ -163,9 +163,6 @@ export function parseTotalPrizes(s) {
   let n;
   if (valid) {
     n = +val.replace(/,/g, "");
-    if (/,/.test(val)) {
-      n = n.toLocaleString("en-US");
-    }
     return n;
   }
 }

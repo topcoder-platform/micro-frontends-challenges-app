@@ -159,6 +159,7 @@ const ChallengeFilter = ({
                 } else {
                   setTotalPrizesFromError(null);
                 }
+                totalPrizesFrom = value.toLocaleString("en-US");
                 if (totalPrizesToError) {
                   return;
                 }
