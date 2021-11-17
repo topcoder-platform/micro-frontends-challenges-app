@@ -156,6 +156,10 @@ const ChallengeFilter = ({
                 if (value == null) {
                   setTotalPrizesFromError("Invalid format");
                   return;
+                } else if (value === totalPrizesTo) {
+                  setTotalPrizesFromError("Cannot be same as 'To'");
+                } else if (value > totalPrizesTo) {
+                  setTotalPrizesFromError("Cannot be greater than 'To'");
                 } else {
                   setTotalPrizesFromError(null);
                 }
@@ -188,6 +192,10 @@ const ChallengeFilter = ({
                 if (value == null) {
                   setTotalPrizesToError("Invalid format");
                   return;
+                } else if (value === totalPrizesFrom) {
+                  setTotalPrizesToError("Cannot be same as 'From'");
+                } else if (value < totalPrizesFrom) {
+                  setTotalPrizesToError("Cannot be less than 'From'");
                 } else {
                   setTotalPrizesToError(null);
                 }
