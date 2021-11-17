@@ -41,7 +41,7 @@ const App = () => {
           actions.challenges.getChallengesDone(currentFilter)
         );
       }
-
+      
       return;
     }
 
