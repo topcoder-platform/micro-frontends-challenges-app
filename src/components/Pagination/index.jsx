@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import PT from "prop-types";
 import Dropdown from "../Dropdown";
 import {
@@ -55,35 +55,40 @@ const Pagination = ({ length, pageIndex, pageSize, onChange }) => {
     }
   };
 
-  const propsRef = useRef();
-  propsRef.current = { pageIndex };
+  const previousPropsRef = useRef();
+  const [displayPages, setDisplayPages] = useState([]);
 
-  const displayPages = useMemo(() => {
-    const newTotal = Math.ceil(length / pageSize);
-    const initDisplayPages = createDisplayPages(propsRef.current.pageIndex, newTotal);
-    return initDisplayPages;
-  }, [length, pageSize]);
+  useEffect(() => {
+      let _displayPages = displayPages;
 
-
-  const updateDisplayPages = useMemo(() => {
-      const start = displayPages[0];
-      const end = displayPages[displayPages.length - 1];
-
-      const _updateDisplayPages = [];
-      if (pageIndex < start) {
-        for (let i = pageIndex; i < pageIndex + N; i += 1) {
-          _updateDisplayPages.push(i);
-        }
-      } else if (pageIndex > end) {
-        for (let i = pageIndex; i > pageIndex - N; i -= 1) {
-          _updateDisplayPages.unshift(i);
-        }
-      } else {
-        _updateDisplayPages.push(...displayPages);
+      if (!previousPropsRef.current
+        || previousPropsRef.current.length !== length
+        || previousPropsRef.current.pageSize !== pageSize) {
+        const newTotal = Math.ceil(length / pageSize);
+        _displayPages = createDisplayPages(pageIndex, newTotal);
+        setDisplayPages(_displayPages)
       }
 
-      return _updateDisplayPages;
-  }, [pageIndex, displayPages]);
+      if (!previousPropsRef.current || previousPropsRef.current.pageIndex !== pageIndex) {
+        const start = _displayPages[0];
+        const end = _displayPages[_displayPages.length - 1];
+
+        const updateDisplayPages = [];
+        if (pageIndex < start) {
+          for (let i = pageIndex; i < pageIndex + N; i += 1) {
+            updateDisplayPages.push(i);
+          }
+          setDisplayPages(updateDisplayPages);
+        } else if (pageIndex > end) {
+          for (let i = pageIndex; i > pageIndex - N; i -= 1) {
+            updateDisplayPages.unshift(i);
+          }
+          setDisplayPages(updateDisplayPages);
+        }
+      }
+
+      previousPropsRef.current = { length, pageSize, pageIndex };
+  }, [length, pageSize, pageIndex, displayPages, setDisplayPages]);
 
   const formatPage = (p) => `${p + 1}`;
 
@@ -105,7 +110,7 @@ const Pagination = ({ length, pageIndex, pageSize, onChange }) => {
             PREVIOUS
           </button>
         </li>
-        {updateDisplayPages.map((p) => (
+        {displayPages.map((p) => (
           <li styleName={`page ${p === pageIndex ? "active" : ""}`} key={p}>
             <button
               onClick={() => {
