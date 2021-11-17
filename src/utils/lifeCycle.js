@@ -5,20 +5,24 @@ import * as utils from "../utils";
 export default function appInit() {
   let initialQuery;
   let urlPath;
+  let firstMounted = true;
 
   function bootstrap() {
     return Promise.resolve().then(() => {
       initialQuery = window.location.search;
-      urlPath = window.location.pathname;
+      urlPath = utils.url.removeTrailingSlash(window.location.pathname);
     });
   }
 
   async function mount() {
     try {
-      if (initialQuery) {
-        const params = utils.url.parseUrlQuery(initialQuery);
-        const filter = utils.challenge.createChallengeFilter(params);
-        store.dispatch(action.initApp(filter));
+      if (firstMounted) {
+        if (initialQuery && urlPath === '/earn/find/challenges') {
+          const params = utils.url.parseUrlQuery(initialQuery);
+          const filter = utils.challenge.createChallengeFilter(params);
+          store.dispatch(action.initApp(filter));
+        }
+        firstMounted = false;
       }
     } catch (error) {
       console.error(error)
