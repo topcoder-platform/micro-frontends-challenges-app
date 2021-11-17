@@ -41,6 +41,7 @@ function TextInput({
         readOnly={readonly}
         defaultValue={value}
         type={type}
+        maxLength="100"
         placeholder={`${placeholder}${placeholder && required ? " *" : ""}`}
         styleName={`${value || val ? "haveValue" : ""} ${
           errorMsg ? "haveError" : ""
