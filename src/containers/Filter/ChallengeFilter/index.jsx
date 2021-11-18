@@ -60,19 +60,6 @@ const ChallengeFilter = ({
   const [totalPrizesFromError, setTotalPrizesFromError] = useState(null);
   const [totalPrizesToError, setTotalPrizesToError] = useState(null);
 
-  const [valTotalPrizesFrom, setValTotalPrizesFrom] = useState(totalPrizesFrom);
-  const [valTotalPrizesTo, setValTotalPrizesTo] = useState(totalPrizesTo);
-
-  useEffect(() => {
-    ref.current.totalPrizesFrom = totalPrizesFrom;
-    setValTotalPrizesFrom(totalPrizesFrom);
-  }, [totalPrizesFrom]);
-
-  useEffect(() => {
-    ref.current.totalPrizesTo = totalPrizesTo;
-    setValTotalPrizesTo(totalPrizesTo);
-  }, [totalPrizesTo]);
-
   const onInputTotalPrizesFrom = useRef(_.debounce((f) => f(), 500));
   const onInputTotalPrizesTo = useRef(_.debounce((f) => f(), 500));
 
@@ -179,7 +166,6 @@ const ChallengeFilter = ({
                 } else {
                   setTotalPrizesFromError(null);
                 }
-                setValTotalPrizesFrom(value.toLocaleString("en-US"));
                 if (totalPrizesToError) {
                   return;
                 }
@@ -213,7 +199,6 @@ const ChallengeFilter = ({
                 } else {
                   setTotalPrizesToError(null);
                 }
-                setValTotalPrizesTo(value.toLocaleString("en-US"));
                 if (totalPrizesFromError) {
                   return;
                 }
