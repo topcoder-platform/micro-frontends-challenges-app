@@ -163,11 +163,8 @@ export function parseTotalPrizes(s) {
   let n;
   if (valid) {
     n = +val.replace(/,/g, "");
-    if (/,/.test(val)) {
-      valid = valid && n.toLocaleString("en-US") === val;
-    }
+    return n;
   }
-  if (valid) return n;
 }
 
 export function triggerDownload(fileName, blob) {
