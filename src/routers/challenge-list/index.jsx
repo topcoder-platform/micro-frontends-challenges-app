@@ -29,6 +29,8 @@ const App = () => {
 
   useEffect(() => {
     if (!location.search) {
+      const filterChange = utils.challenge.createEmptyChallengeFilter();
+      store.dispatch(actions.filter.clearChallengeFilter(filterChange));
       store.dispatch(actions.challenges.getChallengesInit());
       store.dispatch(
         actions.challenges.getChallengesDone(initialChallengeFilter)
@@ -36,7 +38,8 @@ const App = () => {
       return;
     }
 
-    const params = utils.url.parseUrlQuery(location.search);
+    let search = location.href.split('?').length ? '?' + location.href.split('?')[1]: ''
+    const params = utils.url.parseUrlQuery(search);
     const toUpdate = utils.challenge.createChallengeFilter(params);
 
     if (!toUpdate.types) toUpdate.types = [];

@@ -55,7 +55,7 @@ function TextInput({
         }}
         onKeyPress={(e) => {
           if (e.key === "Enter") {
-            onEnterKey();
+            onEnterKey(e.target.value);
           }
         }}
       />

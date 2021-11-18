@@ -36,6 +36,16 @@ const Listing = ({
   );
 
   const onSearch = useRef(_.debounce((f) => f(), 1000));
+  const onChangeSortBy = (newSortByOptions) => {
+    const selectedOption = utils.getSelectedDropdownOption(
+      newSortByOptions
+    );
+    const filterChange = {
+      sortBy: constants.CHALLENGE_SORT_BY[selectedOption.label],
+      page: 1,
+    };
+    updateFilter(filterChange);
+  }
 
   return (
     <Panel>
@@ -70,16 +80,7 @@ const Listing = ({
               label="Sort by"
               options={sortByOptions}
               size="xs"
-              onChange={(newSortByOptions) => {
-                const selectedOption = utils.getSelectedDropdownOption(
-                  newSortByOptions
-                );
-                const filterChange = {
-                  sortBy: constants.CHALLENGE_SORT_BY[selectedOption.label],
-                  page: 1,
-                };
-                updateFilter(filterChange);
-              }}
+              onChange={_.debounce(onChangeSortBy, 1000)}
             />
           </div>
           <div
@@ -88,6 +89,7 @@ const Listing = ({
             }`}
           >
             <DateRangePicker
+              enterToSubmit
               onChange={(range) => {
                 const d = range.endDate
                   ? moment(range.endDate).toISOString()
