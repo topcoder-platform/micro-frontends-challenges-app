@@ -18,7 +18,7 @@ import qs from "qs";
 export function buildQueryString(params, disableEncode) {
   params = _.omitBy(params, (p) => p == null || p === "" || p.length === 0);
   if (!disableEncode) {
-    params.tags = _.map(params.tags, (t) => encodeURIComponent(t))
+    params.tags = _.map(params.tags, (t) => encodeURIComponent(t));
   }
   let queryString = qs.stringify(params, {
     encode: false,
@@ -30,11 +30,11 @@ export function buildQueryString(params, disableEncode) {
 }
 
 export function parseUrlQuery(queryString) {
-  let params =  qs.parse(queryString, { ignoreQueryPrefix: true });
+  let params = qs.parse(queryString, { ignoreQueryPrefix: true });
   if (params.tags) {
-    params.tags = _.map(params.tags, (t) => decodeURIComponent(t))
+    params.tags = _.map(params.tags, (t) => decodeURIComponent(t));
   }
-  return params
+  return params;
 }
 
 export function updateQuery(params, replace = false) {

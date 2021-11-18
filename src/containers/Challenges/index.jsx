@@ -40,13 +40,18 @@ const Challenges = ({
   }, []);
 
   // reset pagination
-  if (page > 1 && challengesMeta.total && challengesMeta.total > 0 && challenges.length === 0) {
+  if (
+    page > 1 &&
+    challengesMeta.total &&
+    challengesMeta.total > 0 &&
+    challenges.length === 0
+  ) {
     updateFilter({
-      page: 1
-    })
+      page: 1,
+    });
     updateQuery({
-      page: 1
-    })
+      page: 1,
+    });
   }
 
   const BUCKET_OPEN_FOR_REGISTRATION = constants.FILTER_BUCKETS[1];

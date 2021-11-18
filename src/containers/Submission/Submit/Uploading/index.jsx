@@ -28,10 +28,12 @@ const Uploading = ({
       if (propsRef.current.submitDone) {
         const backUrl = window.location.pathname;
         if (backUrl === `${CHALLENGES_URL}/${challengeId}`) {
-          navigate(`${CHALLENGES_URL}/${propsRef.current.challengeId}?reload=true`);
+          navigate(
+            `${CHALLENGES_URL}/${propsRef.current.challengeId}?reload=true`
+          );
         }
       }
-    }
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

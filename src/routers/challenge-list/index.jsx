@@ -37,15 +37,15 @@ const App = () => {
         utils.url.updateQuery(params, true);
       } else {
         store.dispatch(actions.challenges.getChallengesInit());
-        store.dispatch(
-          actions.challenges.getChallengesDone(currentFilter)
-        );
+        store.dispatch(actions.challenges.getChallengesDone(currentFilter));
       }
-      
+
       return;
     }
 
-    let search = location.href.split('?').length ? '?' + location.href.split('?')[1]: ''
+    let search = location.href.split("?").length
+      ? "?" + location.href.split("?")[1]
+      : "";
     const params = utils.url.parseUrlQuery(search);
     const toUpdate = utils.challenge.createChallengeFilter(params);
 

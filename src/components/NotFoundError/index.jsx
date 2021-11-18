@@ -8,12 +8,8 @@ const NotFoundError = ({ message }) => (
     <div>
       <img src={IconNotFound} alt="not found" />
     </div>
-    <h1>
-      404 Not found
-    </h1>
-    <p>
-      Sorry, we couldn’t find that page
-    </p>
+    <h1>404 Not found</h1>
+    <p>Sorry, we couldn’t find that page</p>
   </div>
 );
 

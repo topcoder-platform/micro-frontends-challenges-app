@@ -59,35 +59,40 @@ const Pagination = ({ length, pageIndex, pageSize, onChange }) => {
   const [displayPages, setDisplayPages] = useState([]);
 
   useEffect(() => {
-      let _displayPages = displayPages;
+    let _displayPages = displayPages;
 
-      if (!previousPropsRef.current
-        || previousPropsRef.current.length !== length
-        || previousPropsRef.current.pageSize !== pageSize) {
-        const newTotal = Math.ceil(length / pageSize);
-        _displayPages = createDisplayPages(pageIndex, newTotal);
-        setDisplayPages(_displayPages)
-      }
+    if (
+      !previousPropsRef.current ||
+      previousPropsRef.current.length !== length ||
+      previousPropsRef.current.pageSize !== pageSize
+    ) {
+      const newTotal = Math.ceil(length / pageSize);
+      _displayPages = createDisplayPages(pageIndex, newTotal);
+      setDisplayPages(_displayPages);
+    }
 
-      if (!previousPropsRef.current || previousPropsRef.current.pageIndex !== pageIndex) {
-        const start = _displayPages[0];
-        const end = _displayPages[_displayPages.length - 1];
+    if (
+      !previousPropsRef.current ||
+      previousPropsRef.current.pageIndex !== pageIndex
+    ) {
+      const start = _displayPages[0];
+      const end = _displayPages[_displayPages.length - 1];
 
-        const updateDisplayPages = [];
-        if (pageIndex < start) {
-          for (let i = pageIndex; i < pageIndex + N; i += 1) {
-            updateDisplayPages.push(i);
-          }
-          setDisplayPages(updateDisplayPages);
-        } else if (pageIndex > end) {
-          for (let i = pageIndex; i > pageIndex - N; i -= 1) {
-            updateDisplayPages.unshift(i);
-          }
-          setDisplayPages(updateDisplayPages);
+      const updateDisplayPages = [];
+      if (pageIndex < start) {
+        for (let i = pageIndex; i < pageIndex + N; i += 1) {
+          updateDisplayPages.push(i);
         }
+        setDisplayPages(updateDisplayPages);
+      } else if (pageIndex > end) {
+        for (let i = pageIndex; i > pageIndex - N; i -= 1) {
+          updateDisplayPages.unshift(i);
+        }
+        setDisplayPages(updateDisplayPages);
       }
+    }
 
-      previousPropsRef.current = { length, pageSize, pageIndex };
+    previousPropsRef.current = { length, pageSize, pageIndex };
   }, [length, pageSize, pageIndex, displayPages, setDisplayPages]);
 
   const formatPage = (p) => `${p + 1}`;

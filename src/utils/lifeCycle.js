@@ -17,7 +17,7 @@ export default function appInit() {
   async function mount() {
     try {
       if (firstMounted) {
-        if (initialQuery && urlPath === '/earn/find/challenges') {
+        if (initialQuery && urlPath === "/earn/find/challenges") {
           const params = utils.url.parseUrlQuery(initialQuery);
           const filter = utils.challenge.createChallengeFilter(params);
           store.dispatch(action.initApp(filter));
@@ -25,7 +25,7 @@ export default function appInit() {
         firstMounted = false;
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     } finally {
       return Promise.resolve();
     }

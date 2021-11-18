@@ -37,15 +37,13 @@ const Listing = ({
 
   const onSearch = useRef(_.debounce((f) => f(), 1000));
   const onChangeSortBy = (newSortByOptions) => {
-    const selectedOption = utils.getSelectedDropdownOption(
-      newSortByOptions
-    );
+    const selectedOption = utils.getSelectedDropdownOption(newSortByOptions);
     const filterChange = {
       sortBy: constants.CHALLENGE_SORT_BY[selectedOption.label],
       page: 1,
     };
     updateFilter(filterChange);
-  }
+  };
 
   return (
     <Panel>
@@ -112,10 +110,13 @@ const Listing = ({
           </div>
         </div>
       </Panel.Header>
-      {challenges.length ?
+      {challenges.length ? (
         <Panel.Body>
           {challenges.map((challenge, index) => (
-            <div key={challenge.id} styleName={index % 2 === 0 ? "even" : "odd"}>
+            <div
+              key={challenge.id}
+              styleName={index % 2 === 0 ? "even" : "odd"}
+            >
               <ChallengeItem
                 challenge={challenge}
                 onClickTag={(tag) => {
@@ -127,7 +128,7 @@ const Listing = ({
                 }}
                 onClickTrack={(track) => {
                   const filterChange = {
-                    tracks: [track.replace('Quality Assurance', 'QA')],
+                    tracks: [track.replace("Quality Assurance", "QA")],
                     page: 1,
                   };
                   updateFilter(filterChange);
@@ -150,7 +151,10 @@ const Listing = ({
               }}
             />
           </div>
-        </Panel.Body> : <ChallengeError /> }
+        </Panel.Body>
+      ) : (
+        <ChallengeError />
+      )}
     </Panel>
   );
 };

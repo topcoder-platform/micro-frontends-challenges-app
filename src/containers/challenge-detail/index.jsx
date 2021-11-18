@@ -253,9 +253,13 @@ class ChallengeDetailPageContainer extends React.Component {
 
     const query = new URLSearchParams(history.location.search);
     const isReloading = isLoadingChallenge || isLoadingTerms;
-    if (query.get('reload') && !isReloading) {
+    if (query.get("reload") && !isReloading) {
       history.replace(history.location.pathname, history.state);
-      loadChallengeDetails(nextProps.auth, challengeId, loadFullChallengeDetails);
+      loadChallengeDetails(
+        nextProps.auth,
+        challengeId,
+        loadFullChallengeDetails
+      );
 
       return;
     }

@@ -51,7 +51,12 @@ const staticRangeHandler = {
  */
 export function createStaticRanges() {
   const today = moment();
-  const endOfToday = today.set({ hour: 23, minute: 59, second: 59, millisecond: 999 });
+  const endOfToday = today.set({
+    hour: 23,
+    minute: 59,
+    second: 59,
+    millisecond: 999,
+  });
   const pastWeek = endOfToday.clone().subtract(1, "week");
   const pastMonth = endOfToday.clone().subtract(1, "month");
   const past6Months = endOfToday.clone().subtract(6, "month");
