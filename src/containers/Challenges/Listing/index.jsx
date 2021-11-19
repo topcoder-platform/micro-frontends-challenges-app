@@ -64,6 +64,7 @@ const Listing = ({
                   updateFilter(filterChange);
                 });
               }}
+              maxLength="100"
             />
           </div>
           <div styleName="separator" />
