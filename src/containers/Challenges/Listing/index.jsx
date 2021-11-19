@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useCallback } from "react";
 import PT from "prop-types";
 import _ from "lodash";
 import moment from "moment";
@@ -44,6 +44,12 @@ const Listing = ({
     };
     updateFilter(filterChange);
   };
+
+  const isItemOutOfRange = useCallback((challenge) => {
+    const endDate = utils.challenge.getEndDateWithYear(challenge);
+    return moment(endDate).isAfter(startDateEnd) ||
+        moment(endDate).isBefore(endDateStart)
+  },[endDateStart, startDateEnd]);
 
   return (
     <Panel>
@@ -112,31 +118,25 @@ const Listing = ({
       </Panel.Header>
       {challenges.length ? (
         <Panel.Body>
-          {challenges.map((challenge, index) => (
-            <div
-              key={challenge.id}
-              styleName={index % 2 === 0 ? "even" : "odd"}
-            >
-              <ChallengeItem
-                challenge={challenge}
-                onClickTag={(tag) => {
-                  const filterChange = {
-                    tags: [tag],
-                    page: 1,
-                  };
-                  updateFilter(filterChange);
-                }}
-                onClickTrack={(track) => {
-                  const filterChange = {
-                    tracks: [track.replace("Quality Assurance", "QA")],
-                    page: 1,
-                  };
-                  updateFilter(filterChange);
-                }}
-                isLoggedIn={isLoggedIn}
-              />
-            </div>
-          ))}
+          {challenges.map((challenge, index) => {
+            if (isItemOutOfRange(challenge)) return null;
+            return (
+                <div key={challenge.id} styleName={index % 2 === 0 ? "even" : "odd"}>
+                  <ChallengeItem
+                      challenge={challenge}
+                      onClickTag={(tag) => {
+                        const filterChange = { tags: [tag] };
+                        updateFilter(filterChange);
+                      }}
+                      onClickTrack={(track) => {
+                        const filterChange = { tracks: [track] };
+                        updateFilter(filterChange);
+                      }}
+                      isLoggedIn={isLoggedIn}
+                  />
+                </div>
+            )
+          })}
           <div styleName="pagination">
             <Pagination
               length={total}

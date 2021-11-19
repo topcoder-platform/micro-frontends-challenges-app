@@ -384,21 +384,43 @@ export function phaseStartDate(phase) {
 }
 
 /**
- * Returns challenge's end date.
+ * calculate challenge's end date.
  * @param {Object} challenge
  * @return {Date}
  */
-export function getEndDate(challenge) {
+
+function calcEndDate(challenge) {
   const type = challenge.type;
   let phases = challenge.phases || [];
   if (type === "First2Finish" && challenge.status === "Completed") {
     phases = challenge.phases.filter(
-      (p) => p.phaseType === "Iterative Review" && p.phaseStatus === "Closed"
+        (p) => p.phaseType === "Iterative Review" && p.phaseStatus === "Closed"
     );
   }
 
-  const endPhaseDate = Math.max(...phases.map((phase) => phaseEndDate(phase)));
+  return Math.max(...phases.map((phase) => phaseEndDate(phase)));
+}
+
+/**
+ * Returns challenge's end date.
+ * @param {Object} challenge
+ * @return {Date}
+ */
+
+export function getEndDate(challenge) {
+  const endPhaseDate = calcEndDate(challenge);
   return moment(endPhaseDate).format("MMM DD");
+}
+
+/**
+ * Returns challenge's end date with year.
+ * @param {Object} challenge
+ * @return {Date}
+ */
+
+export function getEndDateWithYear(challenge) {
+  const endPhaseDate = calcEndDate(challenge);
+  return moment(endPhaseDate).format();
 }
 
 const STALLED_MSG = "Stalled";
