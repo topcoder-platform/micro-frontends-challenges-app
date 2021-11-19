@@ -60,6 +60,21 @@ const ChallengeFilter = ({
   const [totalPrizesFromError, setTotalPrizesFromError] = useState(null);
   const [totalPrizesToError, setTotalPrizesToError] = useState(null);
 
+  const [valTotalPrizesFrom, setValTotalPrizesFrom] = useState(totalPrizesFrom);
+  const [valTotalPrizesTo, setValTotalPrizesTo] = useState(totalPrizesTo);
+
+  const maxPrize = 100000;
+
+  useEffect(() => {
+    ref.current.totalPrizesFrom = totalPrizesFrom;
+    setValTotalPrizesFrom(totalPrizesFrom);
+  }, [totalPrizesFrom]);
+
+  useEffect(() => {
+    ref.current.totalPrizesTo = totalPrizesTo;
+    setValTotalPrizesTo(totalPrizesTo);
+  }, [totalPrizesTo]);
+
   const onInputTotalPrizesFrom = useRef(_.debounce((f) => f(), 500));
   const onInputTotalPrizesTo = useRef(_.debounce((f) => f(), 500));
 
@@ -156,6 +171,10 @@ const ChallengeFilter = ({
                 if (value == null) {
                   setTotalPrizesFromError("Invalid format");
                   return;
+                }
+                else if(value >= maxPrize){
+                  setTotalPrizesToError("Too big");
+                  return;
                 } else {
                   setTotalPrizesFromError(null);
                 }
@@ -188,6 +207,10 @@ const ChallengeFilter = ({
                 value = utils.parseTotalPrizes(value);
                 if (value == null) {
                   setTotalPrizesToError("Invalid format");
+                  return;
+                }
+                else if(value >= maxPrize){
+                  setTotalPrizesToError("Too big");
                   return;
                 } else {
                   setTotalPrizesToError(null);
