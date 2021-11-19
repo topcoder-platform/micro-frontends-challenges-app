@@ -40,10 +40,12 @@ function toFixed(num, decimal) {
 function processRanks(submissions) {
   let maxFinalScore = 0;
   submissions.sort((a, b) => {
-    let pA = _.get(a, "submissions[0]", { provisionalScore: 0 })
-      .provisionalScore;
-    let pB = _.get(b, "submissions[0]", { provisionalScore: 0 })
-      .provisionalScore;
+    let pA = _.get(a, "submissions[0]", {
+      provisionalScore: 0,
+    }).provisionalScore;
+    let pB = _.get(b, "submissions[0]", {
+      provisionalScore: 0,
+    }).provisionalScore;
     if (pA === "-") pA = 0;
     if (pB === "-") pB = 0;
     if (pA === pB) {

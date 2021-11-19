@@ -54,15 +54,8 @@ const FilePicker = ({
   }, []);
 
   const onSuccess = (file, filePath) => {
-    const {
-      filename,
-      mimetype,
-      size,
-      key,
-      container,
-      source,
-      originalPath,
-    } = file;
+    const { filename, mimetype, size, key, container, source, originalPath } =
+      file;
     // container doesn't seem to get echoed from Drag and Drop
     const cont = container || config.FILESTACK.SUBMISSION_CONTAINER;
     // In case of url we need to submit the original url not the S3

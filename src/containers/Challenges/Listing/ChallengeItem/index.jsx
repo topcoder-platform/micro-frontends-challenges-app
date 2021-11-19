@@ -32,8 +32,8 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
   }
 
   const goToChallengeDetail = () => {
-    navigate(`/earn/find/challenges/${challenge.id}`)
-  }
+    navigate(`/earn/find/challenges/${challenge.id}`);
+  };
 
   return (
     <div styleName="challenge-item">
@@ -49,7 +49,7 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
         <div styleName="name-container">
           <h6 styleName="name">
             <a
-              onClick={goToChallengeDetail}
+              href={`/earn/find/challenges/${challenge.id}`} // eslint-disable-line no-undef
             >
               {challenge.name}
             </a>

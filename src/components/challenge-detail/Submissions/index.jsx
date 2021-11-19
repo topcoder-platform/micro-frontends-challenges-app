@@ -38,9 +38,8 @@ class SubmissionsComponent extends React.Component {
     this.getFlagFirstTry = this.getFlagFirstTry.bind(this);
     this.updateSortedSubmissions = this.updateSortedSubmissions.bind(this);
     this.sortSubmissions = this.sortSubmissions.bind(this);
-    this.checkIsReviewPhaseComplete = this.checkIsReviewPhaseComplete.bind(
-      this
-    );
+    this.checkIsReviewPhaseComplete =
+      this.checkIsReviewPhaseComplete.bind(this);
   }
 
   componentDidMount() {

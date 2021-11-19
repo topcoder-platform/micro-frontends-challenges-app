@@ -43,9 +43,8 @@ function onSetSpecsTabState(state, { payload }) {
  */
 function toggleSubmissionHistory(state, { payload }) {
   const newSubmissionHistoryOpen = _.clone(state.submissionHistoryOpen);
-  newSubmissionHistoryOpen[payload.toString()] = !newSubmissionHistoryOpen[
-    payload.toString()
-  ];
+  newSubmissionHistoryOpen[payload.toString()] =
+    !newSubmissionHistoryOpen[payload.toString()];
   return { ...state, submissionHistoryOpen: newSubmissionHistoryOpen };
 }
 
@@ -57,9 +56,8 @@ function toggleSubmissionHistory(state, { payload }) {
  */
 function toggleSubmissionTestcase(state, { payload }) {
   const newSubmissionTestcaseOpen = _.clone(state.submissionTestcaseOpen);
-  newSubmissionTestcaseOpen[payload.toString()] = !newSubmissionTestcaseOpen[
-    payload.toString()
-  ];
+  newSubmissionTestcaseOpen[payload.toString()] =
+    !newSubmissionTestcaseOpen[payload.toString()];
   return { ...state, submissionTestcaseOpen: newSubmissionTestcaseOpen };
 }
 

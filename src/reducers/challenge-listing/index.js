@@ -25,17 +25,14 @@ function onRegisterDone(state, { error, payload }) {
   if (error) {
     return state;
   }
-  const {
-    recommendedChallenges,
-    loadingRecommendedChallengesTechnologies,
-  } = state;
+  const { recommendedChallenges, loadingRecommendedChallengesTechnologies } =
+    state;
   if (!loadingRecommendedChallengesTechnologies) {
     return state;
   }
 
-  const { challenges } = recommendedChallenges[
-    loadingRecommendedChallengesTechnologies
-  ];
+  const { challenges } =
+    recommendedChallenges[loadingRecommendedChallengesTechnologies];
   const challenge = _.find(challenges, { id: payload.id });
   if (!challenge) {
     return state;
@@ -57,17 +54,14 @@ function onUnregisterDone(state, { error, payload }) {
   if (error) {
     return state;
   }
-  const {
-    recommendedChallenges,
-    loadingRecommendedChallengesTechnologies,
-  } = state;
+  const { recommendedChallenges, loadingRecommendedChallengesTechnologies } =
+    state;
   if (!loadingRecommendedChallengesTechnologies) {
     return state;
   }
 
-  const { challenges } = recommendedChallenges[
-    loadingRecommendedChallengesTechnologies
-  ];
+  const { challenges } =
+    recommendedChallenges[loadingRecommendedChallengesTechnologies];
   const challenge = _.find(challenges, { id: payload.id });
   if (!challenge) {
     return state;

@@ -67,9 +67,8 @@ const Listing = ({
               options={sortByOptions}
               size="xs"
               onChange={(newSortByOptions) => {
-                const selectedOption = utils.getSelectedDropdownOption(
-                  newSortByOptions
-                );
+                const selectedOption =
+                  utils.getSelectedDropdownOption(newSortByOptions);
                 const filterChange = {
                   sortBy: constants.CHALLENGE_SORT_BY[selectedOption.label],
                 };

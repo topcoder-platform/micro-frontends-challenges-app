@@ -48,8 +48,8 @@ const MySubmissions = ({
   const isLoadingOrDeleting = loadingSubmissions || isDeletingSubmission;
 
   const goToChallengeDetail = () => {
-    navigate(`/earn/find/challenges/${challengeId}`)
-  }
+    navigate(`/earn/find/challenges/${challengeId}`);
+  };
 
   return (
     <div styleName="submission-management">
@@ -58,7 +58,7 @@ const MySubmissions = ({
         <div styleName="left-col">
           <h4 styleName="name">{challengeName}</h4>
           <a
-            onClick={goToChallengeDetail}
+            href={`${config.URL.PLATFORM_WEBSITE}/earn/find/challenges/${challengeId}`}
             styleName="back-btn"
           >
             &lt; Back

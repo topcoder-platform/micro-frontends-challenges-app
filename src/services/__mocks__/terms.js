@@ -41,9 +41,8 @@ class TermsService {
   getChallengeTerms(challengeId, agreed) {
     const res = _.clone(this.private.tokenV2 ? termsAuth : termsNoAuth);
     res.serverInformation.currentTime = Date.now();
-    res.requesterInformation.receivedParams.challengeId = _.toString(
-      challengeId
-    );
+    res.requesterInformation.receivedParams.challengeId =
+      _.toString(challengeId);
     if (this.private.tokenV2 && _.isArray(agreed)) {
       for (let i = 0; i < Math.min(agreed.length, res.terms.length); i += 1) {
         res.terms[i].agreed = agreed[i];

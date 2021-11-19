@@ -983,9 +983,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(a.fetchCheckpointsDone(tokens.tokenV2, challengeId));
     },
     toggleCheckpointFeedback: (id, open) => {
-      const {
-        toggleCheckpointFeedback,
-      } = challengeDetailsActions.page.challengeDetails;
+      const { toggleCheckpointFeedback } =
+        challengeDetailsActions.page.challengeDetails;
       dispatch(toggleCheckpointFeedback(id, open));
     },
     onSelectorClicked: (tab) => {

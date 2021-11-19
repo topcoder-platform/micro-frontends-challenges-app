@@ -95,9 +95,8 @@ export function createStaticRanges() {
  * @param {boolean} initialIsVisible true if visible and false if hidden
  */
 export function useComponentVisible(initialIsVisible) {
-  const [isComponentVisible, setIsComponentVisible] = useState(
-    initialIsVisible
-  );
+  const [isComponentVisible, setIsComponentVisible] =
+    useState(initialIsVisible);
   const ref = useRef(null);
 
   const handleHideDropdown = (event) => {

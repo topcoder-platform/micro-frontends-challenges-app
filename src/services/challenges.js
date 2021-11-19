@@ -493,7 +493,8 @@ class ChallengesService {
 
         if (submissions) {
           // Remove AV Scan, SonarQube Review and Virus Scan review types
-          const reviewScans = await this.private.submissionsService.getScanReviewIds();
+          const reviewScans =
+            await this.private.submissionsService.getScanReviewIds();
           submissions.forEach((s, i) => {
             submissions[i].review = _.reject(
               s.review,

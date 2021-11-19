@@ -37,9 +37,8 @@ function DropdownTerms({
   latestPropsRef.current = { addNewOptionPlaceholder };
 
   useEffect(() => {
-    const selectInput = containerRef.current.getElementsByClassName(
-      "Select-input"
-    );
+    const selectInput =
+      containerRef.current.getElementsByClassName("Select-input");
     if (selectInput && selectInput.length) {
       inputFieldRef.current = selectInput[0].getElementsByTagName("input");
       inputFieldRef.current[0].placeholder = focused

@@ -1,16 +1,16 @@
 import React from "react";
 import PT from "prop-types";
 import { navigate } from "@reach/router";
-import { Link } from "@reach/router";
-import config from '../../../../../config'
+import config from "../../../../../config";
 
 import "./styles.scss";
 
 const Header = ({ title, challengeId }) => {
-
   return (
     <div styleName="header">
-      <a onClick={()=> navigate(-1)}>
+      <a
+        href={`${config.URL.PLATFORM_WEBSITE}/earn/find/challenges/${challengeId}`}
+      >
         <span>&#x2039;</span>
         <p>Back to challenge</p>
       </a>
