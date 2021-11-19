@@ -134,4 +134,8 @@ module.exports = {
       process.env.FILESTACK_SUBMISSION_CONTAINER ||
       "topcoder-dev-submissions-dmz",
   },
+  /* Time in MS to wait before refreshing challenge details after register
+   * and unregister.  Used to allow API sufficent time to update.
+   */
+  CHALLENGE_DETAILS_REFRESH_DELAY: 3000,
 };

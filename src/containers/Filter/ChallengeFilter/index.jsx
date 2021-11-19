@@ -90,7 +90,10 @@ const ChallengeFilter = ({
                   const newTypes = checked
                     ? types.concat(type)
                     : types.filter((i) => i !== type);
-                  const filterChange = { types: newTypes };
+                  const filterChange = {
+                    types: newTypes,
+                    page: 1,
+                  };
                   updateFilter(filterChange);
                 }}
               />
@@ -111,7 +114,10 @@ const ChallengeFilter = ({
                   const newTracks = checked
                     ? tracks.concat(track)
                     : tracks.filter((i) => i !== track);
-                  const filterChange = { tracks: newTracks };
+                  const filterChange = {
+                    tracks: newTracks,
+                    page: 1,
+                  };
                   updateFilter(filterChange);
                 }}
               />
@@ -132,6 +138,7 @@ const ChallengeFilter = ({
             );
             const filterChange = {
               tags: selectedTagOptions.map((tagOption) => tagOption.label),
+              page: 1,
             };
             updateFilter(filterChange);
           }}
@@ -164,6 +171,7 @@ const ChallengeFilter = ({
                 }
                 const filterChange = {
                   totalPrizesFrom: value,
+                  page: 1,
                 };
                 updateFilter(filterChange);
               })
@@ -196,6 +204,7 @@ const ChallengeFilter = ({
                 }
                 const filterChange = {
                   totalPrizesTo: value,
+                  page: 1,
                 };
                 updateFilter(filterChange);
               })
@@ -237,7 +246,10 @@ const ChallengeFilter = ({
                               event !==
                               utils.challenge.getCommunityEvent(subCommunity)
                           );
-                      filterChange = { events: newEvents };
+                      filterChange = {
+                        events: newEvents,
+                        page: 1,
+                      };
                     } else {
                       const newGroups = checked
                         ? groups.concat(
@@ -248,7 +260,10 @@ const ChallengeFilter = ({
                               group !==
                               utils.challenge.getCommunityGroup(subCommunity)
                           );
-                      filterChange = { groups: newGroups };
+                      filterChange = {
+                        groups: newGroups,
+                        page: 1,
+                      };
                     }
 
                     updateFilter(filterChange);

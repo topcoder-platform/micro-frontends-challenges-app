@@ -3,7 +3,6 @@ import PT from "prop-types";
 import { connect } from "react-redux";
 import Listing from "./Listing";
 import actions from "../../actions";
-import ChallengeError from "./Listing/errors/ChallengeError";
 // import ChallengeRecommendedError from "./Listing/errors/ChallengeRecommendedError";
 import * as constants from "../../constants";
 import IconListView from "../../assets/icons/list-view.svg";
@@ -15,6 +14,7 @@ import "./styles.scss";
 
 const Challenges = ({
   challenges,
+  challengesMeta,
   search,
   page,
   perPage,
@@ -38,6 +38,21 @@ const Challenges = ({
     };
     checkIsLoggedIn();
   }, []);
+
+  // reset pagination
+  if (
+    page > 1 &&
+    challengesMeta.total &&
+    challengesMeta.total > 0 &&
+    challenges.length === 0
+  ) {
+    updateFilter({
+      page: 1,
+    });
+    updateQuery({
+      page: 1,
+    });
+  }
 
   const BUCKET_OPEN_FOR_REGISTRATION = constants.FILTER_BUCKETS[1];
   const isRecommended = recommended && bucket === BUCKET_OPEN_FOR_REGISTRATION;
@@ -70,8 +85,7 @@ const Challenges = ({
           </button>
         </span>
       </h1>
-      {challenges.length === 0 && initialized && <ChallengeError />}
-      {challenges.length > 0 && (
+      {initialized && (
         <>
           {/*noRecommendedChallenges && <ChallengeRecommendedError />*/}
           <Listing
@@ -126,6 +140,7 @@ const mapStateToProps = (state) => ({
   endDateStart: state.filter.challenge.endDateStart,
   startDateEnd: state.filter.challenge.startDateEnd,
   challenges: state.challenges.challenges,
+  challengesMeta: state.challenges.challengesMeta,
   bucket: state.filter.challenge.bucket,
   recommended: state.filter.challenge.recommended,
   recommendedChallenges: state.challenges.recommendedChallenges,

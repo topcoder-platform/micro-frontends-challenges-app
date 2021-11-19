@@ -20,6 +20,7 @@ const DateInput = ({
   onClickCalendarIcon,
   onStartEndDateChange,
   placeholder,
+  enterToSubmit,
 }) => {
   const ref = useRef(null);
   const [focused, setFocused] = useState(false);
@@ -125,7 +126,14 @@ const DateInput = ({
           size="xs"
           value={rangeText}
           onChange={(value) => {
-            onChangeRangeTextDebounced.current(() => onChangeRangeText(value));
+            if (!enterToSubmit) {
+              onChangeRangeTextDebounced.current(() =>
+                onChangeRangeText(value)
+              );
+            }
+          }}
+          onEnterKey={(value) => {
+            onChangeRangeText(value);
           }}
           placeholder={placeholder}
         />

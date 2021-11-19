@@ -50,39 +50,45 @@ const staticRangeHandler = {
  * @return {object[]} list of defined ranges
  */
 export function createStaticRanges() {
-  const now = moment().utcOffset(0);
-  const pastWeek = now.clone().subtract(1, "week");
-  const pastMonth = now.clone().subtract(1, "month");
-  const past6Months = now.clone().subtract(6, "month");
-  const pastYear = now.clone().subtract(1, "year");
+  const today = moment();
+  const endOfToday = today.set({
+    hour: 23,
+    minute: 59,
+    second: 59,
+    millisecond: 999,
+  });
+  const pastWeek = endOfToday.clone().subtract(1, "week");
+  const pastMonth = endOfToday.clone().subtract(1, "month");
+  const past6Months = endOfToday.clone().subtract(6, "month");
+  const pastYear = endOfToday.clone().subtract(1, "year");
 
   const ranges = [
     {
       label: "Past Week",
       range: () => ({
         startDate: pastWeek.startOf("day").toDate(),
-        endDate: now.endOf("day").toDate(),
+        endDate: endOfToday.toDate(),
       }),
     },
     {
       label: "Past Month",
       range: () => ({
         startDate: pastMonth.startOf("day").toDate(),
-        endDate: now.endOf("day").toDate(),
+        endDate: endOfToday.toDate(),
       }),
     },
     {
       label: "Past 6 Months",
       range: () => ({
         startDate: past6Months.startOf("day").toDate(),
-        endDate: now.endOf("day").toDate(),
+        endDate: endOfToday.toDate(),
       }),
     },
     {
       label: "Past Year",
       range: () => ({
         startDate: pastYear.startOf("day").toDate(),
-        endDate: now.endOf("day").toDate(),
+        endDate: endOfToday.toDate(),
       }),
     },
   ];

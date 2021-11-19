@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import PT from "prop-types";
 import Dropdown from "../Dropdown";
 import {
@@ -12,6 +12,20 @@ import "./styles.scss";
 
 const N = PAGINATION_MAX_PAGE_DISPLAY;
 
+const createDisplayPages = (p, n) => {
+  const pages = [];
+  for (
+    let start = utils.clamp(p - N, 0, n),
+      end = utils.clamp(p + N, 0, n),
+      i = start;
+    i < end;
+    i += 1
+  ) {
+    pages.push(i);
+  }
+  return pages.slice(-N);
+};
+
 /**
  * Pagination with the first page index being as 0 and the last page index being as `total - 1`
  */
@@ -19,24 +33,6 @@ const Pagination = ({ length, pageIndex, pageSize, onChange }) => {
   const total = Math.ceil(length / pageSize);
   const perPageOptions = utils.createDropdownOptions(PAGINATION_PER_PAGES);
   utils.setSelectedDropdownOption(perPageOptions, `${pageSize}`);
-
-  const createDisplayPages = (p, n) => {
-    const pages = [];
-    for (
-      let start = utils.clamp(p - N, 0, n),
-        end = utils.clamp(p + N, 0, n),
-        i = start;
-      i < end;
-      i += 1
-    ) {
-      pages.push(i);
-    }
-    return pages.slice(-N);
-  };
-
-  const [displayPages, setDisplayPages] = useState(
-    createDisplayPages(pageIndex, total)
-  );
 
   const onChangePageSize = (options) => {
     const selectedOption = utils.getSelectedDropdownOption(options);
@@ -59,33 +55,45 @@ const Pagination = ({ length, pageIndex, pageSize, onChange }) => {
     }
   };
 
-  const latestPropsRef = useRef(null);
-  latestPropsRef.current = { displayPages, pageIndex };
+  const previousPropsRef = useRef();
+  const [displayPages, setDisplayPages] = useState([]);
 
   useEffect(() => {
-    const newTotal = Math.ceil(length / pageSize);
-    const _pageIndex = latestPropsRef.current.pageIndex;
-    setDisplayPages(createDisplayPages(_pageIndex, newTotal));
-  }, [length, pageSize]);
+    let _displayPages = displayPages;
 
-  useEffect(() => {
-    const _displayPages = latestPropsRef.current.displayPages;
-    const start = _displayPages[0];
-    const end = _displayPages[_displayPages.length - 1];
-
-    const updateDisplayPages = [];
-    if (pageIndex < start) {
-      for (let i = pageIndex; i < pageIndex + N; i += 1) {
-        updateDisplayPages.push(i);
-      }
-      setDisplayPages(updateDisplayPages);
-    } else if (pageIndex > end) {
-      for (let i = pageIndex; i > pageIndex - N; i -= 1) {
-        updateDisplayPages.unshift(i);
-      }
-      setDisplayPages(updateDisplayPages);
+    if (
+      !previousPropsRef.current ||
+      previousPropsRef.current.length !== length ||
+      previousPropsRef.current.pageSize !== pageSize
+    ) {
+      const newTotal = Math.ceil(length / pageSize);
+      _displayPages = createDisplayPages(pageIndex, newTotal);
+      setDisplayPages(_displayPages);
     }
-  }, [pageIndex]);
+
+    if (
+      !previousPropsRef.current ||
+      previousPropsRef.current.pageIndex !== pageIndex
+    ) {
+      const start = _displayPages[0];
+      const end = _displayPages[_displayPages.length - 1];
+
+      const updateDisplayPages = [];
+      if (pageIndex < start) {
+        for (let i = pageIndex; i < pageIndex + N; i += 1) {
+          updateDisplayPages.push(i);
+        }
+        setDisplayPages(updateDisplayPages);
+      } else if (pageIndex > end) {
+        for (let i = pageIndex; i > pageIndex - N; i -= 1) {
+          updateDisplayPages.unshift(i);
+        }
+        setDisplayPages(updateDisplayPages);
+      }
+    }
+
+    previousPropsRef.current = { length, pageSize, pageIndex };
+  }, [length, pageSize, pageIndex, displayPages, setDisplayPages]);
 
   const formatPage = (p) => `${p + 1}`;
 
