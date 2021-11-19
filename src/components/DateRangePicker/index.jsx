@@ -16,7 +16,7 @@ import {
 } from "./helpers";
 
 function DateRangePicker(props) {
-  const { id, range, onChange, placeholder } = props;
+  const { id, range, onChange, placeholder, enterToSubmit = false } = props;
 
   const [rangeString, setRangeString] = useState({
     startDateString: "",
@@ -344,8 +344,19 @@ function DateRangePicker(props) {
   const onPreviewChange = (date) => {
     if (!(date instanceof Date)) {
       setPreview(null);
-      setActiveDate(null);
-      setFocusedRange([0, focusedRange[1]]);
+
+      // ---
+      // workaround for fixing issue 132:
+      // - set the active range's background to transparent color
+      // to prevent the calendar auto focusing on the day of today by default when no
+      // start date nor end date are set.
+      // - does not set focus on the empty selection range when mouse leaves.
+      // ---
+
+      // setActiveDate(null);
+      if (range.startDate || range.endDate) {
+        setFocusedRange([0, focusedRange[1]]);
+      }
       return;
     }
 
@@ -485,7 +496,7 @@ function DateRangePicker(props) {
           startDate: activeDate,
           endDate: activeDate,
           key: "active",
-          color: "#D8FDD8",
+          color: preview ? "#D8FDD8" : "#D8FDD800",
         },
       ];
     }
@@ -538,6 +549,7 @@ function DateRangePicker(props) {
           }}
           onStartEndDateChange={onStartEndDateChange}
           placeholder={placeholder}
+          enterToSubmit={enterToSubmit}
         />
       </div>
       <div ref={calendarRef} styleName="calendar-container">
@@ -562,18 +574,29 @@ function DateRangePicker(props) {
               preview={preview}
               onPreviewChange={onPreviewChange}
             />
-            <button
-              type="button"
-              styleName="reset-button"
-              onClick={() => {
-                onDateRangePickerChange({
-                  startDate: null,
-                  endDate: null,
-                });
-              }}
-            >
-              Reset
-            </button>
+            <div styleName="calendar-footer">
+              <button
+                type="button"
+                styleName="calendar-button"
+                onClick={() => {
+                  onDateRangePickerChange({
+                    startDate: null,
+                    endDate: null,
+                  });
+                }}
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                styleName="calendar-button"
+                onClick={() => {
+                  setIsComponentVisible(false);
+                }}
+              >
+                Close
+              </button>
+            </div>
           </div>
         )}
       </div>

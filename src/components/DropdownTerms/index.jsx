@@ -50,8 +50,8 @@ function DropdownTerms({
     }
   }, [focused, selectedOption]);
   useEffect(() => {
-    setInternalTerms(terms);
-  }, [terms]);
+    setInternalTerms(terms); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [terms && terms.length]);
 
   const CustomReactSelectRow = React.forwardRef(
     ({ className, option, children, onSelect }, ref) =>

@@ -167,7 +167,7 @@ export function parseTotalPrizes(s) {
       valid = valid && n.toLocaleString("en-US") === val;
     }
   }
-  if (valid) return n;
+  return n;
 }
 
 export function triggerDownload(fileName, blob) {

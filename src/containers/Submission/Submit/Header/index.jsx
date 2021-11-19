@@ -1,6 +1,6 @@
 import React from "react";
 import PT from "prop-types";
-import { navigate } from "@reach/router";
+import { Link } from "@reach/router";
 import config from "../../../../../config";
 
 import "./styles.scss";

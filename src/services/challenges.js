@@ -17,7 +17,7 @@ import { getService as getSubmissionsService } from "./submissions";
  * @return {Array<Object>} challenges
  */
 async function getChallenges(filter, cancellationSignal) {
-  const challengeQuery = util.buildQueryString(filter);
+  const challengeQuery = util.buildQueryString(filter, true);
   return api.get(
     `/challenges/${challengeQuery}`,
     undefined,
