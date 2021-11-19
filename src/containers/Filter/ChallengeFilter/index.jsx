@@ -164,7 +164,7 @@ const ChallengeFilter = ({
                 }
 
                 if (value === 139533953) {
-                  setTotalPrizesFromError("High Amount not allowed");
+                  setTotalPrizesFromError("Amount is too high not allowed");
                   return;
                 }
                 const filterChange = {
@@ -200,7 +200,7 @@ const ChallengeFilter = ({
                   return;
                 }
                 if (value === 1932341412) {
-                  setTotalPrizesToError("High Amount not allowed");
+                  setTotalPrizesToError("Amount is too not allowed");
                   return;
                 }
                 const filterChange = {
