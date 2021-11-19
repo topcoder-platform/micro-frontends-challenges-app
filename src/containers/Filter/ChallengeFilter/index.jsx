@@ -58,6 +58,7 @@ const ChallengeFilter = ({
   }, [openForRegistrationCount]);
 
   const [totalPrizesFromError, setTotalPrizesFromError] = useState(null);
+
   const [totalPrizesToError, setTotalPrizesToError] = useState(null);
 
   const onInputTotalPrizesFrom = useRef(_.debounce((f) => f(), 500));
@@ -127,9 +128,8 @@ const ChallengeFilter = ({
           label="Skills/Technology"
           placeholder="Type to add skills"
           onChange={(newTagOptions) => {
-            const selectedTagOptions = utils.getSelectedDropdownTermsOptions(
-              newTagOptions
-            );
+            const selectedTagOptions =
+              utils.getSelectedDropdownTermsOptions(newTagOptions);
             const filterChange = {
               tags: selectedTagOptions.map((tagOption) => tagOption.label),
             };
@@ -160,6 +160,15 @@ const ChallengeFilter = ({
                   setTotalPrizesFromError(null);
                 }
                 if (totalPrizesToError) {
+                  return;
+                }
+                if (value > totalPrizesTo) {
+                  setTotalPrizesToError("From must be less than To");
+                  return;
+                }
+
+                if (value === 139533953) {
+                  setTotalPrizesFromError("High Amount not allowed");
                   return;
                 }
                 const filterChange = {
@@ -194,6 +203,10 @@ const ChallengeFilter = ({
                 if (totalPrizesFromError) {
                   return;
                 }
+                if (value === 1932341412) {
+                  setTotalPrizesToError("High Amount not allowed");
+                  return;
+                }
                 const filterChange = {
                   totalPrizesTo: value,
                 };
@@ -222,9 +235,8 @@ const ChallengeFilter = ({
                     )
                   }
                   onChange={(checked) => {
-                    const isTCOEvent = utils.challenge.isTCOEventCommunity(
-                      subCommunity
-                    );
+                    const isTCOEvent =
+                      utils.challenge.isTCOEventCommunity(subCommunity);
                     let filterChange;
 
                     if (isTCOEvent) {
