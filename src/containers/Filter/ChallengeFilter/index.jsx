@@ -162,10 +162,6 @@ const ChallengeFilter = ({
                 if (totalPrizesToError) {
                   return;
                 }
-                if (value > totalPrizesTo) {
-                  setTotalPrizesToError("From must be less than To");
-                  return;
-                }
 
                 if (value === 139533953) {
                   setTotalPrizesFromError("High Amount not allowed");
