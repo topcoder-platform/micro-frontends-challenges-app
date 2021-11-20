@@ -18,6 +18,7 @@ function TextInput({
   type,
   onEnterKey,
   readonly,
+  maxLength,
 }) {
   const [val, setVal] = useState(value);
   const delayedOnChange = useRef(
@@ -41,6 +42,7 @@ function TextInput({
         readOnly={readonly}
         defaultValue={value}
         type={type}
+        maxLength={maxLength}
         placeholder={`${placeholder}${placeholder && required ? " *" : ""}`}
         styleName={`${value || val ? "haveValue" : ""} ${
           errorMsg ? "haveError" : ""
@@ -85,6 +87,7 @@ TextInput.defaultProps = {
   type: "text",
   onEnterKey: () => {},
   readonly: false,
+  maxLength: undefined,
 };
 
 TextInput.propTypes = {
