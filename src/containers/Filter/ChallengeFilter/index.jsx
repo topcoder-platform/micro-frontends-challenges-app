@@ -166,6 +166,9 @@ const ChallengeFilter = ({
                 } else if (value > maxPrize) {
                   setTotalPrizesFromError("Too big");
                   return;
+                } else if (value >= totalPrizesTo) {
+                  setTotalPrizesFromError("Too big");
+                  return;
                 } else {
                   setTotalPrizesFromError(null);
                 }
@@ -200,7 +203,10 @@ const ChallengeFilter = ({
                   setTotalPrizesToError("Invalid format");
                   return;
                 } else if (value > maxPrize) {
-                  setTotalPrizesFromError("Too big");
+                  setTotalPrizesToError("Too big");
+                  return;
+                } else if (value <= totalPrizesFrom) {
+                  setTotalPrizesToError("Too small");
                   return;
                 } else {
                   setTotalPrizesToError(null);
