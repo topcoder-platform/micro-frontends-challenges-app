@@ -35,7 +35,7 @@ const ChallengeFilter = ({
   // const BUCKET_OPEN_FOR_REGISTRATION = constants.FILTER_BUCKETS[1];
   const tagOptions = utils.createDropdownTermOptions(challengeTags, tags);
   const bucketOptions = utils.createRadioOptions(challengeBuckets, bucket);
-
+  const maxPrize = 100000;
   const caseSensitive = false;
   utils.setSelectedDropdownTermOptions(tagOptions, tags, caseSensitive);
 
@@ -163,6 +163,9 @@ const ChallengeFilter = ({
                 if (value == null) {
                   setTotalPrizesFromError("Invalid format");
                   return;
+                } else if (value > maxPrize) {
+                  setTotalPrizesFromError("Too big");
+                  return;
                 } else {
                   setTotalPrizesFromError(null);
                 }
@@ -195,6 +198,9 @@ const ChallengeFilter = ({
                 value = utils.parseTotalPrizes(value);
                 if (value == null) {
                   setTotalPrizesToError("Invalid format");
+                  return;
+                } else if (value > maxPrize) {
+                  setTotalPrizesFromError("Too big");
                   return;
                 } else {
                   setTotalPrizesToError(null);
