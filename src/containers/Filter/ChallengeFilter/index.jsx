@@ -121,7 +121,7 @@ const ChallengeFilter = ({
                   updateFilter(filterChange);
                 }}
               />
-              <span>{track}</span>
+              <span>{track.replace('Quality Assurance', 'QA')}</span>
             </span>
           ))}
         </div>

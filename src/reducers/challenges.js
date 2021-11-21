@@ -17,14 +17,9 @@ function onGetChallengesInit(state) {
   return { ...state, loadingChallenges: true, loadingChallengesError: null };
 }
 
-function onGetChallengesDone(state, { payload }) {
-  const error = payload;
-  if (error.name === "AbortError") {
-    return {
-      ...state,
-      loadingChallenges: false,
-      loadingChallengesError: null,
-    };
+function onGetChallengesDone(state, { error, payload }) {
+  if (error) {
+    return onGetChallengesFailure(state, { payload });
   }
 
   return {
@@ -39,32 +34,31 @@ function onGetChallengesDone(state, { payload }) {
   };
 }
 
-// function onGetChallengesFailure(state, { payload }) {
-//   const error = payload;
-//   if (error.name === "AbortError") {
-//     return {
-//       ...state,
-//       loadingChallenges: false,
-//       loadingChallengesError: null,
-//     };
-//   }
+function onGetChallengesFailure(state, { payload }) {
+  const error = payload;
+  if (error.name === "AbortError") {
+    return {
+      ...state,
+      loadingChallenges: false,
+      loadingChallengesError: null,
+    };
+  }
 
-//   return {
-//     ...state,
-//     loadingChallenges: false,
-//     loadingChallengesError: payload,
-//     challenges: [],
-//     total: 0,
-//     openForRegistrationCount: 0,
-//     initialized: true,
-//   };
-// }
+  return {
+    ...state,
+    loadingChallenges: false,
+    loadingChallengesError: payload,
+    challenges: [],
+    total: 0,
+    openForRegistrationCount: 0,
+    initialized: true,
+  };
+}
 
 export default handleActions(
   {
     GET_CHALLENGE_INIT: onGetChallengesInit,
     GET_CHALLENGES_DONE: onGetChallengesDone,
-    // GET_CHALLENGES_FAILURE: onGetChallengesFailure,
   },
   defaultState
 );
