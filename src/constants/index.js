@@ -29,14 +29,14 @@ export const FILTER_CHALLENGE_TRACKS = [
   "Design",
   "Development",
   "Data Science",
-  "QA",
+  "Quality Assurance",
 ];
 
 export const FILTER_CHALLENGE_TRACK_ABBREVIATIONS = {
   Design: "DES",
   Development: "DEV",
   "Data Science": "DS",
-  QA: "QA",
+  "Quality Assurance": "QA",
 };
 
 export const CHALLENGE_SORT_BY = {

@@ -1,6 +1,7 @@
 import store from "../store";
 import action from "../actions/initApp";
 import * as utils from "../utils";
+import { CHALLENGES_URL } from '../constants';
 
 export default function appInit() {
   let initialQuery;
@@ -17,7 +18,7 @@ export default function appInit() {
   async function mount() {
     try {
       if (firstMounted) {
-        if (initialQuery && urlPath === "/earn/find/challenges") {
+        if (initialQuery && urlPath === CHALLENGES_URL) {
           const params = utils.url.parseUrlQuery(initialQuery);
           const filter = utils.challenge.createChallengeFilter(params);
           store.dispatch(action.initApp(filter));
