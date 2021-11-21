@@ -129,7 +129,7 @@ const Listing = ({
                 }}
                 onClickTrack={(track) => {
                   const filterChange = {
-                    tracks: track,
+                    tracks: [track],
                     page: 1,
                   };
                   updateFilter(filterChange);
