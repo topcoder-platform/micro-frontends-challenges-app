@@ -978,8 +978,7 @@ const mapDispatchToProps = (dispatch) => {
       }
       dispatch(updateFilter(change));
       dispatch(
-        updateQuery({ ...stateProps.filter.challenge, ...change }),
-        change
+        updateQuery({ ...stateProps.filter.challenge, ...change })
       );
     },
     setSpecsTabState: (state) =>
