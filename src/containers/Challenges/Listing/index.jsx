@@ -129,7 +129,7 @@ const Listing = ({
                 }}
                 onClickTrack={(track) => {
                   const filterChange = {
-                    tracks: [track.replace("Quality Assurance", "QA")],
+                    tracks: track,
                     page: 1,
                   };
                   updateFilter(filterChange);
