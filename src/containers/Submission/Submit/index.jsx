@@ -45,6 +45,45 @@ const Submit = ({
 
   const submissionPermitted = !submissionEnded || canSubmitFinalFixes;
 
+  //this code below here is used to check if the user is no longer active in the page
+  //by constantly checking for mousemove event
+  //if the user is inactive, the page will reload then backend will know that users has logged out else where then redirect to the login page
+  // @
+  //authTokens won't work because except the page refreshes the fontend won't know that the cookies, session or localstorage has been cleared by this domain from else where, i just submitted to a challenge whereby i have already logged out in another tab since 5 munites ago, but if the page refreshes before the user can the user can return to compelete the submission, this user will be forced to loggin again
+ 
+ const [timeLeft, setTimeLeft] = useState(120);
+	let counter;
+	const mouseMotion = (t) => {
+		counter = setInterval(p, 1000);
+		function p() {
+			t--;
+			setTimeLeft(t--);
+		}
+	};
+	useEffect(() => {
+		mouseMotion(120);
+		document.addEventListener("mousemove", () => {
+			clearInterval(counter);
+			setTimeLeft(120);
+		});
+
+		document.addEventListener("mouseleave", () => {
+			mouseMotion(120);
+		});
+
+		//this code below is for touch devices
+		document.addEventListener("touchmove", () => {
+			clearInterval(counter);
+			setTimeLeft(120);
+		});
+
+		document.addEventListener("touchend", () => {
+			mouseMotion(120);
+		});
+	}, []);
+	if (timeLeft < 1) {
+		window.location.reload();
+	}
   return (
     <div styleName="container">
       <div styleName="content" role="main">
