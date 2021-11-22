@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import PT from "prop-types";
 import * as util from "../../../utils/submission";
 import Header from "./Header";
@@ -44,6 +44,46 @@ const Submit = ({
   );
 
   const submissionPermitted = !submissionEnded || canSubmitFinalFixes;
+
+
+//this code below here is used to check if the user is no longer active in the page
+  //by constantly checking for mousemove event
+  //if the user is inactive, the page will reload then backend will know that users has logged out else where then redirect to the login page
+
+  const [timeLeft, setTimeLeft] = useState(120);
+  let counter;
+  const mouseMotion = () => {
+    counter = setInterval(() => {
+      setTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
+    }, 3000);
+  };
+  useEffect(() => {
+    mouseMotion();
+    document.addEventListener("mousemove", () => {
+      clearInterval(counter);
+      setTimeLeft(120);
+    });
+
+    document.addEventListener("mouseleave", () => {
+      mouseMotion();
+    });
+
+    //this code below is for touch devices
+    document.addEventListener("touchmove", () => {
+      clearInterval(counter);
+      setTimeLeft(120);
+    });
+
+    document.addEventListener("touchend", () => {
+      mouseMotion();
+    });
+
+    // while (moved) {
+    // }
+    if (timeLeft < 1) {
+      window.location.reload();
+    }
+  }, [counter, timeLeft]);
 
   return (
     <div styleName="container">
