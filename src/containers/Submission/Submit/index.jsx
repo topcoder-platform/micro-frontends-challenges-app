@@ -44,6 +44,27 @@ const Submit = ({
   );
 
   const submissionPermitted = !submissionEnded || canSubmitFinalFixes;
+  
+  // this code below here is used to check if the user is no longer active in the page 
+  // by constantly checking for mousemove event
+  const [moved, setMoved] = React.useState(false)
+  const [timeLeft, setTimeLeft] = React.useState(30)
+  React.useEffect(() => {
+    Let counter = setInterval(checkInActivity, 1000)
+    const checkInActivity = () => {
+      setTimeLeft(prevTimeLeft => prevTimeLeft - 1)
+    }
+    document.addEventListner("mousemove", => {
+              SetMoved(true)
+          }
+        )
+      while (moved){
+        clearInterval(counter)
+      }
+     if(timeLeft <= 0){
+     // will finish it soon went to grab an item from the mall 
+     }
+  }, []);
 
   return (
     <div styleName="container">
