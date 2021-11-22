@@ -269,6 +269,37 @@ function DateRangePicker(props) {
     setPreview(null);
   };
 
+  const onReset = (presetRange) => {
+    let newStartDate;
+    let newEndDate;
+
+    if (presetRange) {
+      newStartDate = presetRange.startDate;
+      newEndDate = presetRange.endDate;
+    }
+
+    setFocusedRange([0, 0]);
+
+    setErrors({
+      startDate: "",
+      endDate: "",
+    });
+
+    setRangeString({
+      startDateString: newStartDate
+        ? moment(newStartDate).format("MMM D, YYYY")
+        : "",
+      endDateString: newEndDate ? moment(newEndDate).format("MMM D, YYYY") : "",
+    });
+
+    onChange({
+      startDate: newStartDate ? moment(newStartDate) : null,
+      endDate: newEndDate ? moment(newEndDate) : null,
+    });
+
+    setIsComponentVisible(false);
+  }
+
   /**
    * Event handler on date selection changes
    * @param {Object} newRange nnew range that has endDate and startDate data
@@ -350,13 +381,13 @@ function DateRangePicker(props) {
       // - set the active range's background to transparent color
       // to prevent the calendar auto focusing on the day of today by default when no
       // start date nor end date are set.
-      // - does not set focus on the empty selection range when mouse leaves.
+      // - does not set focus on the selection range when mouse leaves.
       // ---
 
       // setActiveDate(null);
-      if (range.startDate || range.endDate) {
-        setFocusedRange([0, focusedRange[1]]);
-      }
+      // if (range.startDate || range.endDate) {
+      //   setFocusedRange([0, focusedRange[1]]);
+      // }
       return;
     }
 
@@ -558,9 +589,13 @@ function DateRangePicker(props) {
             <ReactDateRangePicker
               focusedRange={focusedRange}
               onRangeFocusChange={setFocusedRange}
-              onChange={(item) =>
-                onDateRangePickerChange(item.selection || item.active)
-              }
+              onChange={(item) => {
+                if (!preview) {
+                  onReset(item.selection || item.active);
+                } else {
+                  onDateRangePickerChange(item.selection || item.active);
+                }
+              }}
               dateDisplayFormat="MM/dd/yyyy"
               showDateDisplay={false}
               staticRanges={createStaticRanges()}
@@ -578,12 +613,7 @@ function DateRangePicker(props) {
               <button
                 type="button"
                 styleName="calendar-button"
-                onClick={() => {
-                  onDateRangePickerChange({
-                    startDate: null,
-                    endDate: null,
-                  });
-                }}
+                onClick={onReset}
               >
                 Reset
               </button>

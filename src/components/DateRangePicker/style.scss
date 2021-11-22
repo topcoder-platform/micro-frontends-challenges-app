@@ -348,6 +348,10 @@ $darkGreen: #0AB88A;;
           }
         }
 
+        .rdrStartEdge.rdrEndEdge ~ .rdrDayNumber span {
+          color: $tc-black;
+        }
+
         .rdrDayNumber {
           top: 0;
           bottom: 0;
