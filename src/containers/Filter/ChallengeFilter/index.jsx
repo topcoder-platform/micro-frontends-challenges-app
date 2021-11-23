@@ -35,7 +35,7 @@ const ChallengeFilter = ({
   // const BUCKET_OPEN_FOR_REGISTRATION = constants.FILTER_BUCKETS[1];
   const tagOptions = utils.createDropdownTermOptions(challengeTags, tags);
   const bucketOptions = utils.createRadioOptions(challengeBuckets, bucket);
-
+  const maxPrize = 100000;
   const caseSensitive = false;
   utils.setSelectedDropdownTermOptions(tagOptions, tags, caseSensitive);
 
@@ -90,7 +90,10 @@ const ChallengeFilter = ({
                   const newTypes = checked
                     ? types.concat(type)
                     : types.filter((i) => i !== type);
-                  const filterChange = { types: newTypes };
+                  const filterChange = {
+                    types: newTypes,
+                    page: 1,
+                  };
                   updateFilter(filterChange);
                 }}
               />
@@ -111,11 +114,14 @@ const ChallengeFilter = ({
                   const newTracks = checked
                     ? tracks.concat(track)
                     : tracks.filter((i) => i !== track);
-                  const filterChange = { tracks: newTracks };
+                  const filterChange = {
+                    tracks: newTracks,
+                    page: 1,
+                  };
                   updateFilter(filterChange);
                 }}
               />
-              <span>{track}</span>
+              <span>{track.replace('Quality Assurance', 'QA')}</span>
             </span>
           ))}
         </div>
@@ -132,6 +138,7 @@ const ChallengeFilter = ({
             );
             const filterChange = {
               tags: selectedTagOptions.map((tagOption) => tagOption.label),
+              page: 1,
             };
             updateFilter(filterChange);
           }}
@@ -156,6 +163,12 @@ const ChallengeFilter = ({
                 if (value == null) {
                   setTotalPrizesFromError("Invalid format");
                   return;
+                } else if (value > maxPrize) {
+                  setTotalPrizesFromError("Too big");
+                  return;
+                } else if (value >= totalPrizesTo) {
+                  setTotalPrizesFromError("Too big");
+                  return;
                 } else {
                   setTotalPrizesFromError(null);
                 }
@@ -164,6 +177,7 @@ const ChallengeFilter = ({
                 }
                 const filterChange = {
                   totalPrizesFrom: value,
+                  page: 1,
                 };
                 updateFilter(filterChange);
               })
@@ -188,6 +202,12 @@ const ChallengeFilter = ({
                 if (value == null) {
                   setTotalPrizesToError("Invalid format");
                   return;
+                } else if (value > maxPrize) {
+                  setTotalPrizesToError("Too big");
+                  return;
+                } else if (value <= totalPrizesFrom) {
+                  setTotalPrizesToError("Too small");
+                  return;
                 } else {
                   setTotalPrizesToError(null);
                 }
@@ -196,6 +216,7 @@ const ChallengeFilter = ({
                 }
                 const filterChange = {
                   totalPrizesTo: value,
+                  page: 1,
                 };
                 updateFilter(filterChange);
               })
@@ -237,7 +258,10 @@ const ChallengeFilter = ({
                               event !==
                               utils.challenge.getCommunityEvent(subCommunity)
                           );
-                      filterChange = { events: newEvents };
+                      filterChange = {
+                        events: newEvents,
+                        page: 1,
+                      };
                     } else {
                       const newGroups = checked
                         ? groups.concat(
@@ -248,7 +272,10 @@ const ChallengeFilter = ({
                               group !==
                               utils.challenge.getCommunityGroup(subCommunity)
                           );
-                      filterChange = { groups: newGroups };
+                      filterChange = {
+                        groups: newGroups,
+                        page: 1,
+                      };
                     }
 
                     updateFilter(filterChange);

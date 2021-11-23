@@ -3,6 +3,7 @@ import PT from "prop-types";
 import _ from "lodash";
 import moment from "moment";
 import Panel from "../../../components/Panel";
+import ChallengeError from "../Listing/errors/ChallengeError";
 import Pagination from "../../../components/Pagination";
 import ChallengeItem from "./ChallengeItem";
 import TextInput from "../../../components/TextInput";
@@ -35,6 +36,14 @@ const Listing = ({
   );
 
   const onSearch = useRef(_.debounce((f) => f(), 1000));
+  const onChangeSortBy = (newSortByOptions) => {
+    const selectedOption = utils.getSelectedDropdownOption(newSortByOptions);
+    const filterChange = {
+      sortBy: constants.CHALLENGE_SORT_BY[selectedOption.label],
+      page: 1,
+    };
+    updateFilter(filterChange);
+  };
 
   return (
     <Panel>
@@ -50,10 +59,14 @@ const Listing = ({
               size="xs"
               onChange={(value) => {
                 onSearch.current(() => {
-                  const filterChange = { search: value };
+                  const filterChange = {
+                    search: value,
+                    page: 1,
+                  };
                   updateFilter(filterChange);
                 });
               }}
+              maxLength="100"
             />
           </div>
           <div styleName="separator" />
@@ -66,15 +79,7 @@ const Listing = ({
               label="Sort by"
               options={sortByOptions}
               size="xs"
-              onChange={(newSortByOptions) => {
-                const selectedOption = utils.getSelectedDropdownOption(
-                  newSortByOptions
-                );
-                const filterChange = {
-                  sortBy: constants.CHALLENGE_SORT_BY[selectedOption.label],
-                };
-                updateFilter(filterChange);
-              }}
+              onChange={_.debounce(onChangeSortBy, 1000)}
             />
           </div>
           <div
@@ -83,6 +88,7 @@ const Listing = ({
             }`}
           >
             <DateRangePicker
+              enterToSubmit
               onChange={(range) => {
                 const d = range.endDate
                   ? moment(range.endDate).toISOString()
@@ -90,7 +96,11 @@ const Listing = ({
                 const s = range.startDate
                   ? moment(range.startDate).toISOString()
                   : null;
-                const filterChange = { endDateStart: s, startDateEnd: d };
+                const filterChange = {
+                  endDateStart: s,
+                  startDateEnd: d,
+                  page: 1,
+                };
                 updateFilter(filterChange);
               }}
               range={{
@@ -101,38 +111,51 @@ const Listing = ({
           </div>
         </div>
       </Panel.Header>
-      <Panel.Body>
-        {challenges.map((challenge, index) => (
-          <div key={challenge.id} styleName={index % 2 === 0 ? "even" : "odd"}>
-            <ChallengeItem
-              challenge={challenge}
-              onClickTag={(tag) => {
-                const filterChange = { tags: [tag] };
+      {challenges.length ? (
+        <Panel.Body>
+          {challenges.map((challenge, index) => (
+            <div
+              key={challenge.id}
+              styleName={index % 2 === 0 ? "even" : "odd"}
+            >
+              <ChallengeItem
+                challenge={challenge}
+                onClickTag={(tag) => {
+                  const filterChange = {
+                    tags: [tag],
+                    page: 1,
+                  };
+                  updateFilter(filterChange);
+                }}
+                onClickTrack={(track) => {
+                  const filterChange = {
+                    tracks: [track],
+                    page: 1,
+                  };
+                  updateFilter(filterChange);
+                }}
+                isLoggedIn={isLoggedIn}
+              />
+            </div>
+          ))}
+          <div styleName="pagination">
+            <Pagination
+              length={total}
+              pageSize={perPage}
+              pageIndex={utils.pagination.pageToPageIndex(page)}
+              onChange={(event) => {
+                const filterChange = {
+                  page: utils.pagination.pageIndexToPage(event.pageIndex),
+                  perPage: event.pageSize,
+                };
                 updateFilter(filterChange);
               }}
-              onClickTrack={(track) => {
-                const filterChange = { tracks: [track] };
-                updateFilter(filterChange);
-              }}
-              isLoggedIn={isLoggedIn}
             />
           </div>
-        ))}
-        <div styleName="pagination">
-          <Pagination
-            length={total}
-            pageSize={perPage}
-            pageIndex={utils.pagination.pageToPageIndex(page)}
-            onChange={(event) => {
-              const filterChange = {
-                page: utils.pagination.pageIndexToPage(event.pageIndex),
-                perPage: event.pageSize,
-              };
-              updateFilter(filterChange);
-            }}
-          />
-        </div>
-      </Panel.Body>
+        </Panel.Body>
+      ) : (
+        <ChallengeError />
+      )}
     </Panel>
   );
 };

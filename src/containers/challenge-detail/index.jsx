@@ -221,6 +221,10 @@ class ChallengeDetailPageContainer extends React.Component {
       challenge,
       // loadingRecommendedChallengesUUID,
       history,
+      loadChallengeDetails,
+      loadFullChallengeDetails,
+      isLoadingChallenge,
+      isLoadingTerms,
     } = this.props;
 
     if (
@@ -246,6 +250,19 @@ class ChallengeDetailPageContainer extends React.Component {
     // ) {
     //   getAllRecommendedChallenges(auth.tokenV3, recommendedTechnology);
     // }
+
+    const query = new URLSearchParams(history.location.search);
+    const isReloading = isLoadingChallenge || isLoadingTerms;
+    if (query.get("reload") && !isReloading) {
+      history.replace(history.location.pathname, history.state);
+      loadChallengeDetails(
+        nextProps.auth,
+        challengeId,
+        loadFullChallengeDetails
+      );
+
+      return;
+    }
 
     const { thriveArticles } = this.state;
     const userId = _.get(this, "props.auth.user.userId");
@@ -961,8 +978,7 @@ const mapDispatchToProps = (dispatch) => {
       }
       dispatch(updateFilter(change));
       dispatch(
-        updateQuery({ ...stateProps.filter.challenge, ...change }),
-        change
+        updateQuery({ ...stateProps.filter.challenge, ...change })
       );
     },
     setSpecsTabState: (state) =>

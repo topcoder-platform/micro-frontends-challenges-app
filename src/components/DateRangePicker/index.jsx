@@ -16,7 +16,7 @@ import {
 } from "./helpers";
 
 function DateRangePicker(props) {
-  const { id, range, onChange, placeholder } = props;
+  const { id, range, onChange, placeholder, enterToSubmit = false } = props;
 
   const [rangeString, setRangeString] = useState({
     startDateString: "",
@@ -269,6 +269,37 @@ function DateRangePicker(props) {
     setPreview(null);
   };
 
+  const onReset = (presetRange) => {
+    let newStartDate;
+    let newEndDate;
+
+    if (presetRange) {
+      newStartDate = presetRange.startDate;
+      newEndDate = presetRange.endDate;
+    }
+
+    setFocusedRange([0, 0]);
+
+    setErrors({
+      startDate: "",
+      endDate: "",
+    });
+
+    setRangeString({
+      startDateString: newStartDate
+        ? moment(newStartDate).format("MMM D, YYYY")
+        : "",
+      endDateString: newEndDate ? moment(newEndDate).format("MMM D, YYYY") : "",
+    });
+
+    onChange({
+      startDate: newStartDate ? moment(newStartDate) : null,
+      endDate: newEndDate ? moment(newEndDate) : null,
+    });
+
+    setIsComponentVisible(false);
+  }
+
   /**
    * Event handler on date selection changes
    * @param {Object} newRange nnew range that has endDate and startDate data
@@ -344,8 +375,19 @@ function DateRangePicker(props) {
   const onPreviewChange = (date) => {
     if (!(date instanceof Date)) {
       setPreview(null);
-      setActiveDate(null);
-      setFocusedRange([0, focusedRange[1]]);
+
+      // ---
+      // workaround for fixing issue 132:
+      // - set the active range's background to transparent color
+      // to prevent the calendar auto focusing on the day of today by default when no
+      // start date nor end date are set.
+      // - does not set focus on the selection range when mouse leaves.
+      // ---
+
+      // setActiveDate(null);
+      // if (range.startDate || range.endDate) {
+      //   setFocusedRange([0, focusedRange[1]]);
+      // }
       return;
     }
 
@@ -485,7 +527,7 @@ function DateRangePicker(props) {
           startDate: activeDate,
           endDate: activeDate,
           key: "active",
-          color: "#D8FDD8",
+          color: preview ? "#D8FDD8" : "#D8FDD800",
         },
       ];
     }
@@ -538,6 +580,7 @@ function DateRangePicker(props) {
           }}
           onStartEndDateChange={onStartEndDateChange}
           placeholder={placeholder}
+          enterToSubmit={enterToSubmit}
         />
       </div>
       <div ref={calendarRef} styleName="calendar-container">
@@ -546,9 +589,13 @@ function DateRangePicker(props) {
             <ReactDateRangePicker
               focusedRange={focusedRange}
               onRangeFocusChange={setFocusedRange}
-              onChange={(item) =>
-                onDateRangePickerChange(item.selection || item.active)
-              }
+              onChange={(item) => {
+                if (!preview) {
+                  onReset(item.selection || item.active);
+                } else {
+                  onDateRangePickerChange(item.selection || item.active);
+                }
+              }}
               dateDisplayFormat="MM/dd/yyyy"
               showDateDisplay={false}
               staticRanges={createStaticRanges()}
@@ -562,18 +609,24 @@ function DateRangePicker(props) {
               preview={preview}
               onPreviewChange={onPreviewChange}
             />
-            <button
-              type="button"
-              styleName="reset-button"
-              onClick={() => {
-                onDateRangePickerChange({
-                  startDate: null,
-                  endDate: null,
-                });
-              }}
-            >
-              Reset
-            </button>
+            <div styleName="calendar-footer">
+              <button
+                type="button"
+                styleName="calendar-button"
+                onClick={onReset}
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                styleName="calendar-button"
+                onClick={() => {
+                  setIsComponentVisible(false);
+                }}
+              >
+                Close
+              </button>
+            </div>
           </div>
         )}
       </div>
