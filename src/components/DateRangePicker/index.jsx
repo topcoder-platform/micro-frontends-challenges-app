@@ -298,7 +298,7 @@ function DateRangePicker(props) {
     });
 
     setIsComponentVisible(false);
-  }
+  };
 
   /**
    * Event handler on date selection changes

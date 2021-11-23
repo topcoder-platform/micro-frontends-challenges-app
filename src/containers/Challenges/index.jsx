@@ -5,8 +5,8 @@ import Listing from "./Listing";
 import actions from "../../actions";
 // import ChallengeRecommendedError from "./Listing/errors/ChallengeRecommendedError";
 import * as constants from "../../constants";
-import IconListView from "../../assets/icons/list-view.svg";
-import IconCardView from "../../assets/icons/card-view.svg";
+// import IconListView from "../../assets/icons/list-view.svg";
+// import IconCardView from "../../assets/icons/card-view.svg";
 import { Banner } from "@topcoder/micro-frontends-earn-app";
 import * as utils from "../../utils";
 
@@ -76,14 +76,14 @@ const Challenges = ({
       <Banner />
       <h1 styleName="title">
         <span>CHALLENGES</span>
-        <span styleName="view-mode">
+        {/* <span styleName="view-mode">
           <button styleName="button-icon active">
             <IconListView />
           </button>
           <button styleName="button-icon">
             <IconCardView />
           </button>
-        </span>
+        </span> */}
       </h1>
       {initialized && (
         <>

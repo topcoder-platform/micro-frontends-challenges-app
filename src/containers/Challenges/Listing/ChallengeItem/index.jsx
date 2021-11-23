@@ -12,8 +12,8 @@ import * as utils from "../../../../utils";
 import ProgressTooltip from "../tooltips/ProgressTooltip";
 import PlacementsTooltip from "../tooltips/PlacementsTooltip";
 import TagsMoreTooltip from "../tooltips/TagsMoreTooltip";
-import { CHALLENGES_URL } from 'constants';
-import { Link } from '@reach/router';
+import { CHALLENGES_URL } from "constants";
+import { Link } from "@reach/router";
 
 import "./styles.scss";
 
@@ -45,9 +45,7 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
       <div styleName="info">
         <div styleName="name-container">
           <h6 styleName="name">
-            <Link
-              to={`${CHALLENGES_URL}/${challenge.id}`}
-            >
+            <Link to={`${CHALLENGES_URL}/${challenge.id}`}>
               {challenge.name}
             </Link>
           </h6>
@@ -72,9 +70,7 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
           />
         </div>
         <div styleName="nums">
-          <Link
-            to={`${CHALLENGES_URL}/${challenge.id}?tab=registrants`}
-          >
+          <Link to={`${CHALLENGES_URL}/${challenge.id}?tab=registrants`}>
             <NumRegistrants numOfRegistrants={challenge.numOfRegistrants} />
           </Link>
           <Link to={submissionLink}>
