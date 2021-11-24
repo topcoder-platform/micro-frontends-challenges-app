@@ -1,5 +1,6 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import PT from "prop-types";
+import _ from "lodash";
 import { connect } from "react-redux";
 import { navigate } from "@reach/router";
 import { PrimaryButton } from "components/Buttons";
@@ -25,7 +26,7 @@ const Submission = ({
   getCommunityList,
   isLoadingChallenge,
   isChallengeLoaded,
-
+  tokens,
   track,
   agreed,
   filePickers,
@@ -39,6 +40,7 @@ const Submission = ({
   uploadProgress,
 
   getChallenge,
+  getChallengeDetails,
   submit,
   resetForm,
   setAgreed,
@@ -49,6 +51,13 @@ const Submission = ({
   setSubmissionFilestackData,
   setAuth,
 }) => {
+
+  const [registered, setRegistered] = useState(isRegistered);
+
+  useEffect(() => {
+    setRegistered(isRegistered);
+  }, [isRegistered]);
+
   const propsRef = useRef();
   propsRef.current = {
     id,
@@ -82,14 +91,29 @@ const Submission = ({
     return null;
   }
 
-  if (!isRegistered) {
+  if (!registered) {
     return (
-      <AccessDenied cause={ACCESS_DENIED_REASON.NOT_AUTHORIZED}>
-        <PrimaryButton to={`${CHALLENGES_URL}/${challengeId}`}>
-          Go to Challenge Details
-        </PrimaryButton>
-      </AccessDenied>
+        <AccessDenied cause={ACCESS_DENIED_REASON.NOT_AUTHORIZED}>
+          <PrimaryButton to={`${CHALLENGES_URL}/${challengeId}`}>
+            Go to Challenge Details
+          </PrimaryButton>
+        </AccessDenied>
     );
+  }
+
+  const checkIfRegistered = async () => {
+    const challengeDetail = await getChallengeDetails(tokens, challengeId);
+    const registrants = challengeDetail?.payload?.registrants;
+    return _.some(registrants, (r) => `${r.memberId}` === `${userId}`);
+  }
+
+  const handleSubmit = async (data) => {
+    const registered = await checkIfRegistered();
+    if (registered) {
+      submit(data);
+    } else {
+      setRegistered(registered);
+    }
   }
 
   return (
@@ -119,7 +143,7 @@ const Submission = ({
       setFilePickerUploadProgress={setFilePickerUploadProgress}
       setFilePickerDragged={setFilePickerDragged}
       setSubmissionFilestackData={setSubmissionFilestackData}
-      submit={submit}
+      submit={handleSubmit}
     />
   );
 };
@@ -164,12 +188,14 @@ Submission.propTypes = {
   setFilePickerDragged: PT.func,
   setSubmissionFilestackData: PT.func,
   setAuth: PT.func,
+  registered: PT.bool,
 };
 
 const mapStateToProps = (state, ownProps) => {
   const challenge = state?.challenge?.challenge;
 
   return {
+    tokens: state.auth,
     id: ownProps.challengeId,
     challengeId: challenge?.id,
     challengeName: challenge?.name,
@@ -212,6 +238,11 @@ const mapDispatchToProps = (dispatch) => {
     getChallenge: (challengeId) => {
       dispatch(actions.challenge.getChallengeInit(challengeId));
       dispatch(actions.challenge.getChallengeDone(challengeId));
+    },
+    getChallengeDetails: (tokens, challengeId) => {
+      const a = actions.challenge;
+      const { tokenV3, tokenV2 } = tokens;
+      return dispatch(a.getFullDetailsDone(challengeId, tokenV3, tokenV2));
     },
     submit: (data) => {
       dispatch(actions.submission.submit.submitInit());
