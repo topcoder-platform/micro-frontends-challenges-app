@@ -52,11 +52,7 @@ const Submission = ({
   setAuth,
 }) => {
 
-  const [registered, setRegistered] = useState(isRegistered);
-
-  useEffect(() => {
-    setRegistered(isRegistered);
-  }, [isRegistered]);
+  const [registrationCanceled, setCanceled] = useState(false);
 
   const propsRef = useRef();
   propsRef.current = {
@@ -91,7 +87,7 @@ const Submission = ({
     return null;
   }
 
-  if (!registered) {
+  if (!isRegistered || registrationCanceled) {
     return (
         <AccessDenied cause={ACCESS_DENIED_REASON.NOT_AUTHORIZED}>
           <PrimaryButton to={`${CHALLENGES_URL}/${challengeId}`}>
@@ -101,18 +97,18 @@ const Submission = ({
     );
   }
 
-  const checkIfRegistered = async () => {
+  const ifStillRegistered = async () => {
     const challengeDetail = await getChallengeDetails(tokens, challengeId);
-    const registrants = challengeDetail?.payload?.registrants;
+    const registrants = challengeDetail?.payload?.registrants || [];
     return _.some(registrants, (r) => `${r.memberId}` === `${userId}`);
   }
 
   const handleSubmit = async (data) => {
-    const registered = await checkIfRegistered();
-    if (registered) {
+    const stillRegistered = await ifStillRegistered();
+    if (stillRegistered) {
       submit(data);
     } else {
-      setRegistered(registered);
+      setCanceled(true);
     }
   }
 
@@ -188,7 +184,7 @@ Submission.propTypes = {
   setFilePickerDragged: PT.func,
   setSubmissionFilestackData: PT.func,
   setAuth: PT.func,
-  registered: PT.bool,
+  registrationCanceled: PT.bool,
 };
 
 const mapStateToProps = (state, ownProps) => {
