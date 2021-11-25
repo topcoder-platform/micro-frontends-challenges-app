@@ -9,14 +9,16 @@ import ChallengeItem from "./ChallengeItem";
 import TextInput from "../../../components/TextInput";
 import Dropdown from "../../../components/Dropdown";
 import DateRangePicker from "../../../components/DateRangePicker";
+import ChallengeLoading from "../../../components/challenge-listing/ChallengeLoading";
 import * as utils from "../../../utils";
+
 import * as constants from "../../../constants";
 import IconSearch from "../../../assets/icons/search.svg";
-
 import "./styles.scss";
 
 const Listing = ({
   challenges,
+  loadingChallenges,
   search,
   page,
   perPage,
@@ -111,7 +113,9 @@ const Listing = ({
           </div>
         </div>
       </Panel.Header>
-      {challenges.length ? (
+      {loadingChallenges ?
+        _.times(3, () => <ChallengeLoading />) :
+        challenges.length ? (
         <Panel.Body>
           {challenges.map((challenge, index) => (
             <div
@@ -162,6 +166,7 @@ const Listing = ({
 
 Listing.propTypes = {
   challenges: PT.arrayOf(PT.shape()),
+  loadingChallenges: PT.bool,
   search: PT.string,
   page: PT.number,
   perPage: PT.number,
