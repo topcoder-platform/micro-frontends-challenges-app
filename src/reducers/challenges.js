@@ -14,7 +14,7 @@ const defaultState = {
 };
 
 function onGetChallengesInit(state) {
-  return { ...state, challenges: [], loadingChallenges: true, loadingChallengesError: null };
+  return { ...state, loadingChallenges: true, loadingChallengesError: null };
 }
 
 function onGetChallengesDone(state, { error, payload }) {
