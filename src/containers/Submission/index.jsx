@@ -1,5 +1,7 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { getAuthUserTokens } from "@topcoder/micro-frontends-navbar-app";
 import PT from "prop-types";
+import _ from 'lodash'
 import { connect } from "react-redux";
 import { navigate } from "@reach/router";
 import { PrimaryButton } from "components/Buttons";
@@ -11,6 +13,7 @@ import actions from "../../actions";
 import { isLegacyId, isUuid } from "../../utils/challenge";
 
 const Submission = ({
+  tokens,
   id,
   challengeId,
   challengeName,
@@ -26,6 +29,7 @@ const Submission = ({
   isLoadingChallenge,
   isChallengeLoaded,
 
+
   track,
   agreed,
   filePickers,
@@ -39,6 +43,7 @@ const Submission = ({
   uploadProgress,
 
   getChallenge,
+  getChallengeDetails,
   submit,
   resetForm,
   setAgreed,
@@ -81,8 +86,9 @@ const Submission = ({
   if (!isChallengeLoaded) {
     return null;
   }
+  const [isLoggedIn, setLoggedIn] = useState(true);
 
-  if (!isRegistered) {
+  if (!isRegistered || !isLoggedIn) {
     return (
       <AccessDenied cause={ACCESS_DENIED_REASON.NOT_AUTHORIZED}>
         <PrimaryButton to={`${CHALLENGES_URL}/${challengeId}`}>
@@ -90,6 +96,15 @@ const Submission = ({
         </PrimaryButton>
       </AccessDenied>
     );
+  }
+
+  const handleSubmit = async (data) => {
+    const {tokenV3} = await  getAuthUserTokens();
+    if (tokenV3) {
+      submit(data);
+    } else {
+      setLoggedIn(false);
+    }
   }
 
   return (
@@ -119,7 +134,7 @@ const Submission = ({
       setFilePickerUploadProgress={setFilePickerUploadProgress}
       setFilePickerDragged={setFilePickerDragged}
       setSubmissionFilestackData={setSubmissionFilestackData}
-      submit={submit}
+      submit={handleSubmit}
     />
   );
 };
@@ -164,6 +179,7 @@ Submission.propTypes = {
   setFilePickerDragged: PT.func,
   setSubmissionFilestackData: PT.func,
   setAuth: PT.func,
+  isLoggedIn: PT.bool,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -171,6 +187,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     id: ownProps.challengeId,
+    tokens: state?.auth,
     challengeId: challenge?.id,
     challengeName: challenge?.name,
     isRegistered: challenge?.isRegistered,
@@ -212,6 +229,11 @@ const mapDispatchToProps = (dispatch) => {
     getChallenge: (challengeId) => {
       dispatch(actions.challenge.getChallengeInit(challengeId));
       dispatch(actions.challenge.getChallengeDone(challengeId));
+    },
+    getChallengeDetails: (tokens, challengeId) => {
+         const a = actions.challenge;
+      const { tokenV3, tokenV2 } = tokens;
+      return dispatch(a.getFullDetailsDone(challengeId, tokenV3, tokenV2));
     },
     submit: (data) => {
       dispatch(actions.submission.submit.submitInit());
