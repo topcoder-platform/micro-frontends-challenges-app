@@ -13,12 +13,14 @@ import PT from "prop-types";
 import _ from "lodash";
 import { PrimaryButton } from "components/Buttons";
 import LoadingIndicator from "components/LoadingIndicator";
-import { COMPETITION_TRACKS } from "../../../../constants";
+import { ACCESS_DENIED_REASON, COMPETITION_TRACKS } from "../../../../constants";
 import FilePicker from "../FilePicker";
+import AccessDenied from "components/AccessDenied";
 import Uploading from "../Uploading";
 import * as util from "../../../../utils/submission";
 
 import "./styles.scss";
+import { isLoggedIn } from "../../../../utils/auth";
 
 const SubmitForm = ({
   challengeId,
@@ -90,7 +92,17 @@ const SubmitForm = ({
   /* User has clicked submit, prepare formData for the V2 API and start upload */
   const handleSubmit = (e) => {
     e.preventDefault();
-    submit(getFormData());
+    if (!isLoggedIn()) {
+      return (
+      <AccessDenied cause={ACCESS_DENIED_REASON.NOT_AUTHORIZED}>
+        <PrimaryButton to={`${CHALLENGES_URL}/${challengeId}`}>
+          Go to Challenge Details
+        </PrimaryButton>
+      </AccessDenied>
+      )
+    } else {
+      submit(getFormData());
+    }
   };
 
   const id = "file-picker-submission";

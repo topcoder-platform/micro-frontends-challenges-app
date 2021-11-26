@@ -1,5 +1,4 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { getAuthUserTokens } from "@topcoder/micro-frontends-navbar-app";
 import PT from "prop-types";
 import _ from 'lodash'
 import { connect } from "react-redux";
@@ -43,7 +42,6 @@ const Submission = ({
   uploadProgress,
 
   getChallenge,
-  getChallengeDetails,
   submit,
   resetForm,
   setAgreed,
@@ -86,9 +84,9 @@ const Submission = ({
   if (!isChallengeLoaded) {
     return null;
   }
-  const [isLoggedIn, setLoggedIn] = useState(true);
 
-  if (!isRegistered || !isLoggedIn) {
+
+  if (!isRegistered) {
     return (
       <AccessDenied cause={ACCESS_DENIED_REASON.NOT_AUTHORIZED}>
         <PrimaryButton to={`${CHALLENGES_URL}/${challengeId}`}>
@@ -98,14 +96,6 @@ const Submission = ({
     );
   }
 
-  const handleSubmit = async (data) => {
-    const {tokenV3} = await  getAuthUserTokens();
-    if (tokenV3) {
-      submit(data);
-    } else {
-      setLoggedIn(false);
-    }
-  }
 
   return (
     <Submit
@@ -134,7 +124,7 @@ const Submission = ({
       setFilePickerUploadProgress={setFilePickerUploadProgress}
       setFilePickerDragged={setFilePickerDragged}
       setSubmissionFilestackData={setSubmissionFilestackData}
-      submit={handleSubmit}
+      submit={submit}
     />
   );
 };
@@ -179,7 +169,6 @@ Submission.propTypes = {
   setFilePickerDragged: PT.func,
   setSubmissionFilestackData: PT.func,
   setAuth: PT.func,
-  isLoggedIn: PT.bool,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -187,7 +176,6 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     id: ownProps.challengeId,
-    tokens: state?.auth,
     challengeId: challenge?.id,
     challengeName: challenge?.name,
     isRegistered: challenge?.isRegistered,
@@ -229,11 +217,6 @@ const mapDispatchToProps = (dispatch) => {
     getChallenge: (challengeId) => {
       dispatch(actions.challenge.getChallengeInit(challengeId));
       dispatch(actions.challenge.getChallengeDone(challengeId));
-    },
-    getChallengeDetails: (tokens, challengeId) => {
-         const a = actions.challenge;
-      const { tokenV3, tokenV2 } = tokens;
-      return dispatch(a.getFullDetailsDone(challengeId, tokenV3, tokenV2));
     },
     submit: (data) => {
       dispatch(actions.submission.submit.submitInit());
