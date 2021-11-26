@@ -122,7 +122,7 @@ const SubmitForm = ({
     uploadProgress: 0,
   };
 
-  const isUploadingState = !(!isSubmitting && !submitDone && !errorMsg);
+  const isUploadingState = !(!isSubmitting && !submitDone && !errorMsg && !isLoggedIn());
   if (isUploadingState) {
     return (
       <Uploading
