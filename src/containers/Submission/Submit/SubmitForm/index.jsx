@@ -92,7 +92,7 @@ const SubmitForm = ({
   };
 
   /* User has clicked submit, prepare formData for the V2 API and start upload */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { tokenV3, tokenV2 } = await getAuthUserTokens();
     if(!tokenV3 || !tokenV2) {
