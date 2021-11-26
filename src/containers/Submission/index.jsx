@@ -48,7 +48,6 @@ const Submission = ({
   setSubmissionFilestackData,
   setAuth,
 }) => {
-
   const propsRef = useRef();
   propsRef.current = {
     id,
@@ -84,11 +83,11 @@ const Submission = ({
 
   if (!isRegistered) {
     return (
-        <AccessDenied cause={ACCESS_DENIED_REASON.NOT_AUTHORIZED}>
-          <PrimaryButton to={`${CHALLENGES_URL}/${challengeId}`}>
-            Go to Challenge Details
-          </PrimaryButton>
-        </AccessDenied>
+      <AccessDenied cause={ACCESS_DENIED_REASON.NOT_AUTHORIZED}>
+        <PrimaryButton to={`${CHALLENGES_URL}/${challengeId}`}>
+          Go to Challenge Details
+        </PrimaryButton>
+      </AccessDenied>
     );
   }
 
@@ -96,12 +95,12 @@ const Submission = ({
     const onCheck = true;
     const challenge = await getChallenge(challengeId, onCheck);
     return challenge?.payload?.isRegistered;
-  }
+  };
 
   const handleSubmit = async (data) => {
     const registered = await ifStillRegistered();
     if (registered) submit(data);
-  }
+  };
 
   return (
     <Submit
