@@ -1,6 +1,5 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import PT from "prop-types";
-import _ from "lodash";
 import { connect } from "react-redux";
 import { navigate } from "@reach/router";
 import { PrimaryButton } from "components/Buttons";
@@ -26,7 +25,6 @@ const Submission = ({
   getCommunityList,
   isLoadingChallenge,
   isChallengeLoaded,
-  tokens,
   track,
   agreed,
   filePickers,
@@ -51,8 +49,6 @@ const Submission = ({
   setSubmissionFilestackData,
   setAuth,
 }) => {
-
-  const [registrationCanceled, setCanceled] = useState(false);
 
   const propsRef = useRef();
   propsRef.current = {
@@ -87,7 +83,7 @@ const Submission = ({
     return null;
   }
 
-  if (!isRegistered || registrationCanceled) {
+  if (!isRegistered) {
     return (
         <AccessDenied cause={ACCESS_DENIED_REASON.NOT_AUTHORIZED}>
           <PrimaryButton to={`${CHALLENGES_URL}/${challengeId}`}>
@@ -98,18 +94,14 @@ const Submission = ({
   }
 
   const ifStillRegistered = async () => {
-    const challengeDetail = await getChallengeDetails(tokens, challengeId);
-    const registrants = challengeDetail?.payload?.registrants || [];
-    return _.some(registrants, (r) => `${r.memberId}` === `${userId}`);
+    const onCheck = true;
+    const challenge = await getChallenge(challengeId, onCheck);
+    return challenge?.payload?.isRegistered;
   }
 
   const handleSubmit = async (data) => {
-    const stillRegistered = await ifStillRegistered();
-    if (stillRegistered) {
-      submit(data);
-    } else {
-      setCanceled(true);
-    }
+    const registered = await ifStillRegistered();
+    if (registered) submit(data);
   }
 
   return (
@@ -184,14 +176,12 @@ Submission.propTypes = {
   setFilePickerDragged: PT.func,
   setSubmissionFilestackData: PT.func,
   setAuth: PT.func,
-  registrationCanceled: PT.bool,
 };
 
 const mapStateToProps = (state, ownProps) => {
   const challenge = state?.challenge?.challenge;
 
   return {
-    tokens: state.auth,
     id: ownProps.challengeId,
     challengeId: challenge?.id,
     challengeName: challenge?.name,
@@ -231,14 +221,11 @@ const mapDispatchToProps = (dispatch) => {
     setAuth: () => {
       dispatch(actions.auth.setAuthDone());
     },
-    getChallenge: (challengeId) => {
-      dispatch(actions.challenge.getChallengeInit(challengeId));
-      dispatch(actions.challenge.getChallengeDone(challengeId));
-    },
-    getChallengeDetails: (tokens, challengeId) => {
-      const a = actions.challenge;
-      const { tokenV3, tokenV2 } = tokens;
-      return dispatch(a.getFullDetailsDone(challengeId, tokenV3, tokenV2));
+    getChallenge: (challengeId, onRegistrationCheck) => {
+      if (!onRegistrationCheck) {
+        dispatch(actions.challenge.getChallengeInit(challengeId));
+      }
+      return dispatch(actions.challenge.getChallengeDone(challengeId));
     },
     submit: (data) => {
       dispatch(actions.submission.submit.submitInit());
