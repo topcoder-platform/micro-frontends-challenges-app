@@ -38,7 +38,6 @@ const Submission = ({
   uploadProgress,
 
   getChallenge,
-  getChallengeDetails,
   submit,
   resetForm,
   setAgreed,
