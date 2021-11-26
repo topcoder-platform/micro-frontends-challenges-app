@@ -17,10 +17,12 @@ import { ACCESS_DENIED_REASON, COMPETITION_TRACKS } from "../../../../constants"
 import FilePicker from "../FilePicker";
 import AccessDenied from "components/AccessDenied";
 import Uploading from "../Uploading";
+import {
+  getAuthUserTokens
+} from "@topcoder/micro-frontends-navbar-app";
 import * as util from "../../../../utils/submission";
 
 import "./styles.scss";
-import { isLoggedIn } from "../../../../utils/auth";
 
 const SubmitForm = ({
   challengeId,
@@ -92,7 +94,8 @@ const SubmitForm = ({
   /* User has clicked submit, prepare formData for the V2 API and start upload */
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isLoggedIn()) {
+    const { tokenV3, tokenV2 } = await getAuthUserTokens();
+    if(!tokenV3 || !tokenV2) {
       return (
       <AccessDenied cause={ACCESS_DENIED_REASON.NOT_AUTHORIZED}>
         <PrimaryButton to={`${CHALLENGES_URL}/${challengeId}`}>
