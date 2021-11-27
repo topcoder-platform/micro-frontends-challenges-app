@@ -87,6 +87,6 @@ function parseCookie(cookie) {
   );
 }
 
-function readCookie(name) {
+export function readCookie(name) {
   return parseCookie(document.cookie)[name];
 }
