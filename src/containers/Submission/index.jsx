@@ -37,6 +37,7 @@ const Submission = ({
   submitDone,
   uploadProgress,
 
+  getIsRegistered,
   getChallenge,
   submit,
   resetForm,
@@ -91,14 +92,8 @@ const Submission = ({
     );
   }
 
-  const ifStillRegistered = async () => {
-    const onCheck = true;
-    const challenge = await getChallenge(challengeId, onCheck);
-    return challenge?.payload?.isRegistered;
-  };
-
   const handleSubmit = async (data) => {
-    const registered = await ifStillRegistered();
+    const registered = await getIsRegistered(challengeId, userId);
     if (registered) submit(data);
   };
 
@@ -165,6 +160,7 @@ Submission.propTypes = {
   uploadProgress: PT.number,
 
   getChallenge: PT.func,
+  getIsRegistered: PT.func,
   submit: PT.func,
   resetForm: PT.func,
   setAgreed: PT.func,
@@ -219,11 +215,13 @@ const mapDispatchToProps = (dispatch) => {
     setAuth: () => {
       dispatch(actions.auth.setAuthDone());
     },
-    getChallenge: (challengeId, onRegistrationCheck) => {
-      if (!onRegistrationCheck) {
-        dispatch(actions.challenge.getChallengeInit(challengeId));
-      }
-      return dispatch(actions.challenge.getChallengeDone(challengeId));
+    getIsRegistered: async (challengeId, userId) => {
+      const action = await dispatch(actions.challenge.getIsRegistered(challengeId, userId));
+      return action?.payload?.isRegistered;
+    },
+    getChallenge: (challengeId) => {
+      dispatch(actions.challenge.getChallengeInit(challengeId));
+      dispatch(actions.challenge.getChallengeDone(challengeId));
     },
     submit: (data) => {
       dispatch(actions.submission.submit.submitInit());
