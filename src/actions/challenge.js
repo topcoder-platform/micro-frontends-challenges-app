@@ -454,6 +454,20 @@ function getChallengeDone(challengeId) {
   return challengeService.getChallenge(challengeId);
 }
 
+/**
+ * @static
+ * @desc Check if a user has registered a challenge
+ * @param {String} challengeId Challenge ID.
+ * @param {String} userId User Id.
+ * @return {Action}
+ */
+async function getIsRegistered(challengeId, userId) {
+  const registrants = await challengeService.getChallengeRegistrants(challengeId);
+  const isRegistered = _.some(registrants, (r) => `${r.memberId}` === `${userId}`);
+  return { isRegistered };
+}
+
+
 export default createActions({
   CHALLENGE: {
     DROP_CHECKPOINTS: dropCheckpoints,
@@ -483,5 +497,6 @@ export default createActions({
     GET_SUBMISSION_INFORMATION_DONE: getSubmissionInformationDone,
     GET_CHALLENGE_INIT: _.noop,
     GET_CHALLENGE_DONE: getChallengeDone,
+    GET_IS_REGISTERED: getIsRegistered,
   },
 });

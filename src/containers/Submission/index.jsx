@@ -25,7 +25,6 @@ const Submission = ({
   getCommunityList,
   isLoadingChallenge,
   isChallengeLoaded,
-
   track,
   agreed,
   filePickers,
@@ -38,6 +37,7 @@ const Submission = ({
   submitDone,
   uploadProgress,
 
+  getIsRegistered,
   getChallenge,
   submit,
   resetForm,
@@ -92,6 +92,11 @@ const Submission = ({
     );
   }
 
+  const handleSubmit = async (data) => {
+    const registered = await getIsRegistered(challengeId, userId);
+    if (registered) submit(data);
+  };
+
   return (
     <Submit
       challengeId={challengeId}
@@ -119,7 +124,7 @@ const Submission = ({
       setFilePickerUploadProgress={setFilePickerUploadProgress}
       setFilePickerDragged={setFilePickerDragged}
       setSubmissionFilestackData={setSubmissionFilestackData}
-      submit={submit}
+      submit={handleSubmit}
     />
   );
 };
@@ -155,6 +160,7 @@ Submission.propTypes = {
   uploadProgress: PT.number,
 
   getChallenge: PT.func,
+  getIsRegistered: PT.func,
   submit: PT.func,
   resetForm: PT.func,
   setAgreed: PT.func,
@@ -208,6 +214,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     setAuth: () => {
       dispatch(actions.auth.setAuthDone());
+    },
+    getIsRegistered: async (challengeId, userId) => {
+      const action = await dispatch(actions.challenge.getIsRegistered(challengeId, userId));
+      return action?.payload?.isRegistered;
     },
     getChallenge: (challengeId) => {
       dispatch(actions.challenge.getChallengeInit(challengeId));
