@@ -5,11 +5,11 @@ import { navigate } from "@reach/router";
 import { PrimaryButton } from "components/Buttons";
 import AccessDenied from "components/AccessDenied";
 import LoadingIndicator from "components/LoadingIndicator";
+import { login } from "@topcoder/micro-frontends-navbar-app";
 import { ACCESS_DENIED_REASON, CHALLENGES_URL } from "../../constants";
 import Submit from "./Submit";
 import actions from "../../actions";
 import { isLegacyId, isUuid } from "../../utils/challenge";
-import { goToLogin } from "../../utils/tc";
 
 const Submission = ({
   id,
@@ -98,7 +98,8 @@ const Submission = ({
   const handleSubmit = async (data) => {
     const isLoggedOut = checkIsLoggedOut();
     if (isLoggedOut) {
-      goToLogin("community-app-main");
+      window.sessionStorage && window.sessionStorage.clear();
+      login();
     } else {
       const registered = await getIsRegistered(challengeId, userId);
       if (registered) submit(data);
