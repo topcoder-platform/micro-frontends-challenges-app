@@ -5,6 +5,7 @@ import { navigate } from "@reach/router";
 import { PrimaryButton } from "components/Buttons";
 import AccessDenied from "components/AccessDenied";
 import LoadingIndicator from "components/LoadingIndicator";
+import { login } from "@topcoder/micro-frontends-navbar-app";
 import { ACCESS_DENIED_REASON, CHALLENGES_URL } from "../../constants";
 import Submit from "./Submit";
 import actions from "../../actions";
@@ -25,6 +26,7 @@ const Submission = ({
   getCommunityList,
   isLoadingChallenge,
   isChallengeLoaded,
+
   track,
   agreed,
   filePickers,
@@ -47,6 +49,7 @@ const Submission = ({
   setFilePickerUploadProgress,
   setFilePickerDragged,
   setSubmissionFilestackData,
+  checkIsLoggedOut,
   setAuth,
 }) => {
   const propsRef = useRef();
@@ -93,8 +96,14 @@ const Submission = ({
   }
 
   const handleSubmit = async (data) => {
-    const registered = await getIsRegistered(challengeId, userId);
-    if (registered) submit(data);
+    const isLoggedOut = checkIsLoggedOut();
+    if (isLoggedOut) {
+      window.sessionStorage && window.sessionStorage.clear();
+      login();
+    } else {
+      const registered = await getIsRegistered(challengeId, userId);
+      if (registered) submit(data);
+    }
   };
 
   return (
@@ -170,6 +179,7 @@ Submission.propTypes = {
   setFilePickerDragged: PT.func,
   setSubmissionFilestackData: PT.func,
   setAuth: PT.func,
+  checkIsLoggedOut: PT.func,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -215,8 +225,14 @@ const mapDispatchToProps = (dispatch) => {
     setAuth: () => {
       dispatch(actions.auth.setAuthDone());
     },
+    checkIsLoggedOut: () => {
+      const action = dispatch(actions.auth.checkIsLoggedOut());
+      return action?.payload?.isLoggedOut;
+    },
     getIsRegistered: async (challengeId, userId) => {
-      const action = await dispatch(actions.challenge.getIsRegistered(challengeId, userId));
+      const action = await dispatch(
+        actions.challenge.getIsRegistered(challengeId, userId)
+      );
       return action?.payload?.isRegistered;
     },
     getChallenge: (challengeId) => {
