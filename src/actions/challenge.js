@@ -462,11 +462,15 @@ function getChallengeDone(challengeId) {
  * @return {Action}
  */
 async function getIsRegistered(challengeId, userId) {
-  const registrants = await challengeService.getChallengeRegistrants(challengeId);
-  const isRegistered = _.some(registrants, (r) => `${r.memberId}` === `${userId}`);
+  const registrants = await challengeService.getChallengeRegistrants(
+    challengeId
+  );
+  const isRegistered = _.some(
+    registrants,
+    (r) => `${r.memberId}` === `${userId}`
+  );
   return { isRegistered };
 }
-
 
 export default createActions({
   CHALLENGE: {

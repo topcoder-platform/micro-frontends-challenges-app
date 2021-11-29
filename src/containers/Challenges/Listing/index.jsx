@@ -113,9 +113,9 @@ const Listing = ({
           </div>
         </div>
       </Panel.Header>
-      {loadingChallenges ?
-        _.times(3, () => <ChallengeLoading />) :
-        challenges.length ? (
+      {loadingChallenges ? (
+        _.times(3, () => <ChallengeLoading />)
+      ) : challenges.length ? (
         <Panel.Body>
           {challenges.map((challenge, index) => (
             <div

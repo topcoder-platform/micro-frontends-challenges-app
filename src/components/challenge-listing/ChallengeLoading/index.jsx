@@ -15,5 +15,5 @@ export default function ChallengeLoading() {
         <div styleName="prize-nominal placeholder-template"></div>
       </div>
     </div>
-  )
+  );
 }

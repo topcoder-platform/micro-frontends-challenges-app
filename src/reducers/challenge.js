@@ -491,8 +491,8 @@ function onGetIsRegistered(state, { error, payload }) {
     ...state,
     challenge: {
       ...state.challenge,
-      isRegistered: payload.isRegistered
-    }
+      isRegistered: payload.isRegistered,
+    },
   };
 }
 

@@ -4,6 +4,7 @@
  */
 
 import { createActions } from "redux-actions";
+import _ from "lodash";
 import { decodeToken, readCookie } from "../utils/token";
 import { getApiV3, getApiV5 } from "../services/challenge-api";
 import { setErrorIcon, ERROR_ICON_TYPES } from "../utils/errors";
