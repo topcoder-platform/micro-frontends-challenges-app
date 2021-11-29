@@ -157,7 +157,7 @@ const mapStateToProps = (state) => ({
   recommendedChallenges: state.challenges.recommendedChallenges,
   initialized: state.challenges.initialized,
   tags: state.filter.challenge.tags,
-  loadingChallenges: state.challenges.loadingChallenges
+  loadingChallenges: state.challenges.loadingChallenges,
 });
 
 const mapDispatchToProps = {

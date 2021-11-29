@@ -113,5 +113,5 @@ async function getChallenge(challengeId) {
 
 export default {
   getChallenge,
-  getChallengeRegistrants
+  getChallengeRegistrants,
 };
