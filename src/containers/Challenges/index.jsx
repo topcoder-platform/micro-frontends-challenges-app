@@ -4,12 +4,14 @@ import { connect } from "react-redux";
 import Listing from "./Listing";
 import actions from "../../actions";
 // import ChallengeRecommendedError from "./Listing/errors/ChallengeRecommendedError";
+import LoadingIndicator from "../../components/LoadingIndicator";
+import Panel from "../../components/Panel";
 import * as constants from "../../constants";
-import IconListView from "../../assets/icons/list-view.svg";
-import IconCardView from "../../assets/icons/card-view.svg";
+// import IconListView from "../../assets/icons/list-view.svg";
+// import IconCardView from "../../assets/icons/card-view.svg";
 import { Banner } from "@topcoder/micro-frontends-earn-app";
-import * as utils from "../../utils";
 
+import * as utils from "../../utils";
 import "./styles.scss";
 
 const Challenges = ({
@@ -29,6 +31,7 @@ const Challenges = ({
   initialized,
   updateQuery,
   tags,
+  loadingChallenges,
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
 
@@ -76,20 +79,21 @@ const Challenges = ({
       <Banner />
       <h1 styleName="title">
         <span>CHALLENGES</span>
-        <span styleName="view-mode">
+        {/* <span styleName="view-mode">
           <button styleName="button-icon active">
             <IconListView />
           </button>
           <button styleName="button-icon">
             <IconCardView />
           </button>
-        </span>
+        </span> */}
       </h1>
-      {initialized && (
+      {initialized ? (
         <>
           {/*noRecommendedChallenges && <ChallengeRecommendedError />*/}
           <Listing
             challenges={challenges}
+            loadingChallenges={loadingChallenges}
             search={search}
             page={page}
             perPage={perPage}
@@ -107,6 +111,12 @@ const Challenges = ({
             isLoggedIn={isLoggedIn}
           />
         </>
+      ) : (
+        <Panel>
+          <Panel.Body>
+            <LoadingIndicator />
+          </Panel.Body>
+        </Panel>
       )}
     </div>
   );
@@ -128,6 +138,7 @@ Challenges.propTypes = {
   initialized: PT.bool,
   updateQuery: PT.func,
   tags: PT.arrayOf(PT.string),
+  loadingChallenges: PT.bool,
 };
 
 const mapStateToProps = (state) => ({
@@ -146,6 +157,7 @@ const mapStateToProps = (state) => ({
   recommendedChallenges: state.challenges.recommendedChallenges,
   initialized: state.challenges.initialized,
   tags: state.filter.challenge.tags,
+  loadingChallenges: state.challenges.loadingChallenges,
 });
 
 const mapDispatchToProps = {

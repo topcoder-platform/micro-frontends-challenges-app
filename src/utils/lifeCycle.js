@@ -1,7 +1,7 @@
 import store from "../store";
 import action from "../actions/initApp";
 import * as utils from "../utils";
-import { CHALLENGES_URL } from '../constants';
+import { CHALLENGES_URL } from "../constants";
 
 export default function appInit() {
   let initialQuery;

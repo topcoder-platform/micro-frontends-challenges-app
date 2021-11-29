@@ -96,3 +96,9 @@ export const COMPETITION_TRACKS = {
   DEV: "Development",
   QA: "Quality Assurance",
 };
+
+export const TOKEN_COOKIE_KEYS = {
+  V3JWT: "v3jwt",
+  TCJWT: "tcjwt",
+  TCSSO: "tcsso",
+};
