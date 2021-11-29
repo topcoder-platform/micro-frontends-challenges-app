@@ -1,7 +1,7 @@
 import { handleActions } from "redux-actions";
 
 const defaultState = {
-  loadingChallenges: false,
+  loadingChallenges: true,
   loadingChallengesError: null,
   challenges: [],
   challengesMeta: {},
@@ -57,7 +57,7 @@ function onGetChallengesFailure(state, { payload }) {
 
 export default handleActions(
   {
-    GET_CHALLENGE_INIT: onGetChallengesInit,
+    GET_CHALLENGES_INIT: onGetChallengesInit,
     GET_CHALLENGES_DONE: onGetChallengesDone,
   },
   defaultState

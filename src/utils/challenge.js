@@ -8,47 +8,47 @@ import { initialChallengeFilter } from "../reducers/filter";
 Joi.optionalId = () => Joi.string().uuid();
 
 Joi.page = () =>
-  Joi.alternatives()
-    .try(
-      Joi.number()
-        .min(1),
-        Joi.any().custom(() => 1)
-    );
+  Joi.alternatives().try(
+    Joi.number().min(1),
+    Joi.any().custom(() => 1)
+  );
 
 Joi.perPage = () =>
-  Joi.alternatives()
-    .try(
-      Joi.number()
-        .integer()
-        .min(1)
-        .max(100)
-        .valid(...constants.PAGINATION_PER_PAGES),
-      Joi.any().custom(() => constants.PAGINATION_PER_PAGES[0])
-    );
+  Joi.alternatives().try(
+    Joi.number()
+      .integer()
+      .min(1)
+      .max(100)
+      .valid(...constants.PAGINATION_PER_PAGES),
+    Joi.any().custom(() => constants.PAGINATION_PER_PAGES[0])
+  );
 
 Joi.bucket = () =>
-  Joi.string().custom((param) =>
-    constants.FILTER_BUCKETS.find(
-      (bucket) => param && param.toLowerCase() === bucket.toLowerCase()
-    ) || null
+  Joi.string().custom(
+    (param) =>
+      constants.FILTER_BUCKETS.find(
+        (bucket) => param && param.toLowerCase() === bucket.toLowerCase()
+      ) || null
   );
 
 Joi.track = () =>
-  Joi.string().custom((param) =>
-    _.findKey(
-      constants.FILTER_CHALLENGE_TRACK_ABBREVIATIONS,
-      (trackAbbreviation) =>
-        param && param.toLowerCase() === trackAbbreviation.toLowerCase()
-    ) || null
+  Joi.string().custom(
+    (param) =>
+      _.findKey(
+        constants.FILTER_CHALLENGE_TRACK_ABBREVIATIONS,
+        (trackAbbreviation) =>
+          param && param.toLowerCase() === trackAbbreviation.toLowerCase()
+      ) || null
   );
 
 Joi.type = () =>
-  Joi.string().custom((param) =>
-    _.findKey(
-      constants.FILTER_CHALLENGE_TYPE_ABBREVIATIONS,
-      (typeAbbreviation) =>
-        param && param.toLowerCase() === typeAbbreviation.toLowerCase()
-    ) || null
+  Joi.string().custom(
+    (param) =>
+      _.findKey(
+        constants.FILTER_CHALLENGE_TYPE_ABBREVIATIONS,
+        (typeAbbreviation) =>
+          param && param.toLowerCase() === typeAbbreviation.toLowerCase()
+      ) || null
   );
 
 export function getCurrencySymbol(prizeSets) {

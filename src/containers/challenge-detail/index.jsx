@@ -977,9 +977,7 @@ const mapDispatchToProps = (dispatch) => {
         change.types = constants.FILTER_CHALLENGE_TYPES;
       }
       dispatch(updateFilter(change));
-      dispatch(
-        updateQuery({ ...stateProps.filter.challenge, ...change })
-      );
+      dispatch(updateQuery({ ...stateProps.filter.challenge, ...change }));
     },
     setSpecsTabState: (state) =>
       dispatch(pageActions.page.challengeDetails.setSpecsTabState(state)),
