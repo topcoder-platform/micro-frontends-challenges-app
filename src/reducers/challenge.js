@@ -473,6 +473,30 @@ function onGetChallengeDone(state, { error, payload }) {
 }
 
 /**
+ * Update isRegistered to before challenge submit
+ * @param {Object} state Old state.
+ * @param {Object} actions Action error/payload.
+ * @param {Object} action Action.
+ */
+function onGetIsRegistered(state, { error, payload }) {
+  if (error) {
+    logger.error("Failed to get the user's registration status!", payload);
+    fireErrorMessage(
+      "ERROR: Failed to submit",
+      "Please, try again a bit later"
+    );
+    return state;
+  }
+  return {
+    ...state,
+    challenge: {
+      ...state.challenge,
+      isRegistered: payload.isRegistered,
+    },
+  };
+}
+
+/**
  * Creates a new Challenge reducer with the specified initial state.
  * @param {Object} initialState Optional. Initial state.
  * @return {Function} Challenge reducer.
@@ -520,6 +544,7 @@ function create(initialState) {
       [a.getSubmissionInformationDone]: onGetSubmissionInformationDone,
       [a.getChallengeInit]: onGetChallengeInit,
       [a.getChallengeDone]: onGetChallengeDone,
+      [a.getIsRegistered]: onGetIsRegistered,
     },
     _.defaults(initialState, {
       details: null,

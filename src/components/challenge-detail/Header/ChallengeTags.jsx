@@ -26,6 +26,8 @@ import { COMPETITION_TRACKS } from "utils/tc";
 import VerifiedTag from "components/challenge-listing/VerifiedTag";
 import MatchScore from "components/challenge-listing/ChallengeCard/MatchScore";
 import { calculateScore } from "../../../utils/challenge-listing/helper";
+import * as urlUtil from "utils/url";
+import * as constants from "constants";
 import "./style.module.scss";
 
 export default function ChallengeTags(props) {
@@ -75,6 +77,19 @@ export default function ChallengeTags(props) {
 
   const tags = technPlatforms.filter((tag) => !matchSkills.includes(tag));
 
+  const filterByChallengeType = urlUtil.buildQueryString({
+    bucket: constants.FILTER_BUCKETS[1],
+    tracks: _.values(constants.FILTER_CHALLENGE_TRACK_ABBREVIATIONS),
+    page: 1,
+  });
+
+  const filterByTag = urlUtil.buildQueryString({
+    bucket: constants.FILTER_BUCKETS[1],
+    tracks: _.values(constants.FILTER_CHALLENGE_TRACK_ABBREVIATIONS),
+    page: 1,
+    types: _.values(constants.FILTER_CHALLENGE_TYPE_ABBREVIATIONS),
+  });
+
   return (
     <div>
       {challengeType && (
@@ -84,7 +99,7 @@ export default function ChallengeTags(props) {
               setChallengeListingFilter({ types: [challengeType.name] })
             )
           }
-          to={`${challengesUrl}?types[]=${encodeURIComponent(
+          to={`${challengesUrl}${filterByChallengeType}&types[]=${encodeURIComponent(
             challengeType.abbreviation
           )}`}
         >
@@ -112,7 +127,9 @@ export default function ChallengeTags(props) {
               onClick={() =>
                 setImmediate(() => setChallengeListingFilter({ tags: [tag] }))
               }
-              to={`${challengesUrl}?tags[]=${encodeURIComponent(tag)}`}
+              to={`${challengesUrl}${filterByTag}&tags[]=${encodeURIComponent(
+                tag
+              )}`}
             >
               {tag}
             </Tag>

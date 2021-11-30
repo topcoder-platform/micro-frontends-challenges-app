@@ -163,15 +163,18 @@ export function parseTotalPrizes(s) {
   let n;
   if (valid) {
     n = +val.replace(/,/g, "");
-    return n;
+    if (/,/.test(val)) {
+      valid = valid && n.toLocaleString("en-US") === val;
+    }
   }
+  return n;
 }
 
-export function triggerDownload(fileName,blob) {
+export function triggerDownload(fileName, blob) {
   const url = window.URL.createObjectURL(new Blob([blob]));
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = url;
-  link.setAttribute('download', fileName);
+  link.setAttribute("download", fileName);
   document.body.appendChild(link);
   link.click();
   link.parentNode.removeChild(link);

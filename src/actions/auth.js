@@ -4,10 +4,12 @@
  */
 
 import { createActions } from "redux-actions";
-import { decodeToken } from "../utils/token";
+import _ from "lodash";
+import { decodeToken, readCookie } from "../utils/token";
 import { getApiV3, getApiV5 } from "../services/challenge-api";
 import { setErrorIcon, ERROR_ICON_TYPES } from "../utils/errors";
 import { getAuthUserTokens } from "@topcoder/micro-frontends-navbar-app";
+import { TOKEN_COOKIE_KEYS } from "../constants/index";
 
 /**
  * Helper method that checks for HTTP error response v5 and throws Error in this case.
@@ -83,11 +85,27 @@ async function setAuthDone() {
   return user;
 }
 
+/**
+ * @static
+ * @desc Check token cookies to find if a user is logged out:
+ * This is because all the token cookies are cleared if a user is logged out.
+ * @return {Action}
+ */
+function checkIsLoggedOut() {
+  const tokenKeys = Object.keys(TOKEN_COOKIE_KEYS);
+  const isLoggedOut = _.every(
+    tokenKeys,
+    (k) => readCookie(TOKEN_COOKIE_KEYS[k]) === undefined
+  );
+  return { isLoggedOut };
+}
+
 export default createActions({
   AUTH: {
     LOAD_PROFILE: loadProfileDone,
     SET_TC_TOKEN_V2: setTcTokenV2,
     SET_TC_TOKEN_V3: setTcTokenV3,
     SET_AUTH_DONE: setAuthDone,
+    CHECK_IS_LOGGED_OUT: checkIsLoggedOut,
   },
 });

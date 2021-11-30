@@ -12,6 +12,8 @@ import * as utils from "../../../../utils";
 import ProgressTooltip from "../tooltips/ProgressTooltip";
 import PlacementsTooltip from "../tooltips/PlacementsTooltip";
 import TagsMoreTooltip from "../tooltips/TagsMoreTooltip";
+import { CHALLENGES_URL } from "constants";
+import { Link } from "@reach/router";
 
 import "./styles.scss";
 
@@ -25,7 +27,7 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
     challenge.prizeSets
   );
 
-  let submissionLink = `/earn/find/challenges/${challenge.id}`;
+  let submissionLink = `${CHALLENGES_URL}/${challenge.id}`;
   if (isLoggedIn && challenge.numOfSubmissions > 0) {
     submissionLink += "?tab=submissions";
   }
@@ -43,11 +45,9 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
       <div styleName="info">
         <div styleName="name-container">
           <h6 styleName="name">
-            <a
-              href={`/earn/find/challenges/${challenge.id}`} // eslint-disable-line no-undef
-            >
+            <Link to={`${CHALLENGES_URL}/${challenge.id}`}>
               {challenge.name}
-            </a>
+            </Link>
           </h6>
           <PhaseEndDate
             challenge={challenge}
@@ -70,14 +70,12 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
           />
         </div>
         <div styleName="nums">
-          <a
-            href={`${process.env.URL.BASE}/challenges/${challenge.id}?tab=registrants`} // eslint-disable-line no-undef
-          >
+          <Link to={`${CHALLENGES_URL}/${challenge.id}?tab=registrants`}>
             <NumRegistrants numOfRegistrants={challenge.numOfRegistrants} />
-          </a>
-          <a href={submissionLink}>
+          </Link>
+          <Link to={submissionLink}>
             <NumSubmissions numOfSubmissions={challenge.numOfSubmissions} />
-          </a>
+          </Link>
         </div>
       </div>
       <div styleName="prize">

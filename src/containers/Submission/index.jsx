@@ -5,6 +5,7 @@ import { navigate } from "@reach/router";
 import { PrimaryButton } from "components/Buttons";
 import AccessDenied from "components/AccessDenied";
 import LoadingIndicator from "components/LoadingIndicator";
+import { login } from "@topcoder/micro-frontends-navbar-app";
 import { ACCESS_DENIED_REASON, CHALLENGES_URL } from "../../constants";
 import Submit from "./Submit";
 import actions from "../../actions";
@@ -38,6 +39,7 @@ const Submission = ({
   submitDone,
   uploadProgress,
 
+  getIsRegistered,
   getChallenge,
   submit,
   resetForm,
@@ -47,6 +49,7 @@ const Submission = ({
   setFilePickerUploadProgress,
   setFilePickerDragged,
   setSubmissionFilestackData,
+  checkIsLoggedOut,
   setAuth,
 }) => {
   const propsRef = useRef();
@@ -92,6 +95,17 @@ const Submission = ({
     );
   }
 
+  const handleSubmit = async (data) => {
+    const isLoggedOut = checkIsLoggedOut();
+    if (isLoggedOut) {
+      window.sessionStorage && window.sessionStorage.clear();
+      login();
+    } else {
+      const registered = await getIsRegistered(challengeId, userId);
+      if (registered) submit(data);
+    }
+  };
+
   return (
     <Submit
       challengeId={challengeId}
@@ -119,7 +133,7 @@ const Submission = ({
       setFilePickerUploadProgress={setFilePickerUploadProgress}
       setFilePickerDragged={setFilePickerDragged}
       setSubmissionFilestackData={setSubmissionFilestackData}
-      submit={submit}
+      submit={handleSubmit}
     />
   );
 };
@@ -155,6 +169,7 @@ Submission.propTypes = {
   uploadProgress: PT.number,
 
   getChallenge: PT.func,
+  getIsRegistered: PT.func,
   submit: PT.func,
   resetForm: PT.func,
   setAgreed: PT.func,
@@ -164,6 +179,7 @@ Submission.propTypes = {
   setFilePickerDragged: PT.func,
   setSubmissionFilestackData: PT.func,
   setAuth: PT.func,
+  checkIsLoggedOut: PT.func,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -208,6 +224,16 @@ const mapDispatchToProps = (dispatch) => {
     },
     setAuth: () => {
       dispatch(actions.auth.setAuthDone());
+    },
+    checkIsLoggedOut: () => {
+      const action = dispatch(actions.auth.checkIsLoggedOut());
+      return action?.payload?.isLoggedOut;
+    },
+    getIsRegistered: async (challengeId, userId) => {
+      const action = await dispatch(
+        actions.challenge.getIsRegistered(challengeId, userId)
+      );
+      return action?.payload?.isRegistered;
     },
     getChallenge: (challengeId) => {
       dispatch(actions.challenge.getChallengeInit(challengeId));
