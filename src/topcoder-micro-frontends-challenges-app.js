@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import singleSpaReact from "single-spa-react";
 import Root from "./root.component";
 import appInit from "./utils/lifeCycle";
+import NotFoundError from "./components/NotFoundError";
 
 const appLifecycles = appInit();
 
@@ -13,7 +14,7 @@ const lifecycles = singleSpaReact({
   rootComponent: Root,
   errorBoundary(err, info, props) {
     // Customize the root error boundary for your microfrontend here.
-    return null;
+    return <NotFoundError />;
   },
 });
 

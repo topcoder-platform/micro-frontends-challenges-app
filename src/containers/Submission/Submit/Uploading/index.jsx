@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import PT from "prop-types";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import { PrimaryButton, DefaultButton as Button } from "components/Buttons";
 import { COMPETITION_TRACKS, CHALLENGES_URL } from "../../../../constants";
 import RobotHappy from "assets/icons/robot-happy.svg";
@@ -20,6 +20,22 @@ const Uploading = ({
   uploadProgress,
   back,
 }) => {
+  const propsRef = useRef();
+  propsRef.current = { submitDone, challengeId };
+
+  useEffect(() => {
+    return () => {
+      if (propsRef.current.submitDone) {
+        const backUrl = window.location.pathname;
+        if (backUrl === `${CHALLENGES_URL}/${challengeId}`) {
+          navigate(
+            `${CHALLENGES_URL}/${propsRef.current.challengeId}?reload=true`
+          );
+        }
+      }
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div styleName="container">
       <div styleName="uploading">

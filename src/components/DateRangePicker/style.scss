@@ -348,6 +348,10 @@ $darkGreen: #0AB88A;;
           }
         }
 
+        .rdrStartEdge.rdrEndEdge ~ .rdrDayNumber span {
+          color: $tc-black;
+        }
+
         .rdrDayNumber {
           top: 0;
           bottom: 0;
@@ -391,6 +395,7 @@ $darkGreen: #0AB88A;;
   z-index: 10;
 
   @include phone {
+    width: 100vw;
     position: fixed;
     top: 0;
     left: 0;
@@ -402,7 +407,15 @@ $darkGreen: #0AB88A;;
     border-radius: 0;
   }
 
-  .reset-button {
+  .calendar-footer {
+    width: 100%;
+
+    @include phone {
+      padding: 0 20px;
+    }
+  }
+
+  .calendar-button {
     @include roboto-bold;
 
     width: 71px;
@@ -421,7 +434,7 @@ $darkGreen: #0AB88A;;
       height: 26px;
       line-height: 27px;
       font-size: 12px;
-      margin: 20px 12px 0;
+      margin: 0 12px 0;
     }
   }
 }

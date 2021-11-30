@@ -29,14 +29,14 @@ export const FILTER_CHALLENGE_TRACKS = [
   "Design",
   "Development",
   "Data Science",
-  "QA",
+  "Quality Assurance",
 ];
 
 export const FILTER_CHALLENGE_TRACK_ABBREVIATIONS = {
   Design: "DES",
   Development: "DEV",
   "Data Science": "DS",
-  QA: "QA",
+  "Quality Assurance": "QA",
 };
 
 export const CHALLENGE_SORT_BY = {
@@ -95,4 +95,10 @@ export const COMPETITION_TRACKS = {
   DES: "Design",
   DEV: "Development",
   QA: "Quality Assurance",
+};
+
+export const TOKEN_COOKIE_KEYS = {
+  V3JWT: "v3jwt",
+  TCJWT: "tcjwt",
+  TCSSO: "tcsso",
 };
