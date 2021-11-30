@@ -15,9 +15,11 @@ import qs from "qs";
  * @params {Object<{[key: string]: any}>} params Query string parameters
  * @return {String}
  */
-export function buildQueryString(params) {
+export function buildQueryString(params, disableEncode) {
   params = _.omitBy(params, (p) => p == null || p === "" || p.length === 0);
-
+  if (!disableEncode) {
+    params.tags = _.map(params.tags, (t) => encodeURIComponent(t));
+  }
   let queryString = qs.stringify(params, {
     encode: false,
     arrayFormat: "brackets",
@@ -28,15 +30,23 @@ export function buildQueryString(params) {
 }
 
 export function parseUrlQuery(queryString) {
-  return qs.parse(queryString, { ignoreQueryPrefix: true });
+  let params = qs.parse(queryString, { ignoreQueryPrefix: true });
+  if (params.tags) {
+    params.tags = _.map(params.tags, (t) => decodeURIComponent(t));
+  }
+  return params;
 }
 
-export function updateQuery(params) {
+export function updateQuery(params, replace = false) {
   const oldQuery = decodeURIComponent(window.location.search);
   let query = buildQueryString(params);
   query = `?${query.substring(1).split("&").sort().join("&")}`;
   if (query !== oldQuery) {
-    window.history.pushState(window.history.state, "", query);
+    if (replace) {
+      window.history.replaceState(window.history.state, "", query);
+    } else {
+      window.history.pushState(window.history.state, "", query);
+    }
   }
 }
 
