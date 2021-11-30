@@ -177,5 +177,5 @@ export function triggerDownload(fileName, blob) {
   link.setAttribute("download", fileName);
   document.body.appendChild(link);
   link.click();
-  link.parentNode.removeChild(link);
+  link.parentNode.removeChild(link); 
 }
