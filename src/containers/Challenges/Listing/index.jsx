@@ -14,7 +14,7 @@ import * as utils from "../../../utils";
 
 import * as constants from "../../../constants";
 import IconSearch from "../../../assets/icons/search.svg";
-import IconTrash from "../../../assets/icons/IconTrashSimple.svg";
+import IconClear from "../../../assets/icons/close.svg";
 import "./styles.scss";
 
 const Listing = ({
@@ -71,20 +71,24 @@ const Listing = ({
               }}
               maxLength="100"
             />
-            <span styleName="trash-icon">
-              <IconTrash
-                size="xs"
-                onClick={() => {
-                  onSearch.current(() => {
-                    const filterChange = {
-                      search: "",
-                      page: 1,
-                    };
-                    updateFilter(filterChange);
-                  });
-                }}
-              />
-            </span>
+            {search.length ? (
+              <span styleName="clear-icon">
+                <IconClear
+                  size="xs"
+                  onClick={() => {
+                    onSearch.current(() => {
+                      const filterChange = {
+                        search: "",
+                        page: 1,
+                      };
+                      updateFilter(filterChange);
+                    });
+                  }}
+                />
+              </span>
+            ):(
+              <span type="hidden"></span>
+            )}
           </div>
           <div styleName="separator" />
           <div
