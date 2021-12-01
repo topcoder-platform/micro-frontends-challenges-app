@@ -47,7 +47,6 @@ export default function ChallengeHeader(props) {
     onToggleDeadlines,
     registering,
     registerForChallenge,
-    setChallengeListingFilter,
     unregisterFromChallenge,
     unregistering,
     challengeTypesMap,
@@ -282,7 +281,6 @@ export default function ChallengeHeader(props) {
                 challengesUrl={challengesUrl}
                 events={eventNames}
                 technPlatforms={miscTags}
-                setChallengeListingFilter={setChallengeListingFilter}
                 openForRegistrationChallenges={openForRegistrationChallenges}
               />
               {(hasRecommendedChallenges || hasThriveArticles) && (
@@ -531,7 +529,6 @@ ChallengeHeader.propTypes = {
   registerForChallenge: PT.func.isRequired,
   registering: PT.bool.isRequired,
   selectedView: PT.string.isRequired,
-  setChallengeListingFilter: PT.func.isRequired,
   showDeadlineDetail: PT.bool.isRequired,
   unregisterFromChallenge: PT.func.isRequired,
   unregistering: PT.bool.isRequired,

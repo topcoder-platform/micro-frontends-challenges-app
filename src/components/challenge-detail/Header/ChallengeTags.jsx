@@ -38,7 +38,6 @@ export default function ChallengeTags(props) {
     challengeType,
     events,
     technPlatforms,
-    setChallengeListingFilter,
     openForRegistrationChallenges,
   } = props;
 
@@ -94,11 +93,6 @@ export default function ChallengeTags(props) {
     <div>
       {challengeType && (
         <TrackTag
-          onClick={() =>
-            setImmediate(() =>
-              setChallengeListingFilter({ types: [challengeType.name] })
-            )
-          }
           to={`${challengesUrl}${filterByChallengeType}&types[]=${encodeURIComponent(
             challengeType.abbreviation
           )}`}
@@ -124,9 +118,6 @@ export default function ChallengeTags(props) {
           tag && (
             <Tag
               key={tag}
-              onClick={() =>
-                setImmediate(() => setChallengeListingFilter({ tags: [tag] }))
-              }
               to={`${challengesUrl}${filterByTag}&tags[]=${encodeURIComponent(
                 tag
               )}`}
@@ -150,7 +141,6 @@ ChallengeTags.propTypes = {
   track: PT.string.isRequired,
   events: PT.arrayOf(PT.string),
   technPlatforms: PT.arrayOf(PT.string),
-  setChallengeListingFilter: PT.func.isRequired,
   challengeType: PT.shape().isRequired,
   openForRegistrationChallenges: PT.shape().isRequired,
 };
