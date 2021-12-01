@@ -255,9 +255,9 @@ const SubmitForm = ({
               Topcoder terms of use
             </a>
             &zwnj; and to the extent your uploaded file wins a topcoder
-            Competition, you hereby assign, grant and transfer and agree to
-            assign, grant and transfer to topcoder all right and title in and to
-            the Winning Submission (as further described in the terms of use).
+            Competition, you hereby agree to assign, grant and transfer to
+            Topcoder all right and title in and to the Winning Submission (as
+            further described in the terms of use).
           </p>
           <div styleName="tc-checkbox">
             <input
