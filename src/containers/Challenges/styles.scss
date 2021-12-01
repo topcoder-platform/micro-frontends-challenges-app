@@ -18,6 +18,8 @@
 .title {
   @include barlow-condensed-medium;
   margin-bottom: 22px;
+  font-size: 34px;
+  line-height: 1;
 
   @include down($mfe-screen-xs) {
     font-size: 25px;
