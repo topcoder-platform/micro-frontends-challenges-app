@@ -7,7 +7,7 @@ export const useCssVariable = (name, transformFunc) => {
     const val = style.getPropertyValue(name);
 
     return transformFunc ? transformFunc(val) : val;
-  }, [name]);
+  }, [name, transformFunc]);
 
   return value;
 };

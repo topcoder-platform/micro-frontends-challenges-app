@@ -123,9 +123,8 @@ const Listing = ({
           </div>
         </div>
       </Panel.Header>
-      {loadingChallenges ? (
-        _.times(3, () => <ChallengeLoading />)
-      ) : challenges.length ? (
+      {loadingChallenges && (_.times(3, () => <ChallengeLoading />))}
+      {!loadingChallenges && (challenges.length ? (
         <Panel.Body>
           {challenges.map((challenge, index) => (
             <div
@@ -152,24 +151,28 @@ const Listing = ({
               />
             </div>
           ))}
-          <div styleName="pagination">
-            <Pagination
-              length={total}
-              pageSize={perPage}
-              pageIndex={utils.pagination.pageToPageIndex(page)}
-              onChange={(event) => {
-                const filterChange = {
-                  page: utils.pagination.pageIndexToPage(event.pageIndex),
-                  perPage: event.pageSize,
-                };
-                updateFilter(filterChange);
-              }}
-            />
-          </div>
         </Panel.Body>
       ) : (
         <ChallengeError />
-      )}
+      ))}
+      <Panel.Body>
+        <div styleName="pagination" style={{
+          display: challenges.length === 0 || loadingChallenges ? 'none' : ''
+        }}>
+          <Pagination
+            length={total}
+            pageSize={perPage}
+            pageIndex={utils.pagination.pageToPageIndex(page)}
+            onChange={(event) => {
+              const filterChange = {
+                page: utils.pagination.pageIndexToPage(event.pageIndex),
+                perPage: event.pageSize,
+              };
+              updateFilter(filterChange);
+            }}
+          />
+        </div>
+      </Panel.Body>
     </Panel>
   );
 };

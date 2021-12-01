@@ -7,6 +7,11 @@
   @include down($mfe-screen-xs) {
     padding: 10px 0;
     background-color: $tc-white;
+
+    :global(.banner) {
+      margin: 0 20px;
+      width: calc(100% - 40px);
+    }
   }
 }
 

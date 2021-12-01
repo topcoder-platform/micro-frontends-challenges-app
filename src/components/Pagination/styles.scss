@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
 
-  @include down($mfe-screen-xs) {
+  @include down(1024px) {
     .per-page {
       width: 60px;
 
@@ -20,17 +20,13 @@
         }
       }
 
-      @include down(375px - 1px) {
-        .label {
-          display: none;
-        }
+      .label {
+        display: none;
       }
     }
 
     .pages {
-      flex: auto;
       margin: 0;
-      justify-content: flex-end;
 
       .page.previous > button,
       .page.next > button {
@@ -42,6 +38,14 @@
           content: '';
         }
       }
+    }
+  }
+
+  @include down($mfe-screen-xs) {
+    .pages {
+      flex: auto;
+      margin: 0;
+      justify-content: flex-end;
     }
   }
 }

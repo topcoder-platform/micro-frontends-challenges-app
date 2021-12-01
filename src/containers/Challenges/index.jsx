@@ -99,9 +99,10 @@ const Challenges = ({
       <Banner />
 
       <div ref={menuRef}>
-        <h1
+        <div
           styleName={`title ${isScreenXs && menuExpanded ? 'menu-title' : ''}`}
           role="button"
+          tabIndex={-1}
           onClick={() => setMenuExpanded(!menuExpanded)}
         >
           <span>{isScreenXs && menuExpanded ? 'EARN' : 'CHALLENGES'}</span>
@@ -120,7 +121,7 @@ const Challenges = ({
               </button>*/}
             </span>
           )}
-        </h1>
+        </div>
 
         {mobileMenu}
       </div>
