@@ -32,7 +32,7 @@ $filter-padding-y: 3 * $base-unit;
   :global {
     .count-badge {
       display: inline-block;
-      margin: -2px 0 0 $base-unit;
+      margin: 2px 0 0 $base-unit;
       padding: 2px 5px 0;
       font-weight: bold;
       font-size: 11px;
