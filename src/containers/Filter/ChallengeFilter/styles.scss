@@ -96,6 +96,10 @@ $filter-padding-y: 3 * $base-unit;
   position: relative;
   margin-top: -12px;
 
+  :global(.textInputContainer) {
+    width: 100%;
+  }
+
   input {
     padding-right: 36px !important;
   }

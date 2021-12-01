@@ -12,7 +12,12 @@ import * as constants from "../../constants";
 import { Banner } from "@topcoder/micro-frontends-earn-app";
 
 import * as utils from "../../utils";
+import { useMediaQuery } from 'react-responsive';
+import { useCssVariable } from "../../utils/hooks/useCssVariable";
+import IconArrow from "../../assets/icons/arrow.svg";
+
 import "./styles.scss";
+import { useClickOutside } from "../../utils/hooks/useClickOutside";
 
 const Challenges = ({
   challenges,
@@ -74,20 +79,52 @@ const Challenges = ({
     recommended &&
     recommendedChallenges.length === 0;
 
+  const screenXs = useCssVariable('--mfe-screen-xs', value => parseInt(value));
+  const isScreenXs = useMediaQuery({ maxWidth: screenXs });
+
+  const [menuExpanded, setMenuExpanded] = useState(false);
+  const menuRef = useClickOutside(menuExpanded, (event) => {
+    setMenuExpanded(false);
+  });
+
+  const mobileMenu = (
+    <div
+      id="menu-id"
+      styleName={`mobile-menu ${menuExpanded ? '' : 'hidden'}`}
+    />
+  );
+
   return (
     <div styleName="page">
       <Banner />
-      <h1 styleName="title">
-        <span>CHALLENGES</span>
-        {/* <span styleName="view-mode">
-          <button styleName="button-icon active">
-            <IconListView />
-          </button>
-          <button styleName="button-icon">
-            <IconCardView />
-          </button>
-        </span> */}
-      </h1>
+
+      <div ref={menuRef}>
+        <h1
+          styleName={`title ${isScreenXs && menuExpanded ? 'menu-title' : ''}`}
+          role="button"
+          onClick={() => setMenuExpanded(!menuExpanded)}
+        >
+          <span>{isScreenXs && menuExpanded ? 'EARN' : 'CHALLENGES'}</span>
+
+          {isScreenXs ? (
+            <span styleName={`arrow-down ${menuExpanded ? 'up' : ''}`}>
+              <IconArrow />
+            </span>
+          ) : (
+            <span styleName="view-mode">
+              {/*<button styleName="button-icon active">
+                <IconListView />
+              </button>
+              <button styleName="button-icon">
+                <IconCardView />
+              </button>*/}
+            </span>
+          )}
+        </h1>
+
+        {mobileMenu}
+      </div>
+
       {initialized ? (
         <>
           {/*noRecommendedChallenges && <ChallengeRecommendedError />*/}

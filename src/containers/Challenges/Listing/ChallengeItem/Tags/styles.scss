@@ -1,9 +1,14 @@
 @import "styles/variables";
 
 .tags {
+  margin-top: -5px;
+
   > * {
-    margin-right: 4px;
-    margin-bottom: 4px;
+    margin-top: 5px;
+  }
+
+  > *:not(:last-child) {
+    margin-right: 5px;
   }
 }
 

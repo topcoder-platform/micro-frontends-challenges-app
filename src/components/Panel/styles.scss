@@ -7,6 +7,21 @@ $panel-padding-y: 16px;
 .panel {
   background: $white;
   border-radius: $border-radius-lg;
+
+  @include down($mfe-screen-xs) {
+    padding: 0;
+    border-radius: 0;
+
+    .panel-header,
+    .panel-footer {
+      padding: 10px 20px;
+      border-radius: 0;
+    }
+
+    .panel-body {
+      padding: 0;
+    }
+  }
 }
 
 .panel-header {

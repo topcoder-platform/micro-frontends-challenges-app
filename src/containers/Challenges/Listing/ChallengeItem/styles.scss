@@ -1,12 +1,75 @@
 @import "styles/variables";
+@import "styles/mixins";
 
 .challenge-item {
   display: flex;
-  padding: 16px;
+  padding: 16px 0 16px 16px;
   border-top: 1px solid #E9E9E9;
 
   &:last-child {
     border-bottom: 1px solid #E9E9E9;
+  }
+
+  @include down($mfe-screen-sm) {
+    .info {
+      .name-container {
+        padding-right: 60px;
+      }
+
+      .tags {
+        max-width: none;
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      .nums {
+        width: 0;
+        flex: none;
+      }
+    }
+
+    .prize {
+      align-self: flex-start;
+      padding-top: 5px;
+    }
+  }
+
+  @include down($mfe-screen-xs) {
+    position: relative;
+    flex-wrap: wrap;
+    padding: 20px 0 20px 68px;
+
+    .track {
+      position: absolute;
+      left: 15px;
+      top: 20px;
+    }
+
+    .info {
+      width: 100%;
+
+      .name-container {
+        padding-right: 20px;
+
+        .name {
+          line-height: 20px;
+        }
+      }
+
+      .tags {
+        max-width: none;
+        min-width: 0;
+      }
+
+      .name-container,
+      .tags {
+        margin-bottom: 10px;
+      }
+
+      .nums {
+        display: none;
+      }
+    }
   }
 }
 
@@ -39,7 +102,7 @@
     min-width: calc(50% - 84px);
     flex: 1 1 auto;
 
-    @media (min-width: $screen-xxl + 1px) {
+    @media (min-width: ($screen-xxl + 1px)) {
       min-width: 294px;
       max-width: 25%;
     }

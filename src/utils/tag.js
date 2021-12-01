@@ -1,15 +1,14 @@
-const MAX_LEN = 20;
+const canvas = document.createElement('canvas');
+const context = canvas.getContext('2d');
+context.font = 'normal 12px Roboto';
 
-export function calculateNumberOfVisibleTags(tags) {
-  const tagsString = tags.reduce((s, tag) => s.concat(tag), "");
+export function measureText(tags) {
+  let text = tags.join();
+  const metrics = context.measureText(text);
 
-  let n = tags.length;
-  if (tagsString.length > MAX_LEN) {
-    let ss = "";
-    for (n = 0; n < tags.length && ss.length < MAX_LEN; n += 1) {
-      ss = ss.concat(tags[n]);
-    }
-  }
-
-  return n;
+  // tag's:
+  // - padding-x: '5px 4px'
+  // - border-width: 1px
+  // - margin-right: 5px
+  return metrics.width + tags.length * 16 - 5;
 }
