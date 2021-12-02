@@ -103,7 +103,7 @@ const Challenges = ({
           styleName={`title ${isScreenXs && menuExpanded ? 'menu-title' : ''}`}
           role="button"
           tabIndex={-1}
-          onClick={() => setMenuExpanded(!menuExpanded)}
+          onClick={() => isScreenXs && setMenuExpanded(!menuExpanded)}
         >
           <span>{isScreenXs && menuExpanded ? 'EARN' : 'CHALLENGES'}</span>
 
