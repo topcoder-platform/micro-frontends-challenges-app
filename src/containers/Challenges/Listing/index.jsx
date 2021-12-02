@@ -72,9 +72,19 @@ const Listing = ({
               maxLength="100"
             />
             {search.length ? (
-              <span styleName="clear-icon">
+              <span styleName="clear-icon"
+                onClick={() => {
+                  onSearch.current(() => {
+                    const filterChange = {
+                      search: "",
+                      page: 1,
+                    };
+                    updateFilter(filterChange);
+                  });
+                }}
+              >
                 <IconClear
-                  size="xs"
+                  size="sm"
                   onClick={() => {
                     onSearch.current(() => {
                       const filterChange = {
