@@ -267,9 +267,8 @@ const SubmitForm = ({
               onChange={(e) => setAgreed(e.target.checked)}
             />
             <label htmlFor="agree">
-              <input type="hidden" />
+              <div styleName="tc-checkbox-label">I UNDERSTAND AND AGREE</div>
             </label>
-            <div styleName="tc-checkbox-label">I UNDERSTAND AND AGREE</div>
           </div>
           <PrimaryButton
             type="submit"

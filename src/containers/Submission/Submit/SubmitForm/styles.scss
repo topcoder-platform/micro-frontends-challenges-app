@@ -236,7 +236,7 @@
         border-color: $tc-dark-blue;
       }
 
-      input[type=checkbox]:focus ~ label {
+      input[type=checkbox]:focus {
         outline: 2px auto $tc-dark-blue;
       }
 
