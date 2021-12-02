@@ -1,4 +1,5 @@
 @import "~styles/mixins";
+@import "~styles/variables";
 
 @keyframes placeholderAnim {
   0% {
@@ -80,5 +81,20 @@
   .prize-nominal {
     height: 42px;
     width: 40px;
+  }
+
+  @include down($mfe-screen-sm) {
+    .title {
+      width: 50%;
+      max-width: 100px;
+    }
+    .info {
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+
+  @include down($mfe-screen-xs) {
+    margin: 0;
   }
 }

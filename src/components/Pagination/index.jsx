@@ -105,14 +105,14 @@ const Pagination = ({ length, pageIndex, pageSize, onChange }) => {
           onChange={onChangePageSize}
           size="xs"
         />
+        <span styleName="label">per page</span>
       </div>
       <ul styleName="pages">
         <li styleName={`page previous ${pageIndex === 0 ? "hidden" : ""}`}>
           <button onClick={previous}>
             <span styleName="arrow">
               <IconArrow />
-            </span>{" "}
-            PREVIOUS
+            </span>
           </button>
         </li>
         {displayPages.map((p) => (
@@ -132,7 +132,6 @@ const Pagination = ({ length, pageIndex, pageSize, onChange }) => {
           }`}
         >
           <button onClick={next}>
-            NEXT{" "}
             <span styleName="arrow">
               <IconArrow />
             </span>

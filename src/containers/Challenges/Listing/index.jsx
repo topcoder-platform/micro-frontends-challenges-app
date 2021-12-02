@@ -14,6 +14,8 @@ import * as utils from "../../../utils";
 
 import * as constants from "../../../constants";
 import IconSearch from "../../../assets/icons/search.svg";
+import Button from "../../../components/Button";
+
 import "./styles.scss";
 
 const Listing = ({
@@ -45,6 +47,11 @@ const Listing = ({
       page: 1,
     };
     updateFilter(filterChange);
+  };
+
+  const onShowSidebar = () => {
+    const sidebarEl = document.getElementById('sidebar-id');
+    sidebarEl.classList.add('show');
   };
 
   return (
@@ -111,11 +118,13 @@ const Listing = ({
               }}
             />
           </div>
+          <div styleName="filter-button">
+            <Button onClick={onShowSidebar}>FILTER</Button>
+          </div>
         </div>
       </Panel.Header>
-      {loadingChallenges ? (
-        _.times(3, () => <ChallengeLoading />)
-      ) : challenges.length ? (
+      {loadingChallenges && (_.times(3, () => <ChallengeLoading />))}
+      {!loadingChallenges && (challenges.length ? (
         <Panel.Body>
           {challenges.map((challenge, index) => (
             <div
@@ -142,24 +151,28 @@ const Listing = ({
               />
             </div>
           ))}
-          <div styleName="pagination">
-            <Pagination
-              length={total}
-              pageSize={perPage}
-              pageIndex={utils.pagination.pageToPageIndex(page)}
-              onChange={(event) => {
-                const filterChange = {
-                  page: utils.pagination.pageIndexToPage(event.pageIndex),
-                  perPage: event.pageSize,
-                };
-                updateFilter(filterChange);
-              }}
-            />
-          </div>
         </Panel.Body>
       ) : (
         <ChallengeError />
-      )}
+      ))}
+      <Panel.Body>
+        <div styleName="pagination" style={{
+          display: challenges.length === 0 || loadingChallenges ? 'none' : ''
+        }}>
+          <Pagination
+            length={total}
+            pageSize={perPage}
+            pageIndex={utils.pagination.pageToPageIndex(page)}
+            onChange={(event) => {
+              const filterChange = {
+                page: utils.pagination.pageIndexToPage(event.pageIndex),
+                perPage: event.pageSize,
+              };
+              updateFilter(filterChange);
+            }}
+          />
+        </div>
+      </Panel.Body>
     </Panel>
   );
 };

@@ -97,3 +97,22 @@ $screen-lg: 1280px !default;
     @content;
   }
 }
+
+// mfe
+
+$mfe-screen-xs: 767px;
+$mfe-screen-sm: 1080px;
+$mfe-screen-lg: 1280px;
+$mfe-screen-xl: 1366px;
+
+@mixin up($screen-width) {
+  @media (min-width: $screen-width) {
+    @content;
+  }
+}
+
+@mixin down($screen-width) {
+  @media (max-width: $screen-width) {
+    @content;
+  }
+}
