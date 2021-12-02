@@ -181,9 +181,15 @@ export function triggerDownload(fileName, blob) {
 }
 
 export function toBreakableWords(str, breakFunc) {
-  return str.split(' ').map(hyphenWords => {
-    return hyphenWords.split('-').map(word => {
-      return breakFunc(word);
-    }).join('-');
-  }).join(' ');
+  return str
+    .split(" ")
+    .map((hyphenWords) => {
+      return hyphenWords
+        .split("-")
+        .map((word) => {
+          return breakFunc(word);
+        })
+        .join("-");
+    })
+    .join(" ");
 }

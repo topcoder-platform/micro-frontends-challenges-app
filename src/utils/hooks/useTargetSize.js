@@ -10,7 +10,7 @@ export const useTargetSize = () => {
 
   React.useLayoutEffect(() => {
     const targetNode = ref.current;
-    const resizeObserver = new ResizeObserver(entries => {
+    const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (entry.contentBoxSize) {
           const contentBoxSize = Array.isArray(entry.contentBoxSize)
@@ -21,13 +21,13 @@ export const useTargetSize = () => {
           });
         }
       }
-    })
+    });
     resizeObserver.observe(targetNode);
 
     return () => {
-      resizeObserver.unobserve(targetNode)
+      resizeObserver.unobserve(targetNode);
     };
   }, []);
 
   return [size, ref];
-}
+};

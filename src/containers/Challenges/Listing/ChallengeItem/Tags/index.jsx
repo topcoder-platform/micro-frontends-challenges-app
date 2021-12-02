@@ -25,7 +25,7 @@ const Tags = ({ tags, onClickTag, tooltip }) => {
     }
 
     const widthOfMoreTag = 40;
-    while(tagsWidth > maxWidth - widthOfMoreTag) {
+    while (tagsWidth > maxWidth - widthOfMoreTag) {
       tagArray.pop();
       tagsWidth = util.measureText(tagArray);
     }

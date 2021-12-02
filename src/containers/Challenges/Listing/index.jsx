@@ -50,8 +50,8 @@ const Listing = ({
   };
 
   const onShowSidebar = () => {
-    const sidebarEl = document.getElementById('sidebar-id');
-    sidebarEl.classList.add('show');
+    const sidebarEl = document.getElementById("sidebar-id");
+    sidebarEl.classList.add("show");
   };
 
   return (
@@ -123,42 +123,46 @@ const Listing = ({
           </div>
         </div>
       </Panel.Header>
-      {loadingChallenges && (_.times(3, () => <ChallengeLoading />))}
-      {!loadingChallenges && (challenges.length ? (
-        <Panel.Body>
-          {challenges.map((challenge, index) => (
-            <div
-              key={challenge.id}
-              styleName={index % 2 === 0 ? "even" : "odd"}
-            >
-              <ChallengeItem
-                challenge={challenge}
-                onClickTag={(tag) => {
-                  const filterChange = {
-                    tags: [tag],
-                    page: 1,
-                  };
-                  updateFilter(filterChange);
-                }}
-                onClickTrack={(track) => {
-                  const filterChange = {
-                    tracks: [track],
-                    page: 1,
-                  };
-                  updateFilter(filterChange);
-                }}
-                isLoggedIn={isLoggedIn}
-              />
-            </div>
-          ))}
-        </Panel.Body>
-      ) : (
-        <ChallengeError />
-      ))}
+      {loadingChallenges && _.times(3, () => <ChallengeLoading />)}
+      {!loadingChallenges &&
+        (challenges.length ? (
+          <Panel.Body>
+            {challenges.map((challenge, index) => (
+              <div
+                key={challenge.id}
+                styleName={index % 2 === 0 ? "even" : "odd"}
+              >
+                <ChallengeItem
+                  challenge={challenge}
+                  onClickTag={(tag) => {
+                    const filterChange = {
+                      tags: [tag],
+                      page: 1,
+                    };
+                    updateFilter(filterChange);
+                  }}
+                  onClickTrack={(track) => {
+                    const filterChange = {
+                      tracks: [track],
+                      page: 1,
+                    };
+                    updateFilter(filterChange);
+                  }}
+                  isLoggedIn={isLoggedIn}
+                />
+              </div>
+            ))}
+          </Panel.Body>
+        ) : (
+          <ChallengeError />
+        ))}
       <Panel.Body>
-        <div styleName="pagination" style={{
-          display: challenges.length === 0 || loadingChallenges ? 'none' : ''
-        }}>
+        <div
+          styleName="pagination"
+          style={{
+            display: challenges.length === 0 || loadingChallenges ? "none" : "",
+          }}
+        >
           <Pagination
             length={total}
             pageSize={perPage}

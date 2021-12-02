@@ -33,10 +33,10 @@ $filter-padding-y: 3 * $base-unit;
     .count-badge {
       display: inline-block;
       margin: -2px 0 0 $base-unit;
-      padding: 2px 5px 0;
+      padding: 2px 5px;
       font-weight: bold;
       font-size: 11px;
-      line-height: 14px;
+      line-height: 11px;
       text-align: center;
       color: white;
       vertical-align: middle;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const useClickOutside = (open, onClickOutside) => {
   const ref = React.useRef(null);
@@ -13,8 +13,9 @@ export const useClickOutside = (open, onClickOutside) => {
     if (event.composedPath) {
       inside = event.composedPath().indexOf(ref.current) !== -1;
     } else {
-      inside = !document.documentElement.contains(event.target)
-        || ref.current.contains(event.target);
+      inside =
+        !document.documentElement.contains(event.target) ||
+        ref.current.contains(event.target);
     }
 
     if (!inside) {
@@ -24,9 +25,9 @@ export const useClickOutside = (open, onClickOutside) => {
 
   React.useEffect(() => {
     if (open) {
-      document.addEventListener('click', handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
       return () => {
-        document.removeEventListener('click', handleClickOutside);
+        document.removeEventListener("click", handleClickOutside);
       };
     }
   }, [open, handleClickOutside]);

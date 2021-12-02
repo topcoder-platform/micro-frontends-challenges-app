@@ -1028,7 +1028,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const ChallengeDetailContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(ChallengeDetailPageContainer);
 
 export default ChallengeDetailContainer;

@@ -32,11 +32,8 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
     submissionLink += "?tab=submissions";
   }
 
-  const challengeName = utils.toBreakableWords(
-    challenge.name,
-    w => w.length > 20
-      ? `<span style="word-break: break-all">${w}</span>`
-      : w,
+  const challengeName = utils.toBreakableWords(challenge.name, (w) =>
+    w.length > 20 ? `<span style="word-break: break-all">${w}</span>` : w
   );
 
   return (
@@ -53,7 +50,7 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
         <div styleName="name-container">
           <h6 styleName="name">
             <Link to={`${CHALLENGES_URL}/${challenge.id}`}>
-              <span dangerouslySetInnerHTML={{__html: challengeName}} />
+              <span dangerouslySetInnerHTML={{ __html: challengeName }} />
             </Link>
           </h6>
           <PhaseEndDate

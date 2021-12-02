@@ -1,6 +1,6 @@
-const canvas = document.createElement('canvas');
-const context = canvas.getContext('2d');
-context.font = 'normal 12px Roboto';
+const canvas = document.createElement("canvas");
+const context = canvas.getContext("2d");
+context.font = "normal 12px Roboto";
 
 export function measureText(tags) {
   let text = tags.join();

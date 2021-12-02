@@ -11,7 +11,7 @@ import * as utils from "../../utils";
 import store from "../../store";
 import { initialChallengeFilter } from "../../reducers/filter";
 import _ from "lodash";
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from "react-responsive";
 import { useCssVariable } from "../../utils/hooks/useCssVariable";
 
 import "react-date-range/dist/theme/default.css";
@@ -68,20 +68,20 @@ const App = () => {
   }, [location]);
 
   const onHideSidebar = () => {
-    const sidebarEl = document.getElementById('sidebar-id');
-    sidebarEl.classList.remove('show');
-  }
+    const sidebarEl = document.getElementById("sidebar-id");
+    sidebarEl.classList.remove("show");
+  };
 
-  const screenXs = useCssVariable('--mfe-screen-xs', value => parseInt(value));
+  const screenXs = useCssVariable("--mfe-screen-xs", (value) =>
+    parseInt(value)
+  );
   const isScreenXs = useMediaQuery({ maxWidth: screenXs });
 
   useLayoutEffect(() => {
-
-      showMenu(true);
-      return () => {
-        showMenu(false);
-      };
-
+    showMenu(true);
+    return () => {
+      showMenu(false);
+    };
   }, [isScreenXs]);
 
   return (

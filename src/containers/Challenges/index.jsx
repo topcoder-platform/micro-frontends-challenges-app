@@ -12,7 +12,7 @@ import * as constants from "../../constants";
 import { Banner } from "@topcoder/micro-frontends-earn-app";
 
 import * as utils from "../../utils";
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from "react-responsive";
 import { useCssVariable } from "../../utils/hooks/useCssVariable";
 import IconArrow from "../../assets/icons/arrow.svg";
 
@@ -79,7 +79,9 @@ const Challenges = ({
     recommended &&
     recommendedChallenges.length === 0;
 
-  const screenXs = useCssVariable('--mfe-screen-xs', value => parseInt(value));
+  const screenXs = useCssVariable("--mfe-screen-xs", (value) =>
+    parseInt(value)
+  );
   const isScreenXs = useMediaQuery({ maxWidth: screenXs });
 
   const [menuExpanded, setMenuExpanded] = useState(false);
@@ -90,7 +92,7 @@ const Challenges = ({
   const mobileMenu = (
     <div
       id="menu-id"
-      styleName={`mobile-menu ${menuExpanded ? '' : 'hidden'}`}
+      styleName={`mobile-menu ${menuExpanded ? "" : "hidden"}`}
     />
   );
 
@@ -100,15 +102,15 @@ const Challenges = ({
 
       <div ref={menuRef}>
         <div
-          styleName={`title ${isScreenXs && menuExpanded ? 'menu-title' : ''}`}
+          styleName={`title ${isScreenXs && menuExpanded ? "menu-title" : ""}`}
           role="button"
           tabIndex={-1}
           onClick={() => isScreenXs && setMenuExpanded(!menuExpanded)}
         >
-          <span>{isScreenXs && menuExpanded ? 'EARN' : 'CHALLENGES'}</span>
+          <span>{isScreenXs && menuExpanded ? "EARN" : "CHALLENGES"}</span>
 
           {isScreenXs ? (
-            <span styleName={`arrow-down ${menuExpanded ? 'up' : ''}`}>
+            <span styleName={`arrow-down ${menuExpanded ? "up" : ""}`}>
               <IconArrow />
             </span>
           ) : (
