@@ -141,6 +141,7 @@ $tc-link-visited: #0c4e98;
     margin: (2 * $base-unit) 0 (3 * $base-unit);
     padding: 3 * $base-unit;
     display: block;
+    white-space: pre-wrap;
   }
 
   pre {
@@ -374,7 +375,7 @@ $tc-link-visited: #0c4e98;
     }
 
     code {
-      white-space: pre;
+      white-space: pre-wrap;
       margin: 10px 0 15px;
       background: $tc-gray-neutral-light;
       border: 1px solid silver;
