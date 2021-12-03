@@ -27,7 +27,11 @@
         flex: none;
 
         > * {
-          margin: 0 15px;
+          &:first-child {
+            margin-left: 0;
+            display: inline-block;
+            width: 64px;
+          }
         }
       }
     }
@@ -117,14 +121,11 @@
     white-space: nowrap;
 
     > * {
-      margin: 0 20px;
 
       &:first-child {
         margin-left: 0;
-      }
-
-      &:last-child {
-        margin-right: 0;
+        display: inline-block;
+        width: 84px;
       }
     }
   }
