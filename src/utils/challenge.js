@@ -13,6 +13,18 @@ Joi.page = () =>
     Joi.any().custom(() => 1)
   );
 
+Joi.minPrice = () =>
+  Joi.alternatives().try(
+    Joi.number().min(0),
+    Joi.any().custom(() => 0)
+  );
+
+Joi.maxPrice = () =>
+  Joi.alternatives().try(
+    Joi.number().min(0),
+    Joi.any().custom(() => 10000)
+  );
+
 Joi.perPage = () =>
   Joi.alternatives().try(
     Joi.number()
@@ -135,8 +147,8 @@ const queryScheme = {
   groups: Joi.array().items(Joi.optionalId()).unique(),
   events: Joi.array().items(Joi.string()),
   bucket: Joi.bucket(),
-  totalPrizesFrom: Joi.number().integer().min(0),
-  totalPrizesTo: Joi.number().integer().min(0),
+  totalPrizesFrom: Joi.minPrice(),
+  totalPrizesTo: Joi.maxPrice(),
   recommended: Joi.boolean(),
 };
 
