@@ -82,7 +82,6 @@
     height: 42px;
     width: 40px;
   }
-<<<<<<< HEAD
 
   @include down($mfe-screen-sm) {
     .title {
@@ -98,6 +97,4 @@
   @include down($mfe-screen-xs) {
     margin: 0;
   }
-=======
->>>>>>> master
 }
