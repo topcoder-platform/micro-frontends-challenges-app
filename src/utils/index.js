@@ -179,3 +179,17 @@ export function triggerDownload(fileName, blob) {
   link.click();
   link.parentNode.removeChild(link);
 }
+
+export function toBreakableWords(str, breakFunc) {
+  return str
+    .split(" ")
+    .map((hyphenWords) => {
+      return hyphenWords
+        .split("-")
+        .map((word) => {
+          return breakFunc(word);
+        })
+        .join("-");
+    })
+    .join(" ");
+}

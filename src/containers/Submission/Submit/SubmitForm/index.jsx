@@ -1,3 +1,4 @@
+/* eslint jsx-a11y/no-static-element-interactions:0 */
 /**
  * components.page.challenge-details.Submit
  * <Submit> Component
@@ -50,6 +51,8 @@ const SubmitForm = ({
   const propsRef = useRef();
   propsRef.current = { resetForm };
 
+  const checkboxRef = useRef();
+
   useEffect(() => {
     return () => {
       propsRef.current.resetForm();
@@ -91,6 +94,10 @@ const SubmitForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     submit(getFormData());
+  };
+
+  const handleAgree = () => {
+    checkboxRef.current.checked = !checkboxRef.current.checked;
   };
 
   const id = "file-picker-submission";
@@ -255,13 +262,14 @@ const SubmitForm = ({
               Topcoder terms of use
             </a>
             &zwnj; and to the extent your uploaded file wins a topcoder
-            Competition, you hereby assign, grant and transfer and agree to
-            assign, grant and transfer to topcoder all right and title in and to
-            the Winning Submission (as further described in the terms of use).
+            Competition, you hereby agree to assign, grant and transfer to
+            Topcoder all right and title in and to the Winning Submission (as
+            further described in the terms of use).
           </p>
           <div styleName="tc-checkbox">
             <input
               type="checkbox"
+              ref={checkboxRef}
               id="agree"
               aria-label="I understand and agree"
               onChange={(e) => setAgreed(e.target.checked)}
@@ -269,7 +277,9 @@ const SubmitForm = ({
             <label htmlFor="agree">
               <input type="hidden" />
             </label>
-            <div styleName="tc-checkbox-label">I UNDERSTAND AND AGREE</div>
+            <div styleName="tc-checkbox-label" onClick={handleAgree}>
+              I UNDERSTAND AND AGREE
+            </div>
           </div>
           <PrimaryButton
             type="submit"

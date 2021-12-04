@@ -551,15 +551,11 @@ function DateRangePicker(props) {
     return isBeforeDay(preview.endDate, range.startDate);
   };
 
-  const className = `
-    ${focusedRange[1] === 1 && styles.endDate}
-    ${" "}
-    ${range.startDate && range.endDate && styles.isRange}
-    ${" "}
-    ${isInvalidPreview() && styles.isInvalidPreview}
-    ${" "}
-    ${(errors.startDate || errors.endDate) && styles.isErrorInput}
-  `;
+  const className = `${(focusedRange[1] === 1 && styles.endDate) || ""} ${
+    (range.startDate && range.endDate && styles.isRange) || ""
+  } ${(isInvalidPreview() && styles.isInvalidPreview) || ""} ${
+    ((errors.startDate || errors.endDate) && styles.isErrorInput) || ""
+  }`;
 
   return (
     <div styleName="dateRangePicker" className={className}>

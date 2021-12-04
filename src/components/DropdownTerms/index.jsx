@@ -4,7 +4,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import PT from "prop-types";
 import _ from "lodash";
-import { Creatable } from "react-select";
+import Select from "react-select";
 import iconDown from "assets/icons/dropdown-arrow.png";
 import config from "../../../config";
 import "./styles.scss";
@@ -100,7 +100,7 @@ function DropdownTerms({
       }`}
     >
       <div styleName="relative">
-        <Creatable
+        <Select
           onOpen={() => setFocused(true)}
           onClose={() => setFocused(false)}
           autosize={false}

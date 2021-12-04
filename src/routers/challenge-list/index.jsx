@@ -11,6 +11,8 @@ import * as utils from "../../utils";
 import store from "../../store";
 import { initialChallengeFilter } from "../../reducers/filter";
 import _ from "lodash";
+import { useMediaQuery } from "react-responsive";
+import { useCssVariable } from "../../utils/hooks/useCssVariable";
 
 import "react-date-range/dist/theme/default.css";
 import "react-date-range/dist/styles.css";
@@ -19,13 +21,6 @@ import "rc-tooltip/assets/bootstrap.css";
 const App = () => {
   const location = useLocation();
   const previousControllerRef = useRef();
-
-  useLayoutEffect(() => {
-    showMenu(true);
-    return () => {
-      showMenu(false);
-    };
-  }, []);
 
   useEffect(() => {
     if (!location.search) {
@@ -72,18 +67,42 @@ const App = () => {
     store.dispatch(actions.challenges.getChallengesDone(updatedFilter, signal));
   }, [location]);
 
+  const onHideSidebar = () => {
+    const sidebarEl = document.getElementById("sidebar-id");
+    sidebarEl.classList.remove("show");
+  };
+
+  const screenXs = useCssVariable("--mfe-screen-xs", (value) =>
+    parseInt(value)
+  );
+  const isScreenXs = useMediaQuery({ maxWidth: screenXs });
+
+  useLayoutEffect(() => {
+    showMenu(true);
+    return () => {
+      showMenu(false);
+    };
+  }, [isScreenXs]);
+
   return (
     <>
       <div className="layout">
-        <aside className="sidebar">
+        <aside className="sidebar" id="sidebar-id">
           <div className="sidebar-content">
-            <div id="menu-id" />
+            {!isScreenXs && <div id="menu-id" />}
             <hr />
             <Filter />
           </div>
           <div className="sidebar-footer">
             <FeedbackButton />
           </div>
+          <button
+            type="button"
+            className="close-button"
+            onClick={onHideSidebar}
+          >
+            &times;
+          </button>
         </aside>
         <div className="content">
           <Challenges />
