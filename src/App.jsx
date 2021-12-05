@@ -17,7 +17,10 @@ const App = () => {
   varsRef.current = { previousLocation };
 
   useEffect(() => {
-    if (location.pathname !== varsRef.current.previousLocation.pathname) {
+    if (
+      location.pathname !== varsRef.current.previousLocation.pathname ||
+      location.search !== varsRef.current.previousLocation.search
+    ) {
       window.scrollTo(0, 0);
     }
   }, [location]);
