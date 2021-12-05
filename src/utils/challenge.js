@@ -63,6 +63,12 @@ Joi.type = () =>
       ) || null
   );
 
+Joi.validDate = () =>
+  Joi.alternatives().try(
+    Joi.date(),
+    Joi.any().custom(() => null)
+  );
+
 export function getCurrencySymbol(prizeSets) {
   return constants.CURRENCY_SYMBOL[_.get(prizeSets, "[0].prizes[0].type", "")];
 }
@@ -141,8 +147,8 @@ const queryScheme = {
   tracks: Joi.array().items(Joi.track()),
   search: Joi.string(),
   tags: Joi.array().items(Joi.string()),
-  startDateEnd: Joi.date(),
-  endDateStart: Joi.date(),
+  startDateEnd: Joi.validDate(),
+  endDateStart: Joi.validDate(),
   sortBy: Joi.string().valid("updated", "overview.totalPrizes", "name"),
   groups: Joi.array().items(Joi.optionalId()).unique(),
   events: Joi.array().items(Joi.string()),
