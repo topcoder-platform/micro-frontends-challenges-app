@@ -13,6 +13,18 @@ Joi.page = () =>
     Joi.any().custom(() => 1)
   );
 
+Joi.minPrice = () =>
+  Joi.alternatives().try(
+    Joi.number().min(0),
+    Joi.any().custom(() => 0)
+  );
+
+Joi.maxPrice = () =>
+  Joi.alternatives().try(
+    Joi.number().min(0),
+    Joi.any().custom(() => 10000)
+  );
+
 Joi.perPage = () =>
   Joi.alternatives().try(
     Joi.number()
@@ -49,6 +61,12 @@ Joi.type = () =>
         (typeAbbreviation) =>
           param && param.toLowerCase() === typeAbbreviation.toLowerCase()
       ) || null
+  );
+
+Joi.validDate = () =>
+  Joi.alternatives().try(
+    Joi.date(),
+    Joi.any().custom(() => null)
   );
 
 export function getCurrencySymbol(prizeSets) {
@@ -129,14 +147,14 @@ const queryScheme = {
   tracks: Joi.array().items(Joi.track()),
   search: Joi.string(),
   tags: Joi.array().items(Joi.string()),
-  startDateEnd: Joi.date(),
-  endDateStart: Joi.date(),
+  startDateEnd: Joi.validDate(),
+  endDateStart: Joi.validDate(),
   sortBy: Joi.string().valid("updated", "overview.totalPrizes", "name"),
   groups: Joi.array().items(Joi.optionalId()).unique(),
   events: Joi.array().items(Joi.string()),
   bucket: Joi.bucket(),
-  totalPrizesFrom: Joi.number().integer().min(0),
-  totalPrizesTo: Joi.number().integer().min(0),
+  totalPrizesFrom: Joi.minPrice(),
+  totalPrizesTo: Joi.maxPrice(),
   recommended: Joi.boolean(),
 };
 

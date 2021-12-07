@@ -1,21 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import PT from "prop-types";
 import Tag from "../../../../../components/Tag";
 import * as util from "../../../../../utils/tag";
+import { useTargetSize } from "../../../../../utils/hooks/useTargetSize";
 
 import "./styles.scss";
 
 const Tags = ({ tags, onClickTag, tooltip }) => {
-  const n = util.calculateNumberOfVisibleTags(tags);
+  const Tooltip = tooltip;
+
+  const [size, ref] = useTargetSize();
+
+  const n = useMemo(() => {
+    const tagArray = [...tags];
+    let tagsWidth = util.measureText(tagArray);
+
+    if (!size) {
+      return 0;
+    }
+
+    const maxWidth = Math.min(260, size.width);
+    if (tagsWidth < maxWidth) {
+      return tagArray.length;
+    }
+
+    const widthOfMoreTag = 40;
+    while (tagsWidth > maxWidth - widthOfMoreTag) {
+      tagArray.pop();
+      tagsWidth = util.measureText(tagArray);
+    }
+
+    return tagArray.length;
+  }, [tags, size]);
+
   const more = n < tags.length ? tags.length - n : 0;
+
   const [collapsed, setCollapsed] = useState(more > 0);
   const visibleTags = collapsed ? tags.slice(0, n) : tags;
   const invisibleTags = collapsed ? tags.slice(n) : [];
 
-  const Tooltip = tooltip;
-
   return (
-    <div styleName="tags">
+    <div styleName="tags" ref={ref}>
       {visibleTags.map((tag) => (
         <Tag tag={tag} key={tag} onClick={onClickTag} />
       ))}

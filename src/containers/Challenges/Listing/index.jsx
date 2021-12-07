@@ -14,6 +14,9 @@ import * as utils from "../../../utils";
 
 import * as constants from "../../../constants";
 import IconSearch from "../../../assets/icons/search.svg";
+import IconClear from "../../../assets/icons/close-gray.svg";
+import Button from "../../../components/Button";
+
 import "./styles.scss";
 
 const Listing = ({
@@ -47,6 +50,11 @@ const Listing = ({
     updateFilter(filterChange);
   };
 
+  const onShowSidebar = () => {
+    const sidebarEl = document.getElementById("sidebar-id");
+    sidebarEl.classList.add("show");
+  };
+
   return (
     <Panel>
       <Panel.Header>
@@ -70,6 +78,24 @@ const Listing = ({
               }}
               maxLength="100"
             />
+            {search.length ? (
+              <span styleName="clear-icon">
+                <IconClear
+                  size="xs"
+                  onClick={() => {
+                    onSearch.current(() => {
+                      const filterChange = {
+                        search: "",
+                        page: 1,
+                      };
+                      updateFilter(filterChange);
+                    });
+                  }}
+                />
+              </span>
+            ) : (
+              <span type="hidden"></span>
+            )}
           </div>
           <div styleName="separator" />
           <div
@@ -111,55 +137,65 @@ const Listing = ({
               }}
             />
           </div>
+          <div styleName="filter-button">
+            <Button onClick={onShowSidebar}>FILTER</Button>
+          </div>
         </div>
       </Panel.Header>
-      {loadingChallenges ? (
-        _.times(3, () => <ChallengeLoading />)
-      ) : challenges.length ? (
-        <Panel.Body>
-          {challenges.map((challenge, index) => (
-            <div
-              key={challenge.id}
-              styleName={index % 2 === 0 ? "even" : "odd"}
-            >
-              <ChallengeItem
-                challenge={challenge}
-                onClickTag={(tag) => {
-                  const filterChange = {
-                    tags: [tag],
-                    page: 1,
-                  };
-                  updateFilter(filterChange);
-                }}
-                onClickTrack={(track) => {
-                  const filterChange = {
-                    tracks: [track],
-                    page: 1,
-                  };
-                  updateFilter(filterChange);
-                }}
-                isLoggedIn={isLoggedIn}
-              />
-            </div>
-          ))}
-          <div styleName="pagination">
-            <Pagination
-              length={total}
-              pageSize={perPage}
-              pageIndex={utils.pagination.pageToPageIndex(page)}
-              onChange={(event) => {
-                const filterChange = {
-                  page: utils.pagination.pageIndexToPage(event.pageIndex),
-                  perPage: event.pageSize,
-                };
-                updateFilter(filterChange);
-              }}
-            />
-          </div>
-        </Panel.Body>
-      ) : (
-        <ChallengeError />
-      )}
+      {loadingChallenges && _.times(3, () => <ChallengeLoading />)}
+      {!loadingChallenges &&
+        (challenges.length ? (
+          <Panel.Body>
+            {challenges.map((challenge, index) => (
+              <div
+                key={challenge.id}
+                styleName={index % 2 === 0 ? "even" : "odd"}
+              >
+                <ChallengeItem
+                  challenge={challenge}
+                  onClickTag={(tag) => {
+                    const filterChange = {
+                      tags: [tag],
+                      page: 1,
+                    };
+                    updateFilter(filterChange);
+                  }}
+                  onClickTrack={(track) => {
+                    const filterChange = {
+                      tracks: [track],
+                      page: 1,
+                    };
+                    updateFilter(filterChange);
+                  }}
+                  isLoggedIn={isLoggedIn}
+                />
+              </div>
+            ))}
+          </Panel.Body>
+        ) : (
+          <ChallengeError />
+        ))}
+      <Panel.Body>
+        <div
+          styleName="pagination"
+          style={{
+            display: challenges.length === 0 || loadingChallenges ? "none" : "",
+          }}
+        >
+          <Pagination
+            length={total}
+            pageSize={perPage}
+            pageIndex={utils.pagination.pageToPageIndex(page)}
+            onChange={(event) => {
+              const filterChange = {
+                page: utils.pagination.pageIndexToPage(event.pageIndex),
+                perPage: event.pageSize,
+              };
+              updateFilter(filterChange);
+            }}
+          />
+        </div>
+      </Panel.Body>
     </Panel>
   );
 };

@@ -29,6 +29,10 @@
   }
 }
 
+:root{
+  --mfe-screen-xs: #{$mfe-screen-xs};
+}
+
 #tooltips-container-id {
   position: fixed;
   top: 0;
@@ -36,4 +40,4 @@
   width: 0;
   height: 0;
   z-index: 1001;
-} // end :global
+}

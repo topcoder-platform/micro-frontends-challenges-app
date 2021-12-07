@@ -360,7 +360,6 @@ class ChallengeDetailPageContainer extends React.Component {
       resultsLoadedForChallengeId,
       savingChallenge,
       selectedTab,
-      setChallengeListingFilter,
       setSpecsTabState,
       specsTabState,
       terms,
@@ -488,7 +487,6 @@ class ChallengeDetailPageContainer extends React.Component {
               selectedView={selectedTab}
               // hasRecommendedChallenges={displayRecommendedChallenges.length > 0}
               hasThriveArticles={thriveArticles.length > 0}
-              setChallengeListingFilter={setChallengeListingFilter}
               unregisterFromChallenge={() =>
                 unregisterFromChallenge(auth, challengeId)
               }
@@ -718,7 +716,6 @@ ChallengeDetailPageContainer.propTypes = {
   resultsLoadedForChallengeId: PT.string.isRequired,
   savingChallenge: PT.bool.isRequired,
   selectedTab: PT.string.isRequired,
-  setChallengeListingFilter: PT.func.isRequired,
   setSpecsTabState: PT.func.isRequired,
   specsTabState: PT.string.isRequired,
   terms: PT.arrayOf(PT.shape()),
@@ -967,18 +964,6 @@ const mapDispatchToProps = (dispatch) => {
         return challengeDetails;
       });
     },
-    setChallengeListingFilter: (change, stateProps) => {
-      const updateFilter = actions.filter.updateFilter;
-      const updateQuery = actions.filter.updateChallengeQuery;
-      change.page = 1;
-      change.tracks = constants.FILTER_CHALLENGE_TRACKS;
-      change.backet = constants.FILTER_BUCKETS[1];
-      if (change.tags) {
-        change.types = constants.FILTER_CHALLENGE_TYPES;
-      }
-      dispatch(updateFilter(change));
-      dispatch(updateQuery({ ...stateProps.filter.challenge, ...change }));
-    },
     setSpecsTabState: (state) =>
       dispatch(pageActions.page.challengeDetails.setSpecsTabState(state)),
     unregisterFromChallenge: (auth, challengeId) => {
@@ -1041,18 +1026,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-  ...ownProps,
-  ...stateProps,
-  ...dispatchProps,
-  setChallengeListingFilter: (filter) =>
-    dispatchProps.setChallengeListingFilter(filter, stateProps),
-});
-
 const ChallengeDetailContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
+  mapDispatchToProps
 )(ChallengeDetailPageContainer);
 
 export default ChallengeDetailContainer;
