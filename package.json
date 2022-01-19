@@ -61,7 +61,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
+    "isomorphic-fetch": "^3.0.0",
     "@topcoder-platform/tc-auth-lib": "topcoder-platform/tc-auth-lib#1.0.4",
     "topcoder-react-ui-kit": "2.0.1",
     "topcoder-react-utils": "0.7.8",
@@ -90,9 +90,9 @@
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",
-    "draft-js": "^0.10.4",
+    "draft-js": "^0.11.7",
     "draft-js-plugins-editor": "^2.0.3",
-    "draft-js-markdown-shortcuts-plugin": "^0.3.0",
+    "draft-js-markdown-shortcuts-plugin": "^0.6.0",
     "react-color": "^2.13.8",
     "redux-promise": "^0.6.0",
     "draft-js-export-html": "^1.2.0",
