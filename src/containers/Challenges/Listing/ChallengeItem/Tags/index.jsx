@@ -42,7 +42,7 @@ const Tags = ({ tags, onClickTag, tooltip, isSelfService }) => {
 
   return (
     <div styleName="tags" ref={ref}>
-      {isSelfService && <Tag tag="Customer Self-Service" onClick={_.noop}/>}
+      {isSelfService && <Tag tag="On Demand" onClick={_.noop}/>}
       {visibleTags.map((tag) => (
         <Tag tag={tag} key={tag} onClick={onClickTag} />
       ))}
