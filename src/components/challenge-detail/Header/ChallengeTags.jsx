@@ -32,6 +32,7 @@ import "./style.module.scss";
 
 export default function ChallengeTags(props) {
   const {
+    selfService,
     challengeId,
     challengesUrl,
     track,
@@ -113,6 +114,13 @@ export default function ChallengeTags(props) {
       {matchSkills.map((item) => (
         <VerifiedTag item={item} challengesUrl={challengesUrl} />
       ))}
+      {
+        selfService && (
+          <DevelopmentTrackTag>
+            <span>On Demand</span>
+          </DevelopmentTrackTag>
+        )
+      }
       {tags.map(
         (tag) =>
           tag && (
@@ -133,6 +141,7 @@ export default function ChallengeTags(props) {
 ChallengeTags.defaultProps = {
   events: [],
   technPlatforms: [],
+  selfService: false,
 };
 
 ChallengeTags.propTypes = {
@@ -143,4 +152,5 @@ ChallengeTags.propTypes = {
   technPlatforms: PT.arrayOf(PT.string),
   challengeType: PT.shape().isRequired,
   openForRegistrationChallenges: PT.shape().isRequired,
+  selfService: PT.bool,
 };
