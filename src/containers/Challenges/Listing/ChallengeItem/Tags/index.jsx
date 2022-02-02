@@ -1,12 +1,13 @@
 import React, { useState, useMemo } from "react";
 import PT from "prop-types";
+import _ from "lodash";
 import Tag from "../../../../../components/Tag";
 import * as util from "../../../../../utils/tag";
 import { useTargetSize } from "../../../../../utils/hooks/useTargetSize";
 
 import "./styles.scss";
 
-const Tags = ({ tags, onClickTag, tooltip }) => {
+const Tags = ({ tags, onClickTag, tooltip, isSelfService }) => {
   const Tooltip = tooltip;
 
   const [size, ref] = useTargetSize();
@@ -41,6 +42,7 @@ const Tags = ({ tags, onClickTag, tooltip }) => {
 
   return (
     <div styleName="tags" ref={ref}>
+      {isSelfService && <Tag tag="On Demand" onClick={_.noop} />}
       {visibleTags.map((tag) => (
         <Tag tag={tag} key={tag} onClick={onClickTag} />
       ))}
@@ -54,11 +56,13 @@ const Tags = ({ tags, onClickTag, tooltip }) => {
 };
 
 Tags.defaultProps = {
+  isSelfService: false,
   tags: [],
   tooltip: ({ children }) => <>{children}</>,
 };
 
 Tags.propTypes = {
+  isSelfService: PT.bool,
   tags: PT.arrayOf(PT.string),
   onClickTag: PT.func,
 };

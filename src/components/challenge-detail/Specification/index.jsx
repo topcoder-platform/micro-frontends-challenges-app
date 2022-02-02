@@ -52,7 +52,12 @@ export default function ChallengeDetailsView(props) {
   } = challenge;
 
   const roles = (userDetails || {}).roles || [];
-  const { reviewScorecardId, screeningScorecardId, forumId } = legacy;
+  const {
+    reviewScorecardId,
+    screeningScorecardId,
+    forumId,
+    selfService,
+  } = legacy;
 
   let stockArtValue = "";
   const allowStockArt = _.find(metadata, { name: "allowStockArt" });
@@ -163,7 +168,7 @@ export default function ChallengeDetailsView(props) {
       <div styleName="challenge-details-view">
         <div styleName="challenge-specifications">
           <div styleName={`challenge-specs-main ${accentedStyle}`}>
-            {track.toLowerCase() !== "design" ? (
+            {track.toLowerCase() !== "design" && !selfService ? (
               <div>
                 {description && (
                   <article>
@@ -390,6 +395,7 @@ ChallengeDetailsView.propTypes = {
       reviewScorecardId: PT.oneOfType([PT.string, PT.number]),
       screeningScorecardId: PT.string,
       forumId: PT.number,
+      selfService: PT.bool,
     }),
     track: PT.string.isRequired,
     legacyId: PT.oneOfType([PT.string, PT.number]),

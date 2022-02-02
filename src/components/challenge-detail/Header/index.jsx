@@ -75,7 +75,10 @@ export default function ChallengeHeader(props) {
     status,
     type,
     track,
+    legacy,
   } = challenge;
+
+  const { selfService } = legacy;
 
   const tags = challenge.tags || [];
 
@@ -275,6 +278,7 @@ export default function ChallengeHeader(props) {
             <h1 styleName="challenge-header">{name}</h1>
             <div styleName="tag-container">
               <ChallengeTags
+                selfService={selfService}
                 challengeId={challengeId}
                 track={track}
                 challengeType={_.find(challengeTypesMap, { name: type }) || {}}
@@ -496,6 +500,9 @@ ChallengeHeader.propTypes = {
   checkpoints: PT.shape(),
   challenge: PT.shape({
     id: PT.string.isRequired,
+    legacy: PT.shape({
+      selfService: PT.bool,
+    }),
     type: PT.any,
     track: PT.string,
     drPoints: PT.any,
