@@ -98,6 +98,7 @@ const SubmitForm = ({
 
   const handleAgree = () => {
     checkboxRef.current.checked = !checkboxRef.current.checked;
+    setAgreed(checkboxRef.current.checked);
   };
 
   const id = "file-picker-submission";
