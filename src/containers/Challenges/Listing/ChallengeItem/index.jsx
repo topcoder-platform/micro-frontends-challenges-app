@@ -64,7 +64,7 @@ const ChallengeItem = ({ challenge, onClickTag, onClickTrack, isLoggedIn }) => {
         </div>
         <div styleName="tags">
           <Tags
-            isSelfService={_.get(challenge, 'legacy.selfService')}
+            isSelfService={_.get(challenge, "legacy.selfService")}
             tags={challenge.tags}
             onClickTag={onClickTag}
             tooltip={({ children, more }) => (

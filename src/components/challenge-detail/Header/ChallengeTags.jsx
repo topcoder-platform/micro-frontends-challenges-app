@@ -114,13 +114,11 @@ export default function ChallengeTags(props) {
       {matchSkills.map((item) => (
         <VerifiedTag item={item} challengesUrl={challengesUrl} />
       ))}
-      {
-        selfService && (
-          <DevelopmentTrackTag>
-            <span>On Demand</span>
-          </DevelopmentTrackTag>
-        )
-      }
+      {selfService && (
+        <DevelopmentTrackTag>
+          <span>On Demand</span>
+        </DevelopmentTrackTag>
+      )}
       {tags.map(
         (tag) =>
           tag && (

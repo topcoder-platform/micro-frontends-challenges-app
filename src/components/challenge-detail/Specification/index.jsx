@@ -52,7 +52,12 @@ export default function ChallengeDetailsView(props) {
   } = challenge;
 
   const roles = (userDetails || {}).roles || [];
-  const { reviewScorecardId, screeningScorecardId, forumId, selfService } = legacy;
+  const {
+    reviewScorecardId,
+    screeningScorecardId,
+    forumId,
+    selfService,
+  } = legacy;
 
   let stockArtValue = "";
   const allowStockArt = _.find(metadata, { name: "allowStockArt" });

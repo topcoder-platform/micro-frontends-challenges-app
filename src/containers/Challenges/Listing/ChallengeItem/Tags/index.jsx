@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import PT from "prop-types";
-import _ from 'lodash';
+import _ from "lodash";
 import Tag from "../../../../../components/Tag";
 import * as util from "../../../../../utils/tag";
 import { useTargetSize } from "../../../../../utils/hooks/useTargetSize";
@@ -42,7 +42,7 @@ const Tags = ({ tags, onClickTag, tooltip, isSelfService }) => {
 
   return (
     <div styleName="tags" ref={ref}>
-      {isSelfService && <Tag tag="On Demand" onClick={_.noop}/>}
+      {isSelfService && <Tag tag="On Demand" onClick={_.noop} />}
       {visibleTags.map((tag) => (
         <Tag tag={tag} key={tag} onClick={onClickTag} />
       ))}
