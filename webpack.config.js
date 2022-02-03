@@ -116,6 +116,8 @@ module.exports = (webpackConfigEnv) => {
           ..._.mapValues(config, (value) => JSON.stringify(value)),
           APPENV: JSON.stringify(process.env.APPENV),
           APPMODE: JSON.stringify(process.env.APPMODE),
+          FILESTACK_API_KEY: JSON.stringify(process.env.FILESTACK_API_KEY),
+          FILESTACK_SUBMISSION_CONTAINER: JSON.stringify(process.env.FILESTACK_SUBMISSION_CONTAINER),
         },
       }),
     ],
