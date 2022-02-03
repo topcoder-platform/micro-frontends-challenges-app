@@ -133,11 +133,9 @@ module.exports = {
   /* Filestack configuration for uploading Submissions
    * These are for the development back end */
   FILESTACK: {
-    API_KEY: process.env.FILESTACK_API_KEY || "AzFINuQoqTmqw0QEoaw9az",
+    API_KEY: process.env.FILESTACK_API_KEY,
     REGION: "us-east-1",
-    SUBMISSION_CONTAINER:
-      process.env.FILESTACK_SUBMISSION_CONTAINER ||
-      "topcoder-dev-submissions-dmz",
+    SUBMISSION_CONTAINER: process.env.FILESTACK_SUBMISSION_CONTAINER
   },
   /* Time in MS to wait before refreshing challenge details after register
    * and unregister.  Used to allow API sufficent time to update.

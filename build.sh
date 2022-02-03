@@ -5,7 +5,9 @@ UPDATE_CACHE=""
 
 docker build -f docker/Dockerfile -t $APP_NAME:latest \
 --build-arg APPMODE=$APPMODE \
---build-arg APPENV=$APPENV .
+--build-arg APPENV=$APPENV \
+--build-arg FILESTACK_API_KEY=$FILESTACK_API_KEY \
+--build-arg FILESTACK_SUBMISSION_CONTAINER=$FILESTACK_SUBMISSION_CONTAINER .
 
 docker create --name app $APP_NAME:latest
 
