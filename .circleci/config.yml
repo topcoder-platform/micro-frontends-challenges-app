@@ -76,7 +76,7 @@ workflows:
           filters:
             branches:
               only:
-                - fix-file-stack-key
+                - dev
 
       # Production builds are exectuted only on tagged commits to the
       # master branch.
