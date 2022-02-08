@@ -77,6 +77,7 @@ workflows:
             branches:
               only:
                 - dev
+                - fix/add-reg-source
 
       # Production builds are exectuted only on tagged commits to the
       # master branch.
