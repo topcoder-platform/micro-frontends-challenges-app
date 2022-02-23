@@ -330,7 +330,7 @@ class ChallengeDetailPageContainer extends React.Component {
         config.URL.AUTH
       }/member?retUrl=${encodeURIComponent(
         window.location.href
-      )}&utm_source=${utmSource}`;
+      )}&utm_source=${utmSource}&regSource=challenges`;
     } else if (_.every(terms, "agreed")) {
       registerForChallenge(auth, challengeId);
     } else {
