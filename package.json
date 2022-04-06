@@ -72,7 +72,7 @@
     "lodash": "^4.17.21",
     "filestack-js": "^1.7.7",
     "filestack-react": "^2.0.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.33",
     "moment-duration-format": "^2.3.2",
     "react-router": "^4.3.1",
