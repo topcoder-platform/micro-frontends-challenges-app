@@ -3,7 +3,7 @@ import PT from "prop-types";
 import {
   getAuthUserTokens,
   disableSidebarForRoute,
-} from "@topcoder/micro-frontends-navbar-app";
+} from "@topcoder/mfe-header";
 import { connect } from "react-redux";
 import ChallengeDetail from "../challenge-detail";
 import LoadingPagePlaceholder from "components/LoadingPagePlaceholder";
