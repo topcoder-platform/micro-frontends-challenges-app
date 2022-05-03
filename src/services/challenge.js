@@ -1,5 +1,5 @@
 import api from "./api";
-import { getAuthUserTokens } from "@topcoder/micro-frontends-navbar-app";
+import { getAuthUserTokens } from "@topcoder/mfe-header";
 import { decodeToken } from "tc-auth-lib";
 import qs from "qs";
 import _ from "lodash";

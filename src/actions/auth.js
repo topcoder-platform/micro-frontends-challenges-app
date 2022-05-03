@@ -8,7 +8,7 @@ import _ from "lodash";
 import { decodeToken, readCookie } from "../utils/token";
 import { getApiV3, getApiV5 } from "../services/challenge-api";
 import { setErrorIcon, ERROR_ICON_TYPES } from "../utils/errors";
-import { getAuthUserTokens } from "@topcoder/micro-frontends-navbar-app";
+import { getAuthUserTokens } from "@topcoder/mfe-header";
 import { TOKEN_COOKIE_KEYS } from "../constants/index";
 
 /**

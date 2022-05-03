@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { createActions } from "redux-actions";
 import service from "../services/submission";
-import { getAuthUserTokens } from "@topcoder/micro-frontends-navbar-app";
+import { getAuthUserTokens } from "@topcoder/mfe-header";
 import { decodeToken } from "tc-auth-lib";
 import { triggerDownload } from "../utils";
 

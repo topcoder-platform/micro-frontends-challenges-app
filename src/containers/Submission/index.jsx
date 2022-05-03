@@ -5,7 +5,7 @@ import { navigate } from "@reach/router";
 import { PrimaryButton } from "components/Buttons";
 import AccessDenied from "components/AccessDenied";
 import LoadingIndicator from "components/LoadingIndicator";
-import { login } from "@topcoder/micro-frontends-navbar-app";
+import { login } from "@topcoder/mfe-header";
 import { ACCESS_DENIED_REASON, CHALLENGES_URL } from "../../constants";
 import Submit from "./Submit";
 import actions from "../../actions";
