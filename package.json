@@ -90,7 +90,7 @@
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",
-    "draft-js": "^0.10.4",
+    "draft-js": "^0.11.7",
     "draft-js-plugins-editor": "^2.0.3",
     "draft-js-markdown-shortcuts-plugin": "^0.3.0",
     "react-color": "^2.13.8",
