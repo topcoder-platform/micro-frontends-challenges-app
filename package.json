@@ -3,6 +3,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "cross-env APPENV=dev webpack-dev-server",
+    "qa": "cross-env APPENV=qa webpack-dev-server",
     "dev-https": "cross-env APPENV=dev webpack-dev-server --https",
     "local": "npm run dev",
     "prod": "cross-env APPENV=prod webpack-dev-server",
